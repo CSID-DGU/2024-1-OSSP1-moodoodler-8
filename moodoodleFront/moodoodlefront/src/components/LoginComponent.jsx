@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import LoginButton from '../components/LoginButton';
-import Main from '../pages/Main';
+import InputComponent from './InputComponent';
 
 export default function LoginComponent() {
   const [id, setId] = useState('');
@@ -51,63 +51,57 @@ export default function LoginComponent() {
   };
 
   return (
-    <div className='w-[338px] h-[297px] rounded-[20px] bg-white shadow-loginShadow'>
-      {/* 로그인 폼 입력란 */}
-      <form className='login-form' onSubmit={handleLogin}>
-        <div>
-          {/* 아이디 입력란 */}
-          <div className='flex justify-center items-center mt-[30px]'>
-            <label className={textStyle} htmlFor='username'>
-              아이디
-            </label>
-            <br />
-          </div>
-          <div className='flex justify-center items-center mb-[10px]'>
-            <input
-              className={boxStyle}
+    <div className='flex w-[338px] h-[297px] rounded-[20px] justify-center items-center bg-white shadow-loginShadow'>
+      <div className='flex flex-col justify-between items-center'>
+        {/* 로그인 폼 입력란 */}
+        <form className='login-form flex flex-col gap-[10px]' onSubmit={handleLogin}>
+          <div>
+            {/* 아이디 입력란 */}
+            <div className='flex flex-col items-start gap-[10px]'>
+              <InputComponent 
+              text="아이디"
               type='text'
               id='username'
               value={id}
               onChange={idHandler}
-              placeholder='아이디를 입력하세요'
-            />
-            <br />
+              placeholder="아이디를 입력하세요"
+              />
+            </div>
           </div>
-          {/* 비밀번호 입력란 */}
-          <div className='flex justify-center items-center'>
-            <label className={textStyle} htmlFor='password'>
-              비밀번호
-            </label>
-          </div>
-          <div className='flex justify-center items-center mb-[10px]'>
-            <input
-              className={boxStyle}
+          <div>
+            {/* 비밀번호 입력란 */}
+            <div className='flex flex-col justify-center items-start'>
+              <InputComponent
+              text="비밀번호"
               type='password'
               id='password'
               value={password}
               onChange={passwordHandler}
-              placeholder='비밀번호를 입력하세요'
-            />
+              placeholder="비밀번호를 입력하세요"
+              />
+            </div>
+            <br />
           </div>
-          <br />
-        </div>
-        {loginCheck && (
-          <label className='text-red'>아이디 혹은 비밀번호가 틀렸습니다.</label>
-        )}
-        {/* 로그인 버튼 */}
-        <div className='flex justify-center items-center mb-[10px]'>
-          <LoginButton text='로그인' onClick={handleLogin} />
-        </div>
-        {/* 회원가입 이동 문구 */}
-        <div className='flex justify-center items-center'>
-          <p className='text-xs text-left text-darkGray mr-[13px]'>
-            아직 회원이 아니신가요?
-          </p>
-          <Link className='text-[13px] font-bold text-lightBlue' to='/signup'>
-            회원가입
-          </Link>
-        </div>
-      </form>
+          {loginCheck && (
+            <label className='text-red'>아이디 혹은 비밀번호가 틀렸습니다.</label>
+          )}
+          {/* 로그인 버튼 */}
+          <div className='flex flex-col gap-[10px] items-center'>
+            <LoginButton text='로그인' onClick={handleLogin} />
+            {/* 회원가입 이동 문구 */}
+            {/* 이 버튼을 누르면 Warning: Expected `onClick` listener to be a function,
+            instead got a value of `string` type. */}
+            <div className='flex justify-center items-center'>
+              <p className='text-xs text-left text-darkGray'>
+                아직 회원이 아니신가요? &nbsp; |
+              </p>
+              <Link className='text-[13px] font-bold text-lightBlue' to='/signup'>
+                &nbsp; &nbsp;회원가입
+              </Link>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

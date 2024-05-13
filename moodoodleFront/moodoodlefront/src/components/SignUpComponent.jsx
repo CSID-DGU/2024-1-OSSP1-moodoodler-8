@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import CustomButton from '../components/CustomButton';
 import LoginButton from '../components/LoginButton';
+import InputComponent from './InputComponent';
 
 export default function SignUp() {
   const [id, setId] = useState('');
@@ -78,67 +79,53 @@ export default function SignUp() {
   };
 
   return (
-    <div className='flex w-[338px] h-[579px] rounded-[20px] justify-center items-center bg-white mt-[-5px] shadow-loginShadow'>
+    <div className='flex w-[338px] h-[579px] rounded-[20px] justify-center items-center bg-white shadow-loginShadow'>
       <div className='flex flex-col w-[283px] h-[530px] justify-between items-center'>
         <form
-          className='login-form flex flex-col gap-[19px]'
+          className='login-form flex flex-col gap-[12px]'
           onSubmit={handleSignup}
         >
           <div className='flex flex-col items-start gap-[10px]'>
             <div className=''>
-              <label className={textStyle} htmlFor='username'>
-                &nbsp; 아이디 (필수)
-              </label>
-              <input
-                className={boxStyle}
+               <InputComponent 
+                text="아이디 (필수)"
                 type='text'
-                id='id'
+                id='username'
                 value={id}
                 onChange={(e) => setId(e.target.value)}
-                placeholder='영문으로 시작하는 4자~20자의 영문, 숫자'
+                placeholder="영문으로 시작하는 4자~20자의 영문, 숫자"
               />
             </div>
             <CustomButton text='중복 확인' color='pink' onClick='' />
           </div>
           <div className='flex flex-col justify-center items-start'>
-            <label className={textStyle} htmlFor='password'>
-              &nbsp; 비밀번호 (필수)
-            </label>
-            <input
-              className={boxStyle}
+            <InputComponent 
+              text="비밀번호 (필수)"
               type='password'
               id='password'
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder='8자~20자 영문, 숫자 모두 조합'
+              placeholder="8자~20자 영문, 숫자 모두 조합"
             />
           </div>
           <div className='flex flex-col justify-center items-start'>
-            <label className={textStyle} htmlFor='confirm-password'>
-              &nbsp; 비밀번호 재입력 (필수)
-            </label>
-            <input
-              className={boxStyle}
+            <InputComponent 
+              text="비밀번호 재입력 (필수)"
               type='password'
               id='confirm-password'
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder='8자~20자 영문, 숫자 모두 조합'
+              placeholder="8자~20자 영문, 숫자 모두 조합"
             />
           </div>
           <div className='flex flex-col justify-center items-start'>
-            <label className={textStyle} htmlFor='nickname'>
-              &nbsp; 닉네임
-            </label>
-            <div className='flex justify-center items-center'>
-              <input
-                className={boxStyle}
-                type='text'
-                id='nickname'
-                value={nickname}
-                onChange={(e) => setNickname(e.target.value)}
-              />
-            </div>
+            <InputComponent 
+              text="닉네임"
+              type='text'
+              id='nickname'
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
+            />
           </div>
           <div className='flex flex-col justify-center items-start'>
             <label className={textStyle} htmlFor='birthdate'>
