@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import Main from './pages/Main';
 import DiaryWritePage from './pages/DiaryWritePage';
 import AnalysisPage from './pages/AnalysisPage';
+import Friend from './pages/Friend';
 import Mypage from './pages/Mypage';
 import NavigationBar from './components/NavigationBar';
 
@@ -34,6 +35,7 @@ function App() {
                       element={<AnalysisPage />}
                     />
                     <Route path='/mypage' element={<Mypage />} />
+                    <Route path='/friend' element={<Friend />} />
                   </Route>
                 </Routes>
                 <NavigationBar />
@@ -56,6 +58,7 @@ function App() {
                       element={<AnalysisPage />}
                     />
                     <Route path='/mypage' element={<Mypage />} />
+                    <Route path='/friend' element={<Friend />} />
                   </Route>
                 </Routes>
               </div>
