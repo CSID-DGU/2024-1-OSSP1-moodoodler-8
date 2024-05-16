@@ -156,8 +156,11 @@ class FriendCalendarView(ListAPIView):
     def get_queryset(self):
         user_id = self.request.user.user_id
         friend_id = self.kwargs['to_user_id']
-        start_date = date(date.today().year, date.today().month, 1)
-        end_date = date(date.today().year, date.today().month, monthrange(date.today().year, date.today().month)[1])
+        year = int(self.kwargs['year'])
+        month = int(self.kwargs['month'])
+        start_date = date(year, month, 1)
+        end_date = date(year, month, monthrange(year, month)[1])
+        current_date = date.today()
         
         if not Friend.objects.filter(from_user_id=user_id, to_user_id=friend_id).exists() and not Friend.objects.filter(from_user_id=friend_id, to_user_id=user_id).exists():
             raise ValueError("친구 관계가 아닙니다.")
@@ -165,6 +168,9 @@ class FriendCalendarView(ListAPIView):
         friend_user = users.objects.filter(user_id=friend_id, public=True).first()
         if not friend_user:
             raise ValueError("친구의 달력이 공개되어 있지 않습니다.")
+        
+        if date(year, month, 1) > current_date:
+            raise ValueError("접근 불가능한 날짜입니다.")
 
         return Diary.objects.filter(date__range=(start_date, end_date), user_id=friend_id)
 
@@ -172,8 +178,10 @@ class FriendCalendarView(ListAPIView):
         try:    
             queryset = self.get_queryset()
             results = []
-            start_date = date(date.today().year, date.today().month, 1)
-            end_date = date(date.today().year, date.today().month, monthrange(date.today().year, date.today().month)[1])
+            year = int(self.kwargs['year'])
+            month = int(self.kwargs['month'])
+            start_date = date(year, month, 1)
+            end_date = date(year, month, monthrange(year, month)[1])
             current_date = start_date
 
             while current_date <= end_date:

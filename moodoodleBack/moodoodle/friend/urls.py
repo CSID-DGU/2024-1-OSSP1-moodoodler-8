@@ -9,5 +9,5 @@ urlpatterns = [
     path('search/<str:id>/', FriendSearchView.as_view(), name='search'),
     path('add/<int:to_user_id>/', FriendAddView.as_view(), name='add'),
     path('delete/<int:to_user_id>/', FriendDeleteView.as_view(), name='delete'),
-    path('calendar/<int:to_user_id>/', FriendCalendarView.as_view(), name='calendar')
+    path('calendar/<int:to_user_id>/<int:year>/<int:month>/', FriendCalendarView.as_view(), name='calendar')
 ]
