@@ -61,7 +61,6 @@ export default function YearCalendar({ handleColorChipToggle }) {
               />
             </div>
           </div>
-
           <ColorNameCode />
         </div>
       </div>

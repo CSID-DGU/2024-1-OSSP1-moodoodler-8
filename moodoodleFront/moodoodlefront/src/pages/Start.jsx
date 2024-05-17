@@ -1,20 +1,12 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import MainButton from '../components/MainButton';
-import Login from './Login';
-import SignUp from './SignUp';
 
 export default function Start() {
   // 버튼을 누를 경우 Navigate를 통해서 이동할까 고민중
   // 알려줄 친절하고 사랑스러운 분을 구합니다
   const movePage = useNavigate();
 
-  function goLogin() {
-    movePage('/login');
-  }
-  function goSignUp() {
-    movePage('/signup');
-  }
   return (
     <div className='flex flex-col justify-center items-center w-[390px] h-screen bg-gradient-to-br from-yellow-100 via-red-100 to-purple-100'>
       {/* 보조 설명 및 타이틀 Image */}
@@ -26,8 +18,12 @@ export default function Start() {
       <img src='/assets/moodoodleLogoBig.svg' alt='logo' />
       {/* 로그인 및 회원가입 버튼 */}
       <div className='flex flex-col items-center mt-[-30px]'>
-        <MainButton text='로그인' onClick={goLogin} />
-        <MainButton text='회원가입' onClick={goSignUp} />
+        <Link to='/login'>
+          <MainButton text='로그인' />
+        </Link>
+        <Link to='/signup'>
+          <MainButton text='회원가입' />
+        </Link>
       </div>
 
       {/* 프로젝트 주최팀의 타 작업물 - 지워도 무관*/}

@@ -7,7 +7,7 @@ export default function MainProfile({ isCalendar, setIsCalendar }) {
 
   useEffect(() => {
     getUserProfile();
-  }, [localStorage.getItem('user_id')]);
+  }, [localStorage.getItem('user_id'), profile]);
 
   return (
     <div className='flex flex-row h-[82px] justify-center items-center'>

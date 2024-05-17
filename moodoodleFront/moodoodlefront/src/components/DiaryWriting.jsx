@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { defaultAxios } from '../axios/defaultAxios';
 import dayjs from 'dayjs';
 import CustomButton from './CustomButton';
 import { useNavigate } from 'react-router-dom';
@@ -15,30 +15,29 @@ export default function DiaryWriting() {
     onInputHandler(e);
   };
 
-  const handleSubmit = () => {
-    navigate(`/analysis/${selectedDay}`);
-  };
-
   const onInputHandler = (e) => {
     setInputCount(e.target.value.length);
   };
 
-  /*const handleSubmit = async () => {
+  const handleSubmit = async () => {
     const postData = {
-      user_id: localStorage.getItem('user_id'),
-      date: selectedDay,
-      content: content,
+      id: localStorage.getItem('id'),
+      date: { selectedDay },
+      content: { content },
     };
     try {
-      const response = await axios.post('/diary/create', postData);
-      console.log(response.data);
-
+      const postDiaryResponse = await defaultAxios.post(
+        '/diary/create',
+        postData,
+      );
+      console.log(postDiaryResponse.data);
       setContent('');
-      navigate('/analysis');
+      navigate(`/analysis/${selectedDay}`);
     } catch (error) {
-      console.error('Error submitting post:', error);
+      const { status_code } = error.response.status_code;
+      console.error('Error submitting post:', status_code);
     }
-  };*/
+  };
 
   return (
     <div className='flex justify-center items-center w-[342px] h-[456px] bg-white rounded-[20px] shadow-componentShadow'>

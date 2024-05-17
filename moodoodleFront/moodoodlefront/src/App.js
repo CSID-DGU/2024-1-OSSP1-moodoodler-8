@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { Mobile, Pc } from './responsive';
 import { RecoilRoot } from 'recoil';
 import Start from './pages/Start';
@@ -20,10 +20,10 @@ function App() {
             <Pc className='flex flex-col m-auto'>
               <div className='flex-1 relative'>
                 <Routes>
+                  <Route path='/start' element={<Start />} />
+                  <Route path='/login' element={<Login />} />
+                  <Route path='/signup' element={<SignUp />} />
                   <Route exact path='/' element={<Home />}>
-                    <Route path='/start' element={<Start />} />
-                    <Route path='/login' element={<Login />} />
-                    <Route path='/signup' element={<SignUp />} />
                     <Route path='/' element={<Main />} />
                     <Route
                       path='/diary/:selectedDate'
@@ -36,16 +36,15 @@ function App() {
                     <Route path='/mypage' element={<Mypage />} />
                   </Route>
                 </Routes>
-                <NavigationBar />
               </div>
             </Pc>
             <Mobile className='flex flex-col m-auto'>
-              <div className='flex-1'>
+              <div className='flex-1 relative'>
                 <Routes>
+                  <Route path='/start' element={<Start />} />
+                  <Route path='/login' element={<Login />} />
+                  <Route path='/signup' element={<SignUp />} />
                   <Route exact path='/' element={<Home />}>
-                    <Route path='/start' element={<Start />} />
-                    <Route path='/login' element={<Login />} />
-                    <Route path='/signup' element={<SignUp />} />
                     <Route path='/' element={<Main />} />
                     <Route
                       path='/diary/:selectedDate'
