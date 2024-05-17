@@ -584,13 +584,10 @@ export default function useMoodYearCalendar() {
 
   const getMoodYearCalendar = async (year) => {
     try {
-      const getMoodYearCalendarResponse = await defaultAxios.get(
-        `/diary/year/${year}`,
-        {
-          id: localStorage.getItem('id'),
-          year: { year },
-        },
-      );
+      const getMoodYearCalendarResponse = await defaultAxios.get(`/diary/year/${year}`, {
+        id: localStorage.getItem('id'),
+        year: { year },
+      });
       setMonthlyDiary(getMoodYearCalendarResponse.data.result);
       getMonthlyList(monthlyDiary);
     } catch (error) {

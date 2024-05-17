@@ -93,14 +93,11 @@ export default function useMoodCalendar() {
 
   const getMoodCalendar = async (year, month) => {
     try {
-      const getMoodCalendarResponse = await defaultAxios.get(
-        `/diary/month/${year}/${month}`,
-        {
-          id: localStorage.getItem('id'),
-          year: { year },
-          month: { month },
-        },
-      );
+      const getMoodCalendarResponse = await defaultAxios.get(`/diary/month/${year}/${month}`, {
+        id: localStorage.getItem('id'),
+        year: { year },
+        month: { month },
+      });
       setDaysDiary(getMoodCalendarResponse.data.result);
       getMoodColorList(daysDiary);
     } catch (error) {

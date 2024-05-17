@@ -68,14 +68,11 @@ export default function useMonthlyReport() {
 
   const getMonthlyReport = async () => {
     try {
-      const getMonthlyReportResponse = await defaultAxios.get(
-        `/user/mypage/report/${date.year}/${date.month}`,
-        {
-          id: localStorage.getItem('id'),
-          year: date.year,
-          month: date.month,
-        },
-      );
+      const getMonthlyReportResponse = await defaultAxios.get(`/user/mypage/report/${date.year}/${date.month}`, {
+        id: localStorage.getItem('id'),
+        year: date.year,
+        month: date.month,
+      });
       setMonthlyReport(getMonthlyReportResponse.data.detail[0]);
       setMonthTagList(getMonthlyReportResponse.data.detail[1]);
     } catch (error) {

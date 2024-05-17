@@ -23,25 +23,14 @@ export default function Home() {
   return (
     <>
       <Header />
-      <div className='relative'>
+      <div className="relative">
         {location.pathname === ('/mypage' || '/friend') ? (
-          <div className='h-[12px]' />
+          <div className="h-[12px]" />
         ) : (
           <MainProfile isCalendar={isCalendar} setIsCalendar={setIsCalendar} />
         )}
-        {isClick ? (
-          <MoodColor handleColorChipToggle={handleColorChipToggle} />
-        ) : (
-          ''
-        )}
-        {isDateClick ? (
-          <MoodAnalysisModal
-            isModal
-            handleDayMoodAnalysisToggle={handleDayMoodAnalysisToggle}
-          />
-        ) : (
-          ''
-        )}
+        {isClick ? <MoodColor handleColorChipToggle={handleColorChipToggle} /> : ''}
+        {isDateClick ? <MoodAnalysisModal isModal handleDayMoodAnalysisToggle={handleDayMoodAnalysisToggle} /> : ''}
         <Outlet
           context={{
             isCalendar,

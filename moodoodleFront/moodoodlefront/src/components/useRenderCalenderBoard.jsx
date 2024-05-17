@@ -12,14 +12,12 @@ const useRenderCalenderBoard = (selectedDay, handleSelectDate, arr, setArr) => {
         : dayjs(selectedDay)
             .startOf('month')
             .set('date', i - firstDay + 1)
-            .format('YYYY-MM-DD'),
+            .format('YYYY-MM-DD')
     );
   };
 
   const moodColorArr = (firstDay, daysInMonth) => {
-    return Array.from({ length: firstDay + daysInMonth }, (v, i) =>
-      i < dayjs().date() ? moodcolorlist[i] : null,
-    );
+    return Array.from({ length: firstDay + daysInMonth }, (v, i) => (i < dayjs().date() ? moodcolorlist[i] : null));
   };
 
   const main_mood_color_list = (firstDay, daysInMonth) => {
@@ -40,10 +38,9 @@ const useRenderCalenderBoard = (selectedDay, handleSelectDate, arr, setArr) => {
   }, [selectedDay]);
 
   const content = arr.map((v, i) => (
-    <div className='flex justify-center' key={v ? v.toString() : `${v}${i}`}>
+    <div className="flex justify-center" key={v ? v.toString() : `${v}${i}`}>
       {v &&
-        (moodcolorlist[i - (arr.length - dayjs(selectedDay).daysInMonth())] !==
-        null ? (
+        (moodcolorlist[i - (arr.length - dayjs(selectedDay).daysInMonth())] !== null ? (
           <div
             className={`flex justify-center items-center w-[22px] h-[22px] rounded-full bg-[#${
               moodcolorlist[i - (arr.length - dayjs(selectedDay).daysInMonth())]
@@ -55,7 +52,7 @@ const useRenderCalenderBoard = (selectedDay, handleSelectDate, arr, setArr) => {
           </div>
         ) : (
           <div
-            className='flex justify-center items-center w-[22px] h-[22px] rounded-full bg-gray-scale-1 text-center cursor-pointer'
+            className="flex justify-center items-center w-[22px] h-[22px] rounded-full bg-gray-scale-1 text-center cursor-pointer"
             date={v}
             onClick={() => handleSelectDate(v)}
           >

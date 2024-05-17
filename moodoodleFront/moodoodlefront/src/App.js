@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Mobile, Pc } from './responsive';
 import { RecoilRoot } from 'recoil';
 import Start from './pages/Start';
@@ -9,7 +9,7 @@ import Main from './pages/Main';
 import DiaryWritePage from './pages/DiaryWritePage';
 import AnalysisPage from './pages/AnalysisPage';
 import Mypage from './pages/Mypage';
-import NavigationBar from './components/NavigationBar';
+import Survey from './pages/Survey';
 
 function App() {
   return (
@@ -23,6 +23,7 @@ function App() {
                   <Route path='/start' element={<Start />} />
                   <Route path='/login' element={<Login />} />
                   <Route path='/signup' element={<SignUp />} />
+                  <Route path='/survey' element={<Survey/>}/>
                   <Route exact path='/' element={<Home />}>
                     <Route path='/' element={<Main />} />
                     <Route

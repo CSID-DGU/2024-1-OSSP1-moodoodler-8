@@ -7,7 +7,7 @@ export default function ToggleContainer({ is, setIs }) {
 
   return (
     <>
-      <div className='relative cursor-pointer' onClick={toggleHandler}>
+      <div className="relative cursor-pointer" onClick={toggleHandler}>
         <div
           className={`w-[37px] h-[18px] rounded-[30px] duration-[0.5s] ${
             is ? 'bg-[#00c866] duration-[0.5s]' : 'bg-[#e9e9ea]'
