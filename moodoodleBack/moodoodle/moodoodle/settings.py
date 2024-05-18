@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',
     'diary.apps.DiaryConfig',
     'friend.apps.FriendConfig',
+    'music.apps.MusicConfig'
 ]
 
 MIDDLEWARE = [
