@@ -6,7 +6,7 @@ from rest_framework import status
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, DestroyAPIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from .serializers import FriendSerializer, FriendListSerializer, FriendCalendarSerializer
+from .serializers import FriendSerializer, FriendListSerializer, FriendRequestSerializer, FriendCalendarSerializer
 from calendar import monthrange
 from datetime import date, timedelta
 
@@ -220,3 +220,82 @@ class FriendCalendarView(ListAPIView):
             'result': results
         }
         return Response(response, status=status.HTTP_200_OK)
+
+class FriendRequestView(ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = FriendRequestSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        friends_list = Friend.objects.filter(to_user_id=user.pk).values_list('from_user_id', flat=True)
+        friend_requests = Friend.objects.filter(to_user_id=user.pk).exclude(from_user_id__in=friends_list)
+        return friend_requests
+    
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.serializer_class(queryset, many=True)
+        response = {
+            'success': True,
+            'status_code': status.HTTP_200_OK,
+            'message': '요청에 성공하였습니다.',
+            'result': serializer.data
+        }
+        return Response(response, status=status.HTTP_200_OK)
+
+class FriendAcceptView(CreateAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = FriendSerializer
+
+    def post(self, request, from_user_id, *args, **kwargs):
+        to_user = request.user
+        try:
+            if Friend.objects.filter(from_user=from_user_id, to_user=to_user).exists() and Friend.objects.filter(from_user=to_user, to_user=from_user_id).exists():
+                response = {
+                    'success': False,
+                    'status_code': status.HTTP_400_BAD_REQUEST,
+                    'message': '이미 친구 관계가 설정되어 있습니다.'
+                }
+                return Response(response, status=status.HTTP_400_BAD_REQUEST)
+
+            Friend.objects.get(from_user_id=from_user_id, to_user=to_user)
+            friend_data = {'from_user': to_user.pk, 'to_user': from_user_id}
+            serializer = self.serializer_class(data=friend_data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            response = {
+                'success': True,
+                'status_code': status.HTTP_200_OK,
+                'message': '친구 신청을 수락하였습니다.'
+            }
+            return Response(response, status=status.HTTP_200_OK)
+        except Friend.DoesNotExist:
+            response = {
+                'success': False,
+                'status_code': status.HTTP_404_NOT_FOUND,
+                'message': '친구 신청을 찾을 수 없습니다.'
+            }
+            return Response(response, status=status.HTTP_404_NOT_FOUND)
+
+class FriendRejectView(DestroyAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = FriendSerializer
+    queryset = Friend.objects.all()
+
+    def delete(self, request, from_user_id, *args, **kwargs):
+        to_user = self.request.user
+        try:
+            friend = Friend.objects.get(from_user_id=from_user_id, to_user_id=to_user.pk)
+            friend.delete()
+            response = {
+                'success': True,
+                'status_code': status.HTTP_204_NO_CONTENT,
+                'message': '친구 신청을 거절하였습니다.'
+            }
+            return Response(response, status=status.HTTP_204_NO_CONTENT)
+        except Friend.DoesNotExist:
+            response = {
+                'success': False,
+                'status_code': status.HTTP_404_NOT_FOUND,
+                'message': '친구 신청을 찾을 수 없습니다.'
+            }
+            return Response(response, status=status.HTTP_404_NOT_FOUND)
