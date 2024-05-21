@@ -6,8 +6,8 @@ from collections import defaultdict
 class DiaryCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Diary
-        fields = ('diary_id', 'user_id', 'date', 'content')
-        read_only_fields = ('diary_id', 'user_id')
+        fields = ('diary_id', 'date', 'content')
+        read_only_fields = ['diary_id']
 
     def create(self, validated_data):
         user_id = self.context['request'].user
@@ -17,8 +17,8 @@ class DiaryCreateSerializer(serializers.ModelSerializer):
 class DiaryUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Diary
-        fields = ('diary_id', 'user_id', 'date', 'content')
-        read_only_fields = ('diary_id', 'user_id')
+        fields = ('diary_id', 'date', 'content')
+        read_only_fields = ['diary_id']
 
 class DiaryMoodSerializer(serializers.ModelSerializer):
     class Meta:

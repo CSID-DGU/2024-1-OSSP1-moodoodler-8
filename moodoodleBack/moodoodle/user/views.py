@@ -9,9 +9,9 @@ from rest_framework.generics import CreateAPIView, UpdateAPIView, RetrieveAPIVie
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from . import serializers
-from .models import users
+from .models import users, Survey
 from diary.models import Diary, Diary_Mood
-from .serializers import UserRegistrationSerializer, UserLoginSerializer, MypageSerializer, UserLogoutSerializer
+from .serializers import UserRegistrationSerializer, UserLoginSerializer, MypageSerializer, UserLogoutSerializer, UserSurveySerializer
 
 class UserRegistrationView(CreateAPIView):
     serializer_class = UserRegistrationSerializer
@@ -184,3 +184,26 @@ class UserLogoutView(RetrieveAPIView):
                 'status_code': status.HTTP_200_OK,
                 'message': "로그아웃에 성공하였습니다."
             }, status=status.HTTP_200_OK)
+
+class UserSurveyView(CreateAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = UserSurveySerializer
+    def post(self, request, *args, **kwargs):
+        user_id = request.data.get('uesr_id')
+        positive_answer = request.data.getlist('positive_answer')
+        negative_answer = request.data.getlist('negative_answer')
+        for answer in positive_answer:
+            seralizer = self.serializer_class(context={'question' : "positive", 'answer' : answer})
+            seralizer.is_valid(raise_exception=True)
+            seralizer.save()
+        for answer in negative_answer:
+            seralizer = self.serializer_class(context={'question' : "negative", 'answer' : answer})
+            seralizer.is_valid(raise_exception=True)
+            seralizer.save()
+
+        return Response({
+            'success' : True,
+            'status_code': status.HTTP_201_CREATED,
+            'message' : "요청에 성공하였습니다."
+        },status=status.HTTP_201_CREATED)
+

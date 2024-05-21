@@ -66,8 +66,6 @@ class DiaryUpdateView(RetrieveUpdateAPIView):
                 'status_code': status.HTTP_403_FORBIDDEN,
                 'message': "일기 접근 권한이 없습니다."
             }, status=status.HTTP_403_FORBIDDEN)
-
-        user_id = self.request.user
         if Diary.objects.filter(user_id=user_id, date=request.data.get('date')).exclude(diary_id=diary.diary_id).first():
             return Response({
                 'success': False,
