@@ -44,10 +44,12 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',
     'diary.apps.DiaryConfig',
     'friend.apps.FriendConfig',
-    'music.apps.MusicConfig'
+    'music.apps.MusicConfig',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -135,3 +137,9 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'user.users'
+
+# 특정 도메인에 대한 요청 허용(원하는 도메인 추가)
+CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:8000', 'http://localhost:8000']
+
+# 모든 요청을 허용(CORS_ORIGIN_WHITELIST와 CORS_ALLOW_ALL_ORIGINS 중 하나만 사용 권장)
+CORS_ALLOW_ALL_ORIGINS = True
