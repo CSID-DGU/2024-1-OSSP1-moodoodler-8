@@ -46,16 +46,14 @@ const useRenderCalenderBoard = (selectedDay, handleSelectDate, arr, setArr) => {
               moodcolorlist[i - (arr.length - dayjs(selectedDay).daysInMonth())]
             }] text-center cursor-pointer bg-opacity-80`}
             date={v}
-            onClick={() => handleSelectDate(v)}
-          >
+            onClick={() => handleSelectDate(v)}>
             {dayjs(v).date()}
           </div>
         ) : (
           <div
             className="flex justify-center items-center w-[22px] h-[22px] rounded-full bg-gray-scale-1 text-center cursor-pointer"
             date={v}
-            onClick={() => handleSelectDate(v)}
-          >
+            onClick={() => handleSelectDate(v)}>
             {dayjs(v).date()}
           </div>
         ))}
