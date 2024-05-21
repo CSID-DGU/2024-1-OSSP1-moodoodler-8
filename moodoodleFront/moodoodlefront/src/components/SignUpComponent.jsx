@@ -87,40 +87,40 @@ export default function SignUp() {
         >
           <div className='flex flex-col items-start gap-[10px]'>
             <div className=''>
-               <InputComponent 
-                text="아이디 (필수)"
+              <InputComponent
+                text='아이디 (필수)'
                 type='text'
                 id='username'
                 value={id}
                 onChange={(e) => setId(e.target.value)}
-                placeholder="영문으로 시작하는 4자~20자의 영문, 숫자"
+                placeholder='영문으로 시작하는 4자~20자의 영문, 숫자'
               />
             </div>
             <CustomButton text='중복 확인' color='pink' onClick='' />
           </div>
           <div className='flex flex-col justify-center items-start'>
-            <InputComponent 
-              text="비밀번호 (필수)"
+            <InputComponent
+              text='비밀번호 (필수)'
               type='password'
               id='password'
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="8자~20자 영문, 숫자 모두 조합"
+              placeholder='8자~20자 영문, 숫자 모두 조합'
             />
           </div>
           <div className='flex flex-col justify-center items-start'>
-            <InputComponent 
-              text="비밀번호 재입력 (필수)"
+            <InputComponent
+              text='비밀번호 재입력 (필수)'
               type='password'
               id='confirm-password'
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder="8자~20자 영문, 숫자 모두 조합"
+              placeholder='8자~20자 영문, 숫자 모두 조합'
             />
           </div>
           <div className='flex flex-col justify-center items-start'>
-            <InputComponent 
-              text="닉네임"
+            <InputComponent
+              text='닉네임'
               type='text'
               id='nickname'
               value={nickname}

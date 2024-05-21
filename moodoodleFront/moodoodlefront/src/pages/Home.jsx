@@ -24,7 +24,9 @@ export default function Home() {
     <>
       <Header />
       <div className='relative'>
-        {location.pathname === '/mypage' || location.pathname === '/friend' ? (
+        {location.pathname === '/mypage' ||
+        location.pathname === '/friend' ||
+        location.pathname === '/alarm' ? (
           <div className='h-[12px]' />
         ) : (
           <MainProfile isCalendar={isCalendar} setIsCalendar={setIsCalendar} />

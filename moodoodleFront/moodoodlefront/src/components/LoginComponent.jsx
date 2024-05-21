@@ -54,17 +54,20 @@ export default function LoginComponent() {
     <div className='flex w-[338px] h-[297px] rounded-[20px] justify-center items-center bg-white shadow-loginShadow'>
       <div className='flex flex-col justify-between items-center'>
         {/* 로그인 폼 입력란 */}
-        <form className='login-form flex flex-col gap-[10px]' onSubmit={handleLogin}>
+        <form
+          className='login-form flex flex-col gap-[10px]'
+          onSubmit={handleLogin}
+        >
           <div>
             {/* 아이디 입력란 */}
             <div className='flex flex-col items-start gap-[10px]'>
-              <InputComponent 
-              text="아이디"
-              type='text'
-              id='username'
-              value={id}
-              onChange={idHandler}
-              placeholder="아이디를 입력하세요"
+              <InputComponent
+                text='아이디'
+                type='text'
+                id='username'
+                value={id}
+                onChange={idHandler}
+                placeholder='아이디를 입력하세요'
               />
             </div>
           </div>
@@ -72,18 +75,20 @@ export default function LoginComponent() {
             {/* 비밀번호 입력란 */}
             <div className='flex flex-col justify-center items-start'>
               <InputComponent
-              text="비밀번호"
-              type='password'
-              id='password'
-              value={password}
-              onChange={passwordHandler}
-              placeholder="비밀번호를 입력하세요"
+                text='비밀번호'
+                type='password'
+                id='password'
+                value={password}
+                onChange={passwordHandler}
+                placeholder='비밀번호를 입력하세요'
               />
             </div>
             <br />
           </div>
           {loginCheck && (
-            <label className='text-red'>아이디 혹은 비밀번호가 틀렸습니다.</label>
+            <label className='text-red'>
+              아이디 혹은 비밀번호가 틀렸습니다.
+            </label>
           )}
           {/* 로그인 버튼 */}
           <div className='flex flex-col gap-[10px] items-center'>
@@ -95,7 +100,10 @@ export default function LoginComponent() {
               <p className='text-xs text-left text-darkGray'>
                 아직 회원이 아니신가요? &nbsp; |
               </p>
-              <Link className='text-[13px] font-bold text-lightBlue' to='/signup'>
+              <Link
+                className='text-[13px] font-bold text-lightBlue'
+                to='/signup'
+              >
                 &nbsp; &nbsp;회원가입
               </Link>
             </div>

@@ -11,6 +11,7 @@ import AnalysisPage from './pages/AnalysisPage';
 import Friend from './pages/Friend';
 import Mypage from './pages/Mypage';
 import NavigationBar from './components/NavigationBar';
+import Alarm from './pages/Alarm';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
                     />
                     <Route path='/mypage' element={<Mypage />} />
                     <Route path='/friend' element={<Friend />} />
+                    <Route path='/alarm' element={<Alarm />} />
                   </Route>
                 </Routes>
                 <NavigationBar />
@@ -59,6 +61,7 @@ function App() {
                     />
                     <Route path='/mypage' element={<Mypage />} />
                     <Route path='/friend' element={<Friend />} />
+                    <Route path='/alarm' element={<Alarm />} />
                   </Route>
                 </Routes>
               </div>

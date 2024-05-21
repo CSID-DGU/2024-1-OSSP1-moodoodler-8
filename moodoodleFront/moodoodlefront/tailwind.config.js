@@ -11,7 +11,6 @@ module.exports = {
         componentShadow: '0px 0px 20px 0px rgba(0, 0, 0, 0.05)',
         hashtagShadow: '0px 0px 5px 0px rgba(0, 0, 0, 0.20)',
         loginShadow: '0px 0px 18.85px 0px rgba(0,0,0,0.05)',
-        searchShadow: '0px 8px 15px 0px rgba(0,0,0,0.05)'
       },
       colors: {
         darkNavy: '#0F2552',
