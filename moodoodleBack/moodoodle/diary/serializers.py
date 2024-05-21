@@ -23,8 +23,8 @@ class DiaryUpdateSerializer(serializers.ModelSerializer):
 class DiaryMoodSerializer(serializers.ModelSerializer):
     class Meta:
         model = Diary_Mood
-        fields = ('diary_mood_id', 'title', 'ratio', 'color', 'diary_id')
-        
+        fields = ('diary_mood_id', 'fear', 'surprised', 'anger', 'sad', 'normal', 'happy', 'aversion', 'color', 'diary_id')
+
 class DiaryDetailSerializer(serializers.ModelSerializer):
     detail = serializers.SerializerMethodField()
     class Meta:

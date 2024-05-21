@@ -19,7 +19,8 @@ class DiaryCreateView(CreateAPIView):
     permission_classes = [IsAuthenticated]
     queryset = Diary.objects.all()
     def create(self, request, *args, **kwargs):
-        user_id = request.user
+        id = request.user.id
+        user_id = users.objects.get(id=id)
         date = request.data.get('date')
         content = request.data.get('content')
         if date is None or content is None:
@@ -41,10 +42,10 @@ class DiaryCreateView(CreateAPIView):
         serializer.save()
         return Response({
             'success' : True,
-            'status_code' : status.HTTP_200_OK,
+            'status_code' : status.HTTP_201_CREATED,
             'message': "요청에 성공하였습니다.",
             'data': serializer.data
-        }, status=status.HTTP_200_OK)
+        }, status=status.HTTP_201_CREATED)
 
 
 class DiaryUpdateView(RetrieveUpdateAPIView):
@@ -57,7 +58,9 @@ class DiaryUpdateView(RetrieveUpdateAPIView):
 
     def update(self, request, *args, **kwargs):
         diary = self.get_object()
-        if diary.user_id != self.request.user:
+        id = request.user.id
+        user_id = users.objects.get(id=id)
+        if user_id != diary.user_id:
             return Response({
                 'success': False,
                 'status_code': status.HTTP_403_FORBIDDEN,
@@ -101,7 +104,9 @@ class DiaryDeleteView(DestroyAPIView):
 
     def delete(self, request, *args, **kwargs):
             diary = self.get_object()
-            if diary.user_id != request.user:
+            id = request.user.id
+            user_id = users.objects.get(id=id)
+            if diary.user_id != user_id:
                 return Response({
                     'success' : False,
                     'status_code': status.HTTP_403_FORBIDDEN,
@@ -122,7 +127,9 @@ class DiaryDetailView(APIView):
     def get(self, request, *args, **kwargs):
         diary_id = self.kwargs.get('pk')
         diary = get_object_or_404(Diary, diary_id=diary_id)
-        if diary.user_id != request.user:
+        id = request.user.id
+        user_id = users.objects.get(id=id)
+        if diary.user_id != user_id:
             return Response({
                 'success' : False,
                 'status_code': status.HTTP_403_FORBIDDEN,
