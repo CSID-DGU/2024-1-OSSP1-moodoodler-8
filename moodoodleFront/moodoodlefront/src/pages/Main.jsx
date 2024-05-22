@@ -18,8 +18,8 @@ export default function Main() {
   const { daysDiary } = useMoodCalendar();
 
   return (
-    <div className="relative">
-      <div className="flex flex-col items-center gap-[12px]">
+    <div className='relative'>
+      <div className='flex flex-col items-center gap-[12px]'>
         {context.isCalendar ? (
           <YearCalendar handleColorChipToggle={context.handleColorChipToggle} />
         ) : (
@@ -36,8 +36,8 @@ export default function Main() {
             <DiaryShow
               content={daysDiary[date].content}
               selectedDate={selectedDate}
-              text="분석 결과 보기"
-              color="orange"
+              text='분석 결과 보기'
+              color='orange'
               handleDayMoodAnalysisToggle={context.handleDayMoodAnalysisToggle}
             />
           ) : (

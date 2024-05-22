@@ -32,9 +32,9 @@ function App() {
                     <Route path="/diary/:selectedDate" element={<DiaryWritePage />} />
                     <Route path="/analysis/:selectedDate" element={<AnalysisPage />} />
                     <Route path="/mypage" element={<Mypage />} />
-                    <Route path='/friend' element={<Friend />} />
-                    <Route path='/search' element={<Search />} />
-                    <Route path='/alarm' element={<Alarm />} />
+                    <Route path="/friend" element={<Friend />} />
+                    <Route path="/search" element={<Search />} />
+                    <Route path="/alarm" element={<Alarm />} />
                   </Route>
                 </Routes>
               </div>
@@ -50,9 +50,9 @@ function App() {
                     <Route path="/diary/:selectedDate" element={<DiaryWritePage />} />
                     <Route path="/analysis/:selectedDate" element={<AnalysisPage />} />
                     <Route path="/mypage" element={<Mypage />} />
-                    <Route path='/friend' element={<Friend />} />
-                    <Route path='/search' element={<Search />} />
-                    <Route path='/alarm' element={<Alarm />} />
+                    <Route path="/friend" element={<Friend />} />
+                    <Route path="/search" element={<Search />} />
+                    <Route path="/alarm" element={<Alarm />} />
                   </Route>
                 </Routes>
               </div>

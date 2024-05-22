@@ -7,8 +7,7 @@ export default function MypageMenu({ handleReportComponent, handleProfileCompone
         <button
           type="button"
           onClick={handleReportComponent}
-          className="flex flex-col items-center w-[59px] h-[51px] gap-[7px]"
-        >
+          className="flex flex-col items-center w-[59px] h-[51px] gap-[7px]">
           <img src="/assets/report.svg" alt="report" className="w-[29px] h-[29px]" />
           <p className="text-darkGray text-[12px] font-semibold">감정 레포트</p>
         </button>
