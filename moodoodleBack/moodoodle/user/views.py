@@ -57,7 +57,7 @@ class UserLoginView(CreateAPIView):
 
     
 class MypageAPIView(UpdateAPIView):
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
     serializer_class = MypageSerializer
     queryset = users.objects.all()
     # lookup_field = 'id'
@@ -119,7 +119,7 @@ class MypageAPIView(UpdateAPIView):
             }, status=status.HTTP_400_BAD_REQUEST)
 
 class UserMoodReportView(ListAPIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     queryset = Diary_Mood.objects.all()
     def get(self, request, year, month):
         year = self.kwargs.get('year')
@@ -173,7 +173,7 @@ class UserMoodReportView(ListAPIView):
 
 
 class UserLogoutView(RetrieveAPIView):
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
     queryset = users.objects.all()
     serializer_class = UserLogoutSerializer
 
