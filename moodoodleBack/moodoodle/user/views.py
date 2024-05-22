@@ -194,7 +194,7 @@ class UserMoodReportView(ListAPIView):
 
 
 class UserLogoutView(RetrieveAPIView):
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
     queryset = users.objects.all()
     serializer_class = UserLogoutSerializer
 
