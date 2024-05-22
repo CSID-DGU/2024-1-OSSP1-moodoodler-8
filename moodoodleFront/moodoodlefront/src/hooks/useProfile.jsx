@@ -1,25 +1,26 @@
 import { useState } from 'react';
-import axios from 'axios';
+import { defaultAxios } from '../axios/defaultAxios';
 
 export default function useProfile() {
   const [profile, setProfile] = useState({
-    nickname: '무두들러',
-    description: '안녕하세요. 무두들러입니다!',
-    profile_image: '/assets/profile.svg',
+    nickname: '',
+    description: '',
+    profile_image: '',
     public: false,
   });
 
-  const getUserProfile = async (body) => {
+  const getUserProfile = async () => {
     try {
-      const userProfileResponse = await axios.get('/user/mypage', body);
+      const getProfileResponse = await defaultAxios.get('/user/mypage', {
+        id: localStorage.getItem('id'),
+      });
       setProfile({
-        nickname: userProfileResponse.nickname,
-        description: userProfileResponse.description,
-        profile_image: userProfileResponse.profile_image,
+        nickname: getProfileResponse.data.nickname,
+        description: getProfileResponse.data.description,
+        profile_image: getProfileResponse.data.profile_image,
       });
     } catch (error) {
-      const { message } = error.response.data;
-      console.log(message);
+      console.error('Error getting profile:');
     }
   };
   return { profile, getUserProfile };

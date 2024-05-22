@@ -29,7 +29,7 @@ export default function Mypage() {
 
   return (
     <div>
-      <div className='flex flex-col justify-center items-center gap-[12px]'>
+      <div className="flex flex-col justify-center items-center gap-[12px]">
         {isClickedProfile ? (
           <ProfileManagement handleProfileComponent={handleProfileComponent} />
         ) : isClickedReport ? (

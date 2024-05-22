@@ -1,14 +1,12 @@
 import { useState } from 'react';
-import axios from 'axios';
+import { defaultAxios } from '../axios/defaultAxios';
 import dayjs from 'dayjs';
-import colorsByCode from '../constants/colorsByCode';
 
 export default function useMonthlyReport() {
   const [date, setDate] = useState({
     year: dayjs().format('YYYY'),
     month: dayjs().format('MM'),
   });
-  const colorlist = colorsByCode.COLOR_LIST;
   const [monthlyReport, setMonthlyReport] = useState({
     mood_color_list: [
       {
@@ -70,19 +68,16 @@ export default function useMonthlyReport() {
 
   const getMonthlyReport = async () => {
     try {
-      const getMonthlyReportResponse = await axios.get(
-        `/user/mypage/report/${date.year}/${date.month}`,
-        {
-          user_id: localStorage.getItem('user_id'),
-          year: date.year,
-          month: date.month,
-        },
-      );
-      setMonthlyReport(getMonthlyReportResponse.detail[0]);
-      setMonthTagList(getMonthlyReportResponse.detail[1]);
+      const getMonthlyReportResponse = await defaultAxios.get(`/user/mypage/report/${date.year}/${date.month}`, {
+        id: localStorage.getItem('id'),
+        year: date.year,
+        month: date.month,
+      });
+      setMonthlyReport(getMonthlyReportResponse.data.detail[0]);
+      setMonthTagList(getMonthlyReportResponse.data.detail[1]);
     } catch (error) {
-      const { message } = error.response.data;
-      console.log(message);
+      const { status_code } = error.response.data.status_code;
+      console.log(status_code);
     }
   };
 

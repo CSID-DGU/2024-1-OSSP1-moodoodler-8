@@ -32,19 +32,8 @@ export default function Home() {
         ) : (
           <MainProfile isCalendar={isCalendar} setIsCalendar={setIsCalendar} />
         )}
-        {isClick ? (
-          <MoodColor handleColorChipToggle={handleColorChipToggle} />
-        ) : (
-          ''
-        )}
-        {isDateClick ? (
-          <MoodAnalysisModal
-            isModal
-            handleDayMoodAnalysisToggle={handleDayMoodAnalysisToggle}
-          />
-        ) : (
-          ''
-        )}
+        {isClick ? <MoodColor handleColorChipToggle={handleColorChipToggle} /> : ''}
+        {isDateClick ? <MoodAnalysisModal isModal handleDayMoodAnalysisToggle={handleDayMoodAnalysisToggle} /> : ''}
         <Outlet
           context={{
             isCalendar,
@@ -55,6 +44,7 @@ export default function Home() {
           }}
         />
       </div>
+      <NavigationBar />
     </>
   );
 }

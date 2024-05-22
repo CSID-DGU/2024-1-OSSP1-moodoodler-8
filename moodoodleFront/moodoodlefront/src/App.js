@@ -10,7 +10,7 @@ import DiaryWritePage from './pages/DiaryWritePage';
 import AnalysisPage from './pages/AnalysisPage';
 import Friend from './pages/Friend';
 import Mypage from './pages/Mypage';
-import NavigationBar from './components/NavigationBar';
+import Survey from './pages/Survey';
 import Alarm from './pages/Alarm';
 import Search from './pages/Search';
 
@@ -18,50 +18,38 @@ function App() {
   return (
     <RecoilRoot>
       <BrowserRouter>
-        <div className='bg-slate-100'>
-          <section className='w-[390px] h-screen flex flex-col m-auto bg-white'>
-            <Pc className='flex flex-col m-auto'>
-              <div className='flex-1 relative'>
+        <div className="bg-slate-100">
+          <section className="w-[390px] h-screen flex flex-col m-auto bg-white">
+            <Pc className="flex flex-col m-auto">
+              <div className="flex-1 relative">
                 <Routes>
-                  <Route exact path='/' element={<Home />}>
-                    <Route path='/start' element={<Start />} />
-                    <Route path='/login' element={<Login />} />
-                    <Route path='/signup' element={<SignUp />} />
-                    <Route path='/' element={<Main />} />
-                    <Route
-                      path='/diary/:selectedDate'
-                      element={<DiaryWritePage />}
-                    />
-                    <Route
-                      path='/analysis/:selectedDate'
-                      element={<AnalysisPage />}
-                    />
-                    <Route path='/mypage' element={<Mypage />} />
+                  <Route path="/start" element={<Start />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/signup" element={<SignUp />} />
+                  <Route path="/survey" element={<Survey />} />
+                  <Route exact path="/" element={<Home />}>
+                    <Route path="/" element={<Main />} />
+                    <Route path="/diary/:selectedDate" element={<DiaryWritePage />} />
+                    <Route path="/analysis/:selectedDate" element={<AnalysisPage />} />
+                    <Route path="/mypage" element={<Mypage />} />
                     <Route path='/friend' element={<Friend />} />
                     <Route path='/search' element={<Search />} />
                     <Route path='/alarm' element={<Alarm />} />
                   </Route>
                 </Routes>
-                <NavigationBar />
               </div>
             </Pc>
-            <Mobile className='flex flex-col m-auto'>
-              <div className='flex-1'>
+            <Mobile className="flex flex-col m-auto">
+              <div className="flex-1 relative">
                 <Routes>
-                  <Route exact path='/' element={<Home />}>
-                    <Route path='/start' element={<Start />} />
-                    <Route path='/login' element={<Login />} />
-                    <Route path='/signup' element={<SignUp />} />
-                    <Route path='/' element={<Main />} />
-                    <Route
-                      path='/diary/:selectedDate'
-                      element={<DiaryWritePage />}
-                    />
-                    <Route
-                      path='/analysis/:selectedDate'
-                      element={<AnalysisPage />}
-                    />
-                    <Route path='/mypage' element={<Mypage />} />
+                  <Route path="/start" element={<Start />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/signup" element={<SignUp />} />
+                  <Route exact path="/" element={<Home />}>
+                    <Route path="/" element={<Main />} />
+                    <Route path="/diary/:selectedDate" element={<DiaryWritePage />} />
+                    <Route path="/analysis/:selectedDate" element={<AnalysisPage />} />
+                    <Route path="/mypage" element={<Mypage />} />
                     <Route path='/friend' element={<Friend />} />
                     <Route path='/search' element={<Search />} />
                     <Route path='/alarm' element={<Alarm />} />

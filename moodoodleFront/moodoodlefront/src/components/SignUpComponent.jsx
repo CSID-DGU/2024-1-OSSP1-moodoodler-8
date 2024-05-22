@@ -24,21 +24,21 @@ export default function SignUp() {
     yearoption.push(
       <option className={textStyle} value={i}>
         {i}
-      </option>,
+      </option>
     );
   }
   for (let i = 1; i <= 12; i++) {
     monthoption.push(
       <option className={textStyle} value={i}>
         {i}
-      </option>,
+      </option>
     );
   }
   for (let i = 1; i <= 31; i++) {
     dayoption.push(
       <option className={textStyle} value={i}>
         {i}
-      </option>,
+      </option>
     );
   }
 
@@ -93,10 +93,10 @@ export default function SignUp() {
                 id='username'
                 value={id}
                 onChange={(e) => setId(e.target.value)}
-                placeholder='영문으로 시작하는 4자~20자의 영문, 숫자'
+                placeholder="영문으로 시작하는 4자~20자의 영문, 숫자"
               />
             </div>
-            <CustomButton text='중복 확인' color='pink' onClick='' />
+            <CustomButton text="중복 확인" color="pink" onClick="" />
           </div>
           <div className='flex flex-col justify-center items-start'>
             <InputComponent
@@ -105,7 +105,7 @@ export default function SignUp() {
               id='password'
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder='8자~20자 영문, 숫자 모두 조합'
+              placeholder="8자~20자 영문, 숫자 모두 조합"
             />
           </div>
           <div className='flex flex-col justify-center items-start'>
@@ -115,7 +115,7 @@ export default function SignUp() {
               id='confirm-password'
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder='8자~20자 영문, 숫자 모두 조합'
+              placeholder="8자~20자 영문, 숫자 모두 조합"
             />
           </div>
           <div className='flex flex-col justify-center items-start'>
@@ -127,42 +127,39 @@ export default function SignUp() {
               onChange={(e) => setNickname(e.target.value)}
             />
           </div>
-          <div className='flex flex-col justify-center items-start'>
-            <label className={textStyle} htmlFor='birthdate'>
+          <div className="flex flex-col justify-center items-start">
+            <label className={textStyle} htmlFor="birthdate">
               &nbsp; 생년월일
             </label>
             {/* 생년월일 셀렉트 박스값의 변경에 따른 onChange 함수 생성 필요 */}
-            <div className='flex flex-row justify-between w-[283px] items-center text-[14px]'>
+            <div className="flex flex-row justify-between w-[283px] items-center text-[14px]">
               <select
-                className='w-[130px] h-[43px] text-darkGray rounded-[10px] bg-gray-scale-1 border border-[#ececec]'
-                defaultValue='2000'
-              >
+                className="w-[130px] h-[43px] text-darkGray rounded-[10px] bg-gray-scale-1 border border-[#ececec]"
+                defaultValue="2000">
                 {yearoption}
               </select>
               <select
-                className='w-[69px] h-[43px] text-darkGray rounded-[10px] bg-gray-scale-1 border border-[#ececec]'
-                defaultValue='1'
-              >
+                className="w-[69px] h-[43px] text-darkGray rounded-[10px] bg-gray-scale-1 border border-[#ececec]"
+                defaultValue="1">
                 {monthoption}
               </select>
               <select
-                className='w-[69px] h-[43px] text-darkGray rounded-[10px] bg-gray-scale-1 border border-[#ececec]'
-                defaultValue='1'
-              >
+                className="w-[69px] h-[43px] text-darkGray rounded-[10px] bg-gray-scale-1 border border-[#ececec]"
+                defaultValue="1">
                 {dayoption}
               </select>
             </div>
           </div>
         </form>
         {/* 회원가입 버튼 */}
-        <div className='flex flex-col gap-[10px] items-center'>
-          <LoginButton text='회원가입' onClick={handleSignup} />
+        <div className="flex flex-col gap-[10px] items-center">
+          <Link to="/survey">
+            <LoginButton text="설문조사" onClick={handleSignup} />
+          </Link>
           {/* 로그인 이동 문구 */}
-          <div className='flex justify-center items-center'>
-            <p className='text-xs text-left text-darkGray'>
-              이미 계정이 있으신가요? &nbsp; |
-            </p>
-            <Link className='text-[13px] font-bold text-lightBlue' to='/login'>
+          <div className="flex justify-center items-center">
+            <p className="text-xs text-left text-darkGray">이미 계정이 있으신가요? &nbsp; |</p>
+            <Link className="text-[13px] font-bold text-lightBlue" to="/login">
               &nbsp; &nbsp;로그인
             </Link>
           </div>
