@@ -25,3 +25,8 @@ class MypageSerializer(serializers.ModelSerializer):
     class Meta:
         model = users
         fields = ('id', 'nickname', 'description', 'public', 'profile_image')
+
+class DuplicatedSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = users
+        fields = ['id']

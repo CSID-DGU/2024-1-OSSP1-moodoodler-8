@@ -11,7 +11,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from . import serializers
 from .models import users
 from diary.models import Diary, Diary_Mood
-from .serializers import UserRegistrationSerializer, UserLoginSerializer, MypageSerializer, UserLogoutSerializer
+from .serializers import UserRegistrationSerializer, UserLoginSerializer, MypageSerializer, UserLogoutSerializer, DuplicatedSerializer
 
 class UserRegistrationView(CreateAPIView):
     serializer_class = UserRegistrationSerializer
@@ -55,7 +55,28 @@ class UserLoginView(CreateAPIView):
                 'message' : "로그인에 실패하였습니다."
             }, status=status.HTTP_404_NOT_FOUND)
 
+class DuplicatedView(CreateAPIView):
+    permission_classes = (AllowAny,)
+    serializer_class = DuplicatedSerializer
     
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        id = request.data.get('id')
+        if users.objects.filter(id=id).exists():
+            response = {
+                'success' : False,
+                'status_code' : status.HTTP_403_FORBIDDEN,
+                'message' : "중복되는 아이디입니다.",
+            }
+            return Response(response, status=status.HTTP_403_FORBIDDEN)
+        else:
+            return Response({
+            'success' : True,
+            'status_code': status.HTTP_200_OK,
+            'message' : "중복되지 않는 아이디입니다."
+        }, status=status.HTTP_200_OK)
+
+
 class MypageAPIView(UpdateAPIView):
     # permission_classes = (IsAuthenticated,)
     serializer_class = MypageSerializer
@@ -173,7 +194,7 @@ class UserMoodReportView(ListAPIView):
 
 
 class UserLogoutView(RetrieveAPIView):
-    #permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
     queryset = users.objects.all()
     serializer_class = UserLogoutSerializer
 
