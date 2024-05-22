@@ -17,7 +17,7 @@ export default function FriendSearch() {
       {/* img를 클릭했을 때 달력을 띄우기 위한 코드 구성 
       서버로 친구들 목록 받아오는 것도 생각해야함*/}
       <div className='flex flex-col gap-[5px]'>
-        <FriendProfile src2='/assets/calendar.svg' alt2='calendar' />
+        <FriendProfile src2='/assets/friendreq.svg' alt2='friendrequest' />
       </div>
     </div>
   );

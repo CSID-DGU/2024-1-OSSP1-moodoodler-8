@@ -12,7 +12,7 @@ import Friend from './pages/Friend';
 import Mypage from './pages/Mypage';
 import NavigationBar from './components/NavigationBar';
 import Alarm from './pages/Alarm';
-import FriendSearch from './components/FriendSearch';
+import Search from './pages/Search';
 
 function App() {
   return (
@@ -38,7 +38,7 @@ function App() {
                     />
                     <Route path='/mypage' element={<Mypage />} />
                     <Route path='/friend' element={<Friend />} />
-                    <Route path='/search' element={<FriendSearch />} />
+                    <Route path='/search' element={<Search />} />
                     <Route path='/alarm' element={<Alarm />} />
                   </Route>
                 </Routes>
@@ -63,7 +63,7 @@ function App() {
                     />
                     <Route path='/mypage' element={<Mypage />} />
                     <Route path='/friend' element={<Friend />} />
-                    <Route path='/search' element={<FriendSearch />} />
+                    <Route path='/search' element={<Search />} />
                     <Route path='/alarm' element={<Alarm />} />
                   </Route>
                 </Routes>
