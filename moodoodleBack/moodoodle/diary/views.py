@@ -16,7 +16,7 @@ from datetime import date, timedelta
 
 class DiaryCreateView(CreateAPIView):
     serializer_class = DiaryCreateSerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     queryset = Diary.objects.all()
     def create(self, request, *args, **kwargs):
         id = request.user.id
@@ -51,7 +51,7 @@ class DiaryCreateView(CreateAPIView):
 class DiaryUpdateView(RetrieveUpdateAPIView):
     serializer_class = DiaryUpdateSerializer
     queryset = Diary.objects.all()
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     def get_object(self):
         diary_id = self.kwargs.get('pk')
         return get_object_or_404(Diary, diary_id=diary_id)
@@ -94,7 +94,7 @@ class DiaryUpdateView(RetrieveUpdateAPIView):
 
 
 class DiaryDeleteView(DestroyAPIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     queryset = Diary.objects.all()
     def get_object(self):
         diary_id = self.kwargs.get('pk')
@@ -120,7 +120,7 @@ class DiaryDeleteView(DestroyAPIView):
 
 class DiaryDetailView(APIView):
     serializer_class = DiaryDetailSerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     queryset = Diary_Mood.objects.all()
     def get(self, request, *args, **kwargs):
         diary_id = self.kwargs.get('pk')
@@ -146,7 +146,7 @@ class DiaryDetailView(APIView):
 
 class MonthlyCalendarView(ListAPIView):
     serializer_class = CalendarSerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         year = int(self.kwargs['year'])
@@ -200,7 +200,7 @@ class MonthlyCalendarView(ListAPIView):
 
 class YearlyCalendarView(ListAPIView):
     serializer_class = CalendarSerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
 
