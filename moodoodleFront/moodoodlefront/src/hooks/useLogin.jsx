@@ -15,9 +15,7 @@ export default function useLogin() {
   const login = async (body) => {
     try {
       setLoading(true);
-      const loginResponse = await defaultAxios.post('/user/login', body, {
-        withCredentials: true,
-      });
+      const loginResponse = await defaultAxios.post('/user/login/', body);
       localStorage.setItem('id', loginResponse.data.data.id);
       navigate('/');
     } catch (error) {

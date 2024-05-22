@@ -5,8 +5,6 @@ const defaultConfigure = {
   timeout: 5000,
 };
 
-axios.defaults.withCredentials = true;
-
 const defaultAxios = axios.create(defaultConfigure);
 
 export { defaultAxios };
