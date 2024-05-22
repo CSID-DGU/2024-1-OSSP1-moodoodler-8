@@ -130,41 +130,68 @@ class UserMoodReportView(ListAPIView):
         user_id = request.user
         diary_list = Diary.objects.filter(user_id=user_id, date__range=[start_date, end_date])
 
-        color_totals = {}
-        tag_totals = {}
+        mood_totals = {}
+
+        mood_mapping = {
+            "fear": "공포",
+            "surprise": "놀람",
+            "anger": "분노",
+            "sad": "슬픔",
+            "neutral": "중립",
+            "happy": "행복",
+            "disgust": "혐오"
+        }
+
+        mood_colors = {
+            "공포": "DBD3FB",
+            "놀람": "FEF4A0",
+            "분노": "FF9191",
+            "슬픔": "B5D3FF",
+            "중립": "B3F4B2",
+            "행복": "FBCFE0",
+            "혐오": "FECFAD"
+        }
 
         for diary in diary_list:
-            mood_list = Diary_Mood.objects.filter(diary_id=diary.diary_id)
-            for mood in mood_list:
-                if mood.color not in color_totals:
-                    color_totals[mood.color] = 0
-                color_totals[mood.color] += mood.ratio
-                if mood.title not in tag_totals:
-                    tag_totals[mood.title] = 0
-                tag_totals[mood.title] += mood.ratio
+            moods = Diary_Mood.objects.filter(diary_id=diary.diary_id).first()
+            if moods:
+                for eng_name, kor_name in mood_mapping.items():
+                    ratio = int(getattr(moods, eng_name, 0.0)*100)
+                    if kor_name not in mood_totals:
+                        mood_totals[kor_name] = 0
+                    mood_totals[kor_name] += ratio
+
 
         mood_color_list = []
-        for color, ratio in color_totals.items():
-            mood_color_list.append({'id' : color, 'mood_color' : "#" + color, 'total_ratio' : ratio})
-        sorted_mood_color_list = sorted(mood_color_list, key = lambda x: x['total_ratio'], reverse = True)
+        for kor_name, ratio in mood_totals.items():
+            if ratio > 0:
+                mood_color_list.append({
+                    'mood_name': kor_name,
+                    'mood_color': "#" + mood_colors[kor_name],
+                    'total_ratio': ratio
+                })
+        sorted_mood_color_list = sorted(mood_color_list, key=lambda x: x['total_ratio'], reverse=True)
 
-        month_tag_list = []
-        for title, ratio in tag_totals.items():
-            color = Diary_Mood.objects.filter(title = title).first().color
-            month_tag_list.append({'tag_title': title, 'tag_color' : color, 'tag_ratio': ratio})
+        mood_tag_list = []
+        for kor_name, ratio in sorted(mood_totals.items(), key=lambda item: item[1], reverse=True)[:5]:
+            if ratio > 0:
+                mood_tag_list.append({
+                    'tag_name': kor_name,
+                    'tag_color': mood_colors[kor_name],
+                    'tag_ratio': ratio
+                })
 
-        sorted_month_tag_list = sorted(month_tag_list, key = lambda x: x['tag_ratio'], reverse = True)[:5]
-        detail = [
-            {'mood_color_list' : sorted_mood_color_list},
-            {'month_tag_list' : sorted_month_tag_list}
-        ]
+        detail = {
+            'mood_color_list': sorted_mood_color_list,
+            'mood_tag_list': mood_tag_list
+        }
+
         return Response({
             'success' : True,
             'status_code': status.HTTP_200_OK,
             'message' : "요청에 성공하였습니다.",
             'detail': detail
         }, status=status.HTTP_200_OK)
-
 
 class UserLogoutView(RetrieveAPIView):
     permission_classes = (IsAuthenticated,)
