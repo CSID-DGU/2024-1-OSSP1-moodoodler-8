@@ -173,7 +173,7 @@ class UserMoodReportView(ListAPIView):
 
 
 class UserLogoutView(RetrieveAPIView):
-    # permission_classes = (IsAuthenticated,)
+    #permission_classes = (IsAuthenticated,)
     queryset = users.objects.all()
     serializer_class = UserLogoutSerializer
 
@@ -183,10 +183,11 @@ class UserLogoutView(RetrieveAPIView):
         self.check_object_permissions(self.request, obj)
         return obj
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         logout(request)
-        return Response({
-                'success' : True,
-                'status_code': status.HTTP_200_OK,
-                'message': "로그아웃에 성공하였습니다."
-            }, status=status.HTTP_200_OK)
+        response_data = {
+            'success': True,
+            'status code': status.HTTP_200_OK,
+            'message': "로그아웃 되었습니다.",
+        }
+        return Response(response_data, status=status.HTTP_200_OK)
