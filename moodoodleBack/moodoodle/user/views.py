@@ -9,9 +9,9 @@ from rest_framework.generics import CreateAPIView, UpdateAPIView, RetrieveAPIVie
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from . import serializers
-from .models import users
+from .models import users, Survey
 from diary.models import Diary, Diary_Mood
-from .serializers import UserRegistrationSerializer, UserLoginSerializer, MypageSerializer, UserLogoutSerializer
+from .serializers import UserRegistrationSerializer, UserLoginSerializer, MypageSerializer, UserLogoutSerializer, UserSurveySerializer
 
 class UserRegistrationView(CreateAPIView):
     serializer_class = UserRegistrationSerializer
@@ -57,11 +57,17 @@ class UserLoginView(CreateAPIView):
 
     
 class MypageAPIView(UpdateAPIView):
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
     serializer_class = MypageSerializer
     queryset = users.objects.all()
     # lookup_field = 'id'
-        
+    
+    def get_object(self):
+        queryset = self.filter_queryset(self.get_queryset())
+        obj = queryset.get(pk=self.request.user.user_id)
+        self.check_object_permissions(self.request, obj)
+        return obj
+    
     def get(self, request, *args, **kwargs):
         id = request.user.id
         try:
@@ -113,7 +119,7 @@ class MypageAPIView(UpdateAPIView):
             }, status=status.HTTP_400_BAD_REQUEST)
 
 class UserMoodReportView(ListAPIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     queryset = Diary_Mood.objects.all()
     def get(self, request, year, month):
         year = self.kwargs.get('year')
@@ -130,34 +136,62 @@ class UserMoodReportView(ListAPIView):
         user_id = request.user
         diary_list = Diary.objects.filter(user_id=user_id, date__range=[start_date, end_date])
 
-        color_totals = {}
-        tag_totals = {}
+        mood_totals = {}
+
+        mood_mapping = {
+            "fear": "공포",
+            "surprise": "놀람",
+            "anger": "분노",
+            "sad": "슬픔",
+            "neutral": "중립",
+            "happy": "행복",
+            "disgust": "혐오"
+        }
+
+        mood_colors = {
+            "공포": "DBD3FB",
+            "놀람": "FEF4A0",
+            "분노": "FF9191",
+            "슬픔": "B5D3FF",
+            "중립": "B3F4B2",
+            "행복": "FBCFE0",
+            "혐오": "FECFAD"
+        }
 
         for diary in diary_list:
-            mood_list = Diary_Mood.objects.filter(diary_id=diary.diary_id)
-            for mood in mood_list:
-                if mood.color not in color_totals:
-                    color_totals[mood.color] = 0
-                color_totals[mood.color] += mood.ratio
-                if mood.title not in tag_totals:
-                    tag_totals[mood.title] = 0
-                tag_totals[mood.title] += mood.ratio
+            moods = Diary_Mood.objects.filter(diary_id=diary.diary_id).first()
+            if moods:
+                for eng_name, kor_name in mood_mapping.items():
+                    ratio = int(getattr(moods, eng_name, 0.0)*100)
+                    if kor_name not in mood_totals:
+                        mood_totals[kor_name] = 0
+                    mood_totals[kor_name] += ratio
+
 
         mood_color_list = []
-        for color, ratio in color_totals.items():
-            mood_color_list.append({'id' : color, 'mood_color' : "#" + color, 'total_ratio' : ratio})
-        sorted_mood_color_list = sorted(mood_color_list, key = lambda x: x['total_ratio'], reverse = True)
+        for kor_name, ratio in mood_totals.items():
+            if ratio > 0:
+                mood_color_list.append({
+                    'mood_name': kor_name,
+                    'mood_color': "#" + mood_colors[kor_name],
+                    'total_ratio': ratio
+                })
+        sorted_mood_color_list = sorted(mood_color_list, key=lambda x: x['total_ratio'], reverse=True)
 
-        month_tag_list = []
-        for title, ratio in tag_totals.items():
-            color = Diary_Mood.objects.filter(title = title).first().color
-            month_tag_list.append({'tag_title': title, 'tag_color' : color, 'tag_ratio': ratio})
+        mood_tag_list = []
+        for kor_name, ratio in sorted(mood_totals.items(), key=lambda item: item[1], reverse=True)[:5]:
+            if ratio > 0:
+                mood_tag_list.append({
+                    'tag_name': kor_name,
+                    'tag_color': mood_colors[kor_name],
+                    'tag_ratio': ratio
+                })
 
-        sorted_month_tag_list = sorted(month_tag_list, key = lambda x: x['tag_ratio'], reverse = True)[:5]
-        detail = [
-            {'mood_color_list' : sorted_mood_color_list},
-            {'month_tag_list' : sorted_month_tag_list}
-        ]
+        detail = {
+            'mood_color_list': sorted_mood_color_list,
+            'mood_tag_list': mood_tag_list
+        }
+
         return Response({
             'success' : True,
             'status_code': status.HTTP_200_OK,
@@ -165,9 +199,8 @@ class UserMoodReportView(ListAPIView):
             'detail': detail
         }, status=status.HTTP_200_OK)
 
-
 class UserLogoutView(RetrieveAPIView):
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
     queryset = users.objects.all()
     serializer_class = UserLogoutSerializer
 
@@ -184,3 +217,26 @@ class UserLogoutView(RetrieveAPIView):
                 'status_code': status.HTTP_200_OK,
                 'message': "로그아웃에 성공하였습니다."
             }, status=status.HTTP_200_OK)
+
+class UserSurveyView(CreateAPIView):
+    # permission_classes = (IsAuthenticated,)
+    serializer_class = UserSurveySerializer
+    def post(self, request, *args, **kwargs):
+        user_id = request.data.get('uesr_id')
+        positive_answer = request.data.getlist('positive_answer')
+        negative_answer = request.data.getlist('negative_answer')
+        for answer in positive_answer:
+            seralizer = self.serializer_class(context={'question' : "positive", 'answer' : answer})
+            seralizer.is_valid(raise_exception=True)
+            seralizer.save()
+        for answer in negative_answer:
+            seralizer = self.serializer_class(context={'question' : "negative", 'answer' : answer})
+            seralizer.is_valid(raise_exception=True)
+            seralizer.save()
+
+        return Response({
+            'success' : True,
+            'status_code': status.HTTP_201_CREATED,
+            'message' : "요청에 성공하였습니다."
+        },status=status.HTTP_201_CREATED)
+

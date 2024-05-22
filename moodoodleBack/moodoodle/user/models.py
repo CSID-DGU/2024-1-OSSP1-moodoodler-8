@@ -24,7 +24,7 @@ class users(AbstractBaseUser, PermissionsMixin):
     user_id = models.AutoField(primary_key=True) 
     id = models.CharField(max_length=20, unique=True)
     password = models.CharField(max_length=255)
-    nickname = models.CharField(max_length=20)
+    nickname = models.CharField(max_length=20, blank=True)
     created = models.DateField(auto_now_add=True)
     birthdate = models.DateField()
     profile_image = models.CharField(max_length=50, blank=True, null=True)
@@ -38,3 +38,22 @@ class users(AbstractBaseUser, PermissionsMixin):
 
     class Meta:
         db_table = 'users'
+
+class SurveyManager(models.Manager):
+    def create_survey(self, user_id, question, answer):
+        survey = self.model(
+            user_id=user_id,
+            question=question,
+            answer=answer
+        )
+        survey.save(using=self._db)
+        return survey
+class Survey(models.Model):
+    survey_id = models.AutoField(primary_key=True)
+    user_id = models.ForeignKey(users, on_delete=models.CASCADE)
+    question = models.CharField(max_length=50)
+    answer = models.CharField(max_length=50)
+
+    objects = SurveyManager()
+    class Meta:
+        db_table = 'survey'
