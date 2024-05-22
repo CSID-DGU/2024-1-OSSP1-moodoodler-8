@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login
 from django.utils import timezone
 from .models import users, Survey
 
+
 class UserRegistrationSerializer(serializers.ModelSerializer):
     class Meta:
         model = users

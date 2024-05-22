@@ -61,7 +61,13 @@ class MypageAPIView(UpdateAPIView):
     serializer_class = MypageSerializer
     queryset = users.objects.all()
     # lookup_field = 'id'
-        
+    
+    def get_object(self):
+        queryset = self.filter_queryset(self.get_queryset())
+        obj = queryset.get(pk=self.request.user.user_id)
+        self.check_object_permissions(self.request, obj)
+        return obj
+    
     def get(self, request, *args, **kwargs):
         id = request.user.id
         try:
