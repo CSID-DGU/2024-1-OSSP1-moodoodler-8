@@ -3,7 +3,7 @@ import { defaultAxios } from '../axios/defaultAxios';
 export default function useSurvey() {
   const postSurveyAnswers = async (positives, negatives) => {
     try {
-      const postSurveyAnswersResponse = await defaultAxios.post('/user/survey', {
+      const postSurveyAnswersResponse = await defaultAxios.post('/user/survey/', {
         id: localStorage.getItem('id'),
         positive_answer: positives,
         negative_answer: negatives,

@@ -6,10 +6,10 @@ export default function useLogout() {
 
   const logout = () =>
     defaultAxios
-      .post('/user/logout')
+      .post('/user/logout/')
       .then(() => {
         localStorage.removeItem('id');
-        navigate('/start');
+        navigate('/');
       })
       .catch((error) => {
         const { message } = error.response.data;

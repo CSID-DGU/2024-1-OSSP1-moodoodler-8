@@ -26,7 +26,7 @@ export default function DiaryWriting() {
       content: { content },
     };
     try {
-      const postDiaryResponse = await defaultAxios.post('/diary/create', postData);
+      const postDiaryResponse = await defaultAxios.post('/diary/create/', postData);
       console.log(postDiaryResponse.data);
       setContent('');
       navigate(`/analysis/${selectedDay}`);

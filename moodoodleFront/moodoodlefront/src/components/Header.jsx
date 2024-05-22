@@ -8,7 +8,7 @@ export default function Header() {
         <button type="button">
           <img src="/assets/bell.svg" alt="알람" />
         </button>
-        <Link to="/">
+        <Link to="/main">
           <img src="/assets/moodoodleLogo.svg" alt="logo" />
         </Link>
       </div>

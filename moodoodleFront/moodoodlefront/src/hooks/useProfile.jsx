@@ -11,7 +11,7 @@ export default function useProfile() {
 
   const getUserProfile = async () => {
     try {
-      const getProfileResponse = await defaultAxios.get('/user/mypage', {
+      const getProfileResponse = await defaultAxios.get('/user/mypage/', {
         id: localStorage.getItem('id'),
       });
       setProfile({
@@ -20,7 +20,7 @@ export default function useProfile() {
         profile_image: getProfileResponse.data.profile_image,
       });
     } catch (error) {
-      console.error('Error getting profile:');
+      console.error(error.response.data);
     }
   };
   return { profile, getUserProfile };

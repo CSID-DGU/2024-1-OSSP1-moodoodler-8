@@ -20,12 +20,12 @@ function App() {
             <Pc className="flex flex-col m-auto">
               <div className="flex-1 relative">
                 <Routes>
-                  <Route path="/start" element={<Start />} />
+                  <Route path="/" element={<Start />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/signup" element={<SignUp />} />
                   <Route path="/survey" element={<Survey />} />
                   <Route exact path="/" element={<Home />}>
-                    <Route path="/" element={<Main />} />
+                    <Route path="/main" element={<Main />} />
                     <Route path="/diary/:selectedDate" element={<DiaryWritePage />} />
                     <Route path="/analysis/:selectedDate" element={<AnalysisPage />} />
                     <Route path="/mypage" element={<Mypage />} />
@@ -36,11 +36,12 @@ function App() {
             <Mobile className="flex flex-col m-auto">
               <div className="flex-1 relative">
                 <Routes>
-                  <Route path="/start" element={<Start />} />
+                  <Route path="/" element={<Start />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/signup" element={<SignUp />} />
+                  <Route path="/survey" element={<Survey />} />
                   <Route exact path="/" element={<Home />}>
-                    <Route path="/" element={<Main />} />
+                    <Route path="/main" element={<Main />} />
                     <Route path="/diary/:selectedDate" element={<DiaryWritePage />} />
                     <Route path="/analysis/:selectedDate" element={<AnalysisPage />} />
                     <Route path="/mypage" element={<Mypage />} />

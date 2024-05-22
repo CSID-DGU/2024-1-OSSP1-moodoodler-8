@@ -14,14 +14,13 @@ export default function useLogin() {
 
   const login = async (body) => {
     try {
-      setLoading(true);
+      setLoading(false);
       const loginResponse = await defaultAxios.post('/user/login/', body);
       localStorage.setItem('id', loginResponse.data.data.id);
-      navigate('/');
+      navigate('/main');
     } catch (error) {
-      console.log(error.response);
-    } finally {
-      setLoading(false);
+      console.log(error.response.data);
+      setLoading(true);
     }
   };
   return { loading, loginData, setLoginData, updateLoginFormData, login };

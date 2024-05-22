@@ -6,7 +6,7 @@ export default function Login() {
   return (
     <div className="flex justify-center flex-col items-center w-[390px] h-screen bg-white">
       <div className="flex flex-col h-[368px] items-center justify-between">
-        <Link to="/start">
+        <Link to="/">
           <img src="/assets/moodoodleLogoMain.svg" alt="logo" />
         </Link>
         <LoginComponent />

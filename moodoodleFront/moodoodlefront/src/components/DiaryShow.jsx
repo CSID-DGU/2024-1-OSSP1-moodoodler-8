@@ -15,7 +15,7 @@ export default function DiaryShow({ content, selectedDate, text, color, handleDa
           </p>
         </div>
         <div className="w-[298px] text-center font-normal text-[13px] text-darkGray">{content}</div>
-        <Link to="/">
+        <Link to="/main">
           <CustomButton text={text} color={color} onClick={handleDayMoodAnalysisToggle} />
         </Link>
       </div>
