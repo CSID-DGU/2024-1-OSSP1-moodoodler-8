@@ -25,7 +25,7 @@ export default function Survey() {
   return (
     <div className="flex flex-col justify-center items-center h-screen">
       <div className="flex flex-col justify-center items-center w-[390px] h-screen bg-white gap-[28px]">
-        <Link to="/start">
+        <Link to="/">
           <img src="/assets/moodoodleLogoMain.svg" alt="logo" />
         </Link>
         {isFirstStep ? (

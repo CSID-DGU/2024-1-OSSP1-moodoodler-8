@@ -9,6 +9,7 @@ export default function useSignup() {
     id: '',
     password: '',
     nickname: '',
+    birthdate: '',
   });
 
   const [isUniqued, setIsUniqued] = useState({
@@ -26,7 +27,7 @@ export default function useSignup() {
       setIsUniqued((prev) => ({ ...prev, userId: true }));
       alert('사용 가능한 아이디입니다.');
     } catch (error) {
-      console.log(error.response.data);
+      console.log(error.response);
       alert('중복되는 아이디입니다.');
       setIsUniqued((prev) => ({ ...prev, userId: false }));
     }
@@ -45,6 +46,7 @@ export default function useSignup() {
         created: dayjs().format('YYYY-MM-DD'),
         birthdate: birthdate,
       });
+      setSignupInfo({ ...signupInfo, birthdate: birthdate });
       navigate('/survey');
     } catch (error) {
       console.log(error.response);

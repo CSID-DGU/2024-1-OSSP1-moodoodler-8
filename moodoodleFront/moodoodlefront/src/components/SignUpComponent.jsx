@@ -6,7 +6,7 @@ import useSignup from '../hooks/useSignup';
 import YEARS from '../constants/years';
 import MONTHS from '../constants/months';
 import DATES from '../constants/days';
-import { checkPasswordPattern, checkPasswordReEnter } from '../utils/checkPattern';
+import { checkPasswordPattern, checkPasswordReEnter, checkUserIdPattern } from '../utils/checkPattern';
 import REGEX from '../constants/regex';
 
 export default function SignUp() {
@@ -61,7 +61,12 @@ export default function SignUp() {
                 placeholder="4자~10자의 영문, 숫자"
               />
             </div>
-            <CustomButton text="중복 확인" color="pink" onClick={() => checkIdDuplicate(id)} />
+            <CustomButton
+              text="중복 확인"
+              color="pink"
+              disabled={checkUserIdPattern(id) ? false : true}
+              onClick={() => checkIdDuplicate(id)}
+            />
           </div>
           <div className="flex flex-col justify-center items-start">
             <label className={textStyle} htmlFor="password">
@@ -76,9 +81,9 @@ export default function SignUp() {
               onReset={setSignupInfo}
               placeholder="8자 이상의 영문 대소문자/숫자/특수문자"
             />
-            <p className="h-[13px] mt-[7px] text-[12px]">
+            <p className="h-[13px] mt-[7px] text-[12px] text-red-600">
               {REGEX.passwordPattern.test(password) || password === '' ? (
-                <p className="text-green-600">사용 가능한 비밀번호입니다.</p>
+                ''
               ) : (
                 <p className="text-red-600">8자 이상의 영문 대소문자/숫자/특수문자를 사용해주세요.</p>
               )}
@@ -96,12 +101,8 @@ export default function SignUp() {
               onChange={handleConfirmPwd}
               placeholder="비밀번호를 재입력 해주세요"
             />
-            <p className="h-[13px] mt-[7px] text-center text-[12px]">
-              {confirmPassword !== '' && confirmPassword === password ? (
-                <p className="text-green-600">비밀번호가 일치합니다.</p>
-              ) : (
-                <p className="text-red-600">비밀번호를 다시 입력해주세요.</p>
-              )}
+            <p className="h-[13px] mt-[7px] text-center text-[12px] text-red-600">
+              {confirmPassword === password ? '' : <p>비밀번호를 다시 입력해주세요.</p>}
             </p>
           </div>
           <div className="flex flex-col justify-center items-start">
@@ -148,7 +149,6 @@ export default function SignUp() {
             </div>
           </div>
         </form>
-        {/* 회원가입 버튼 */}
         <div className="flex flex-col gap-[10px] items-center">
           <Link to="/survey">
             <LoginButton
@@ -157,7 +157,6 @@ export default function SignUp() {
               onClick={postSignupInfo(`${selectedDate.year}-${selectedDate.month}-${selectedDate.day}`)}
             />
           </Link>
-          {/* 로그인 이동 문구 */}
           <div className="flex justify-center items-center">
             <p className="text-xs text-left text-darkGray">이미 계정이 있으신가요? &nbsp; |</p>
             <Link className="text-[13px] font-bold text-lightBlue" to="/login">
