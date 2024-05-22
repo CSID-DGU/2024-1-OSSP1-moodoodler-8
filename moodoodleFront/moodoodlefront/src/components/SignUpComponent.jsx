@@ -145,20 +145,17 @@ export default function SignUp() {
             <div className="flex flex-row justify-between w-[283px] items-center text-[14px]">
               <select
                 className="w-[130px] h-[43px] text-darkGray rounded-[10px] bg-gray-scale-1 border border-[#ececec]"
-                defaultValue="2000"
-              >
+                defaultValue="2000">
                 {yearoption}
               </select>
               <select
                 className="w-[69px] h-[43px] text-darkGray rounded-[10px] bg-gray-scale-1 border border-[#ececec]"
-                defaultValue="1"
-              >
+                defaultValue="1">
                 {monthoption}
               </select>
               <select
                 className="w-[69px] h-[43px] text-darkGray rounded-[10px] bg-gray-scale-1 border border-[#ececec]"
-                defaultValue="1"
-              >
+                defaultValue="1">
                 {dayoption}
               </select>
             </div>
