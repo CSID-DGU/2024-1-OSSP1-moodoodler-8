@@ -11,7 +11,7 @@ from calendar import monthrange
 from datetime import date, timedelta
 
 class FriendListView(ListAPIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     serializer_class = FriendListSerializer
 
     def get_queryset(self):
@@ -36,7 +36,7 @@ class FriendListView(ListAPIView):
         return Response(response, status=status.HTTP_200_OK)
 
 class FriendSearchView(RetrieveAPIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     serializer_class = FriendListSerializer
     lookup_field = 'id'
 
@@ -70,7 +70,7 @@ class FriendSearchView(RetrieveAPIView):
             return Response(response, status=status.HTTP_404_NOT_FOUND)
 
 class FriendAddView(CreateAPIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     serializer_class = FriendSerializer
 
     def post(self, request, to_user_id):
@@ -130,7 +130,7 @@ class FriendAddView(CreateAPIView):
         return Response(response, status=status.HTTP_201_CREATED)
 
 class FriendDeleteView(DestroyAPIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     serializer_class = FriendSerializer
 
     def delete(self, request, to_user_id):
@@ -157,7 +157,7 @@ class FriendDeleteView(DestroyAPIView):
         return Response(response, status=status.HTTP_204_NO_CONTENT)
 
 class FriendCalendarView(ListAPIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     serializer_class = FriendCalendarSerializer
 
     def get_queryset(self):
@@ -222,7 +222,7 @@ class FriendCalendarView(ListAPIView):
         return Response(response, status=status.HTTP_200_OK)
 
 class FriendRequestView(ListAPIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     serializer_class = FriendRequestSerializer
 
     def get_queryset(self):
@@ -243,7 +243,7 @@ class FriendRequestView(ListAPIView):
         return Response(response, status=status.HTTP_200_OK)
 
 class FriendAcceptView(CreateAPIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     serializer_class = FriendSerializer
 
     def post(self, request, from_user_id, *args, **kwargs):
@@ -277,7 +277,7 @@ class FriendAcceptView(CreateAPIView):
             return Response(response, status=status.HTTP_404_NOT_FOUND)
 
 class FriendRejectView(DestroyAPIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     serializer_class = FriendSerializer
     queryset = Friend.objects.all()
 

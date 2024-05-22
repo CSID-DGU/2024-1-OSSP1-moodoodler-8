@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from .serializers import MusicSerializer
 
 class MusicCreateView(CreateAPIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     serializer_class = MusicSerializer
 
     def post(self, request, *args, **kwargs):
