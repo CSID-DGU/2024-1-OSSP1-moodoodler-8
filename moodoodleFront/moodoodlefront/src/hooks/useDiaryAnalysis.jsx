@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import { defaultAxios } from '../axios/defaultAxios';
 
 export default function useDiaryAnalysis() {
   const [analysisResult, setAnalysisResult] = useState([
@@ -39,17 +39,14 @@ export default function useDiaryAnalysis() {
 
   const getDiaryAnalysis = async (diary_id) => {
     try {
-      const getDiaryAnalysisrResponse = await axios.get(
-        `/diary/detail/${diary_id}`,
-        {
-          user_id: localStorage.getItem('user_id'),
-          diary_id: { diary_id },
-        },
-      );
-      setAnalysisResult(getDiaryAnalysisrResponse.detail);
+      const getDiaryAnalysisrResponse = await defaultAxios.get(`/diary/detail/${diary_id}`, {
+        id: localStorage.getItem('id'),
+        diary_id: diary_id,
+      });
+      setAnalysisResult(getDiaryAnalysisrResponse.data.detail);
     } catch (error) {
-      const { message } = error.response.data;
-      console.log(message);
+      const { status_code } = error.response.data.status_code;
+      console.error('Error getting profile:', status_code);
     }
   };
 
