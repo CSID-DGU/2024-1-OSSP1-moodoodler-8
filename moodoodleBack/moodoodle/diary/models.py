@@ -37,11 +37,17 @@ class DiaryMoodManager(models.Manager):
         diary_mood_list = self.filter(diary_id=diary_id)
         return diary_mood_list
 
+
 class Diary_Mood(models.Model):
     diary_mood_id = models.AutoField(primary_key=True)
     diary_id = models.ForeignKey(Diary, on_delete=models.CASCADE, db_column='diary_id')
-    title = models.CharField(max_length=20)
-    ratio = models.IntegerField(default=0)
+    fear = models.FloatField()
+    surprised = models.FloatField()
+    anger = models.FloatField()
+    sad = models.FloatField()
+    normal = models.FloatField()
+    happy = models.FloatField()
+    aversion = models.FloatField()
     color = models.CharField(max_length=6)
 
     objects = DiaryMoodManager()
