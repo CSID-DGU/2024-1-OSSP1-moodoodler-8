@@ -1,6 +1,4 @@
 from rest_framework import serializers
-from django.contrib.auth import authenticate, login
-from django.utils import timezone
 from .models import users
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
