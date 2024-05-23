@@ -90,7 +90,7 @@ class MypageAPIView(UpdateAPIView):
         return obj
     
     def get(self, request, *args, **kwargs):
-        id = request.user.id
+        id = request.data.get('id')
         try:
             user = users.objects.get(id=id)
             serializer = MypageSerializer(user)
@@ -110,7 +110,7 @@ class MypageAPIView(UpdateAPIView):
             }, status=status.HTTP_404_NOT_FOUND)
     
     def patch(self, request, *args, **kwargs):
-        id = request.user.id
+        id = request.data.get('id')
         serializer_data = request.data
         try:
             user = users.objects.get(id=id)
