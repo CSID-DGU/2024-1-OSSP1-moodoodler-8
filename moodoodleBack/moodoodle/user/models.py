@@ -38,3 +38,23 @@ class users(AbstractBaseUser, PermissionsMixin):
 
     class Meta:
         db_table = 'users'
+
+class SurveyManager(models.Manager):
+    def create_survey(self, user_id, question, answer):
+        survey = self.model(
+            user_id=user_id,
+            question=question,
+            answer=answer
+        )
+        survey.save(using=self._db)
+        return survey
+    
+class survey(models.Model):
+    survey_id = models.AutoField(primary_key=True)
+    user_id = models.ForeignKey(users, on_delete=models.CASCADE, db_column='user_id')
+    question = models.CharField(max_length=50)
+    answer = models.CharField(max_length=50)
+
+    objects = SurveyManager()
+    class Meta:
+        db_table = 'survey'
