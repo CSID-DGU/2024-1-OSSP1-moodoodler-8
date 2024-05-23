@@ -5,11 +5,12 @@ from datetime import date
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from rest_framework import status
-from rest_framework.generics import CreateAPIView, UpdateAPIView, RetrieveAPIView, ListAPIView
+from rest_framework.generics import CreateAPIView, UpdateAPIView, RetrieveUpdateAPIView, ListAPIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from . import serializers
 from .models import users, survey
+from drf_yasg.utils import swagger_auto_schema
 from diary.models import Diary, Diary_Mood
 from .serializers import UserRegistrationSerializer, UserLoginSerializer, MypageSerializer, UserLogoutSerializer, DuplicatedSerializer, UserSurveySerializer
 
@@ -77,11 +78,11 @@ class DuplicatedView(CreateAPIView):
         }, status=status.HTTP_200_OK)
 
 
-class MypageAPIView(UpdateAPIView):
-    # permission_classes = (IsAuthenticated,)
+class MypageAPIView(RetrieveUpdateAPIView):
+    permission_classes = (IsAuthenticated,)
     serializer_class = MypageSerializer
     queryset = users.objects.all()
-    # lookup_field = 'id'
+    lookup_field = 'id'
     
     def get_object(self):
         queryset = self.filter_queryset(self.get_queryset())
@@ -90,10 +91,14 @@ class MypageAPIView(UpdateAPIView):
         return obj
     
     def get(self, request, *args, **kwargs):
-        id = request.data.get('id')
+        id = self.kwargs.get('id')
         try:
             user = users.objects.get(id=id)
-            serializer = MypageSerializer(user)
+            serializer_data = request.data
+            serializer = self.serializer_class(
+            user, data=serializer_data, partial=True
+            )
+            serializer.is_valid(raise_exception=True)
             response_data = {
                 'success' : True,
                 'status_code': status.HTTP_200_OK,
@@ -110,7 +115,7 @@ class MypageAPIView(UpdateAPIView):
             }, status=status.HTTP_404_NOT_FOUND)
     
     def patch(self, request, *args, **kwargs):
-        id = request.data.get('id')
+        id = self.kwargs.get('id')
         serializer_data = request.data
         try:
             user = users.objects.get(id=id)
