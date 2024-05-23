@@ -79,7 +79,7 @@ class DuplicatedView(CreateAPIView):
 
 
 class MypageAPIView(RetrieveUpdateAPIView):
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
     serializer_class = MypageSerializer
     queryset = users.objects.all()
     # lookup_field = 'id'
@@ -219,7 +219,7 @@ class UserMoodReportView(ListAPIView):
         }, status=status.HTTP_200_OK)
 
 class UserLogoutView(CreateAPIView):
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
     queryset = users.objects.all()
     serializer_class = UserLogoutSerializer
 
