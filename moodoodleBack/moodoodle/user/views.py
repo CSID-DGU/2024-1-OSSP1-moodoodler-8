@@ -141,7 +141,6 @@ class MypageAPIView(UpdateAPIView):
 
 class UserMoodReportView(ListAPIView):
     # permission_classes = [IsAuthenticated]
-    # permission_classes = [IsAuthenticated]
     queryset = Diary_Mood.objects.all()
     def get(self, request, year, month):
         year = self.kwargs.get('year')
@@ -221,16 +220,10 @@ class UserMoodReportView(ListAPIView):
             'detail': detail
         }, status=status.HTTP_200_OK)
 
-class UserLogoutView(RetrieveAPIView):
+class UserLogoutView(CreateAPIView):
     permission_classes = (IsAuthenticated,)
     queryset = users.objects.all()
     serializer_class = UserLogoutSerializer
-
-    def get_object(self):
-        queryset = self.filter_queryset(self.get_queryset())
-        obj = queryset.get(pk=self.request.user.user_id)
-        self.check_object_permissions(self.request, obj)
-        return obj
 
     def post(self, request):
         logout(request)
