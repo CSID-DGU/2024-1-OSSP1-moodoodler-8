@@ -5,7 +5,6 @@ export default function useProfile() {
   const [profile, setProfile] = useState({
     nickname: '',
     description: '',
-    profile_image: '',
     public: false,
   });
 
@@ -14,13 +13,13 @@ export default function useProfile() {
       const getProfileResponse = await defaultAxios.get('/user/mypage/', {
         id: localStorage.getItem('id'),
       });
+      console.log(getProfileResponse);
       setProfile({
         nickname: getProfileResponse.data.nickname,
         description: getProfileResponse.data.description,
-        profile_image: getProfileResponse.data.profile_image,
       });
     } catch (error) {
-      console.error(error.response.data);
+      console.error(error.response.data.status_code);
     }
   };
   return { profile, getUserProfile };

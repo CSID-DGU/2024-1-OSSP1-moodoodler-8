@@ -98,10 +98,11 @@ export default function useMoodCalendar() {
         year: year,
         month: month,
       });
-      setDaysDiary(getMoodCalendarResponse.data.results);
+      setDaysDiary(getMoodCalendarResponse.results);
       getMoodColorList(daysDiary);
     } catch (error) {
-      if (error.response && (error.response.data.status_code = 401)) {
+      console.log(error.response.data.status_code);
+      if (error.response.data.status_code === 401) {
         getNullMoodColorList();
       }
     }

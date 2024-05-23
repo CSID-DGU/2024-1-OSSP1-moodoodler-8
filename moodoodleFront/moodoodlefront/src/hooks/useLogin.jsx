@@ -15,11 +15,13 @@ export default function useLogin() {
   const login = async (body) => {
     try {
       setLoading(false);
-      const loginResponse = await defaultAxios.post('/user/login/', body);
+      const loginResponse = await defaultAxios.post('/user/login/', body, {
+        withCredentials: true,
+      });
       localStorage.setItem('id', loginResponse.data.data.id);
       navigate('/main');
     } catch (error) {
-      console.log(error.response.data);
+      console.log(error.response.data.status_code);
       setLoading(true);
     }
   };

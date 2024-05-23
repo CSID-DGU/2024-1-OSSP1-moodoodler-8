@@ -25,15 +25,15 @@ export default function SignUp() {
   const selectStyle = `h-[43px] text-darkGray rounded-[10px] bg-gray-scale-1 border border-[#ececec]`;
 
   const [confirmPassword, setConfirmPassword] = useState('');
+
   const handleConfirmPwd = (event) => {
     setConfirmPassword(event.target.value);
   };
 
   const [selectedDate, setDate] = useState({ year: '', month: '', day: '' });
 
-  const updateDateData = (event) => {
-    const targetId = event.target.id;
-    setDate((prev) => ({ ...prev, [targetId]: event.target.value }));
+  const updateDateData = (event, type) => {
+    setDate({ ...selectedDate, [type]: event.target.value });
   };
 
   const isValid =
@@ -45,7 +45,7 @@ export default function SignUp() {
         <form className="login-form flex flex-col gap-[19px]">
           <div className="flex flex-col items-start gap-[10px]">
             <div className="">
-              <label className={textStyle} htmlFor="username">
+              <label className={textStyle}>
                 &nbsp; 아이디 <span className="text-orange-600">*</span>
               </label>
               <input
@@ -62,9 +62,9 @@ export default function SignUp() {
               />
             </div>
             <CustomButton
-              text="중복 확인"
+              text="중복확인"
               color="pink"
-              disabled={checkUserIdPattern(id) ? false : true}
+              disabled={!checkUserIdPattern(id)}
               onClick={() => checkIdDuplicate(id)}
             />
           </div>
@@ -77,17 +77,17 @@ export default function SignUp() {
               type="password"
               id="password"
               value={password}
-              onChange={updateSignupFormData}
+              onChange={(event) => updateSignupFormData(event)}
               onReset={setSignupInfo}
               placeholder="8자 이상의 영문 대소문자/숫자/특수문자"
             />
-            <p className="h-[13px] mt-[7px] text-[12px] text-red-600">
+            <div className="h-[13px] mt-[7px] text-[12px] text-red-600">
               {REGEX.passwordPattern.test(password) || password === '' ? (
                 ''
               ) : (
                 <p className="text-red-600">8자 이상의 영문 대소문자/숫자/특수문자를 사용해주세요.</p>
               )}
-            </p>
+            </div>
           </div>
           <div className="flex flex-col justify-center items-start">
             <label className={textStyle} htmlFor="confirm-password">
@@ -101,9 +101,9 @@ export default function SignUp() {
               onChange={handleConfirmPwd}
               placeholder="비밀번호를 재입력 해주세요"
             />
-            <p className="h-[13px] mt-[7px] text-center text-[12px] text-red-600">
+            <div className="h-[13px] mt-[7px] text-center text-[12px] text-red-600">
               {confirmPassword === password ? '' : <p>비밀번호를 다시 입력해주세요.</p>}
-            </p>
+            </div>
           </div>
           <div className="flex flex-col justify-center items-start">
             <label className={textStyle} htmlFor="nickname">
@@ -115,7 +115,7 @@ export default function SignUp() {
                 type="text"
                 id="nickname"
                 value={nickname}
-                onChange={updateSignupFormData}
+                onChange={(event) => updateSignupFormData(event)}
                 onReset={setSignupInfo}
               />
             </div>
@@ -125,23 +125,32 @@ export default function SignUp() {
               &nbsp; 생년월일
             </label>
             <div className="flex flex-row justify-between w-[283px] items-center text-[14px]">
-              <select className={`w-[130px] ${selectStyle}`} defaultValue="2000">
+              <select
+                className={`w-[130px] ${selectStyle}`}
+                defaultValue="2000"
+                onChange={(event) => updateDateData(event, 'year')}>
                 {YEARS.map((year) => (
-                  <option className={textStyle} value={year} key={year} id="year" onClick={updateDateData}>
+                  <option className={textStyle} value={year} key={year} id="year">
                     {year}
                   </option>
                 ))}
               </select>
-              <select className={`w-[69px] ${selectStyle}`} defaultValue="2000">
+              <select
+                className={`w-[69px] ${selectStyle}`}
+                defaultValue="2000"
+                onChange={(event) => updateDateData(event, 'month')}>
                 {MONTHS.map((month) => (
-                  <option className={textStyle} value={month} key={month} id="month" onClick={updateDateData}>
+                  <option className={textStyle} value={month} key={month} id="month">
                     {month}
                   </option>
                 ))}
               </select>
-              <select className={`w-[69px] ${selectStyle}`} defaultValue="2000">
+              <select
+                className={`w-[69px] ${selectStyle}`}
+                defaultValue="2000"
+                onChange={(e) => updateDateData(e, 'day')}>
                 {DATES.map((day) => (
-                  <option className={textStyle} value={day} key={day} id="day" onClick={updateDateData}>
+                  <option className={textStyle} value={day} key={day} id="day">
                     {day}
                   </option>
                 ))}
@@ -154,7 +163,7 @@ export default function SignUp() {
             <LoginButton
               text="설문조사"
               disabled={isValid ? false : true}
-              onClick={postSignupInfo(`${selectedDate.year}-${selectedDate.month}-${selectedDate.day}`)}
+              onClick={() => postSignupInfo(`${selectedDate.year}-${selectedDate.month}-${selectedDate.day}`)}
             />
           </Link>
           <div className="flex justify-center items-center">
