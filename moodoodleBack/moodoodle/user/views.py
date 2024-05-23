@@ -226,12 +226,12 @@ class UserLogoutView(RetrieveAPIView):
     # permission_classes = (IsAuthenticated,)
     queryset = users.objects.all()
     serializer_class = UserLogoutSerializer
-    lookup_field = 'id'
-    # def get_object(self):
-    #     queryset = self.filter_queryset(self.get_queryset())
-    #     obj = queryset.get(pk=self.request.user.user_id)
-    #     self.check_object_permissions(self.request, obj)
-    #     return obj
+    # lookup_field = 'id'
+    def get_object(self):
+        queryset = self.filter_queryset(self.get_queryset())
+        obj = queryset.get(pk=self.request.user.user_id)
+        self.check_object_permissions(self.request, obj)
+        return obj
 
     def post(self, request):
         logout(request)
