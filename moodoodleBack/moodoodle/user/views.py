@@ -79,7 +79,6 @@ class DuplicatedView(CreateAPIView):
 
 class MypageAPIView(UpdateAPIView):
     # permission_classes = (IsAuthenticated,)
-    # permission_classes = (IsAuthenticated,)
     serializer_class = MypageSerializer
     queryset = users.objects.all()
     # lookup_field = 'id'
@@ -223,10 +222,10 @@ class UserMoodReportView(ListAPIView):
         }, status=status.HTTP_200_OK)
 
 class UserLogoutView(RetrieveAPIView):
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
     queryset = users.objects.all()
     serializer_class = UserLogoutSerializer
-    # lookup_field = 'id'
+
     def get_object(self):
         queryset = self.filter_queryset(self.get_queryset())
         obj = queryset.get(pk=self.request.user.user_id)
@@ -241,7 +240,7 @@ class UserLogoutView(RetrieveAPIView):
             'message': "로그아웃 되었습니다.",
         }
         return Response(response_data, status=status.HTTP_200_OK)
-    
+        
 class UserSurveyView(CreateAPIView):
     # permission_classes = (IsAuthenticated,)
     serializer_class = UserSurveySerializer

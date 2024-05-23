@@ -151,7 +151,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']
 
 CSRF_TRUSTED_ORIGINS = ['http://localhost:3000', 'https://port-0-moodoodle-test-rm6l2llw4xv3nr.sel5.cloudtype.app/']
-# CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_CREDENTIALS = True
 
 # CSRF_COOKIE_SAMESITE = 'None'
 # CSRF_COOKIE_SECURE = False
@@ -159,6 +159,17 @@ CSRF_TRUSTED_ORIGINS = ['http://localhost:3000', 'https://port-0-moodoodle-test-
 # SESSION_COOKIE_SECURE = False
 # CSRF_COOKIE_NAME = "csrftoken"
 # CSRF_COOKIE_HTTPONLY = False
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'basic': {
+            'type': 'basic'
+        }
+    },
+    'DEFAULT_PROTOCOL': 'https',
+    'DEFAULT_API_URL': 'https://port-0-moodoodle-test-rm6l2llw4xv3nr.sel5.cloudtype.app/',
+
+}
 
 CORS_ALLOW_HEADERS = [
     "authorization",
