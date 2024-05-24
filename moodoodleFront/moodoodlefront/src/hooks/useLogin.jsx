@@ -21,7 +21,7 @@ export default function useLogin() {
       localStorage.setItem('id', loginResponse.data.data.id);
       navigate('/main');
     } catch (error) {
-      console.log(error.response.data.status_code);
+      console.log(error.response);
       setLoading(true);
     }
   };

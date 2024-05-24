@@ -8,15 +8,16 @@ export default function Survey() {
   const [isFirstStep, setIsFirstStep] = useState(true);
   const [positives, setPositives] = useState([]);
   const [negatives, setNegatives] = useState([]);
-  const { postSurveyAnswers } = useSurvey();
+  const { postPositiveSurveyAnswers, postNegativeSurveyAnswers } = useSurvey();
 
   const handleFirstStepSubmit = () => {
     setIsFirstStep((prev) => !prev);
+    postPositiveSurveyAnswers(positives);
   };
 
   const handleFinalStepSubmit = () => {
     setIsFirstStep((prev) => !prev);
-    postSurveyAnswers(positives, negatives);
+    postNegativeSurveyAnswers(negatives);
     setPositives([]);
     setNegatives([]);
     navigate('/login');

@@ -159,13 +159,11 @@ export default function SignUp() {
           </div>
         </form>
         <div className="flex flex-col gap-[10px] items-center">
-          <Link to="/survey">
-            <LoginButton
-              text="설문조사"
-              disabled={isValid ? false : true}
-              onClick={() => postSignupInfo(`${selectedDate.year}-${selectedDate.month}-${selectedDate.day}`)}
-            />
-          </Link>
+          <LoginButton
+            text="설문조사"
+            disabled={isValid ? false : true}
+            onClick={() => postSignupInfo(`${selectedDate.year}-${selectedDate.month}-${selectedDate.day}`)}
+          />
           <div className="flex justify-center items-center">
             <p className="text-xs text-left text-darkGray">이미 계정이 있으신가요? &nbsp; |</p>
             <Link className="text-[13px] font-bold text-lightBlue" to="/login">

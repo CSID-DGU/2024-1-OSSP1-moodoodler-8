@@ -27,7 +27,6 @@ export default function useSignup() {
       setIsUniqued((prev) => ({ ...prev, userId: true }));
       alert('사용 가능한 아이디입니다.');
     } catch (error) {
-      console.log(error.response.status_code);
       alert('중복되는 아이디입니다.');
       setIsUniqued((prev) => ({ ...prev, userId: false }));
     }

@@ -22,8 +22,8 @@ export default function DiaryWriting() {
   const handleSubmit = async () => {
     const postData = {
       id: localStorage.getItem('id'),
-      date: { selectedDay },
-      content: { content },
+      date: selectedDay,
+      content: content,
     };
     try {
       const postDiaryResponse = await defaultAxios.post('/diary/create/', postData);
@@ -31,8 +31,7 @@ export default function DiaryWriting() {
       setContent('');
       navigate(`/analysis/${selectedDay}`);
     } catch (error) {
-      const { status_code } = error.response.status_code;
-      console.error('Error submitting post:', status_code);
+      console.log(error.response);
     }
   };
 
