@@ -221,22 +221,39 @@ class UserLogoutView(RetrieveAPIView):
 class UserSurveyView(CreateAPIView):
     # permission_classes = (IsAuthenticated,)
     serializer_class = UserSurveySerializer
-    def post(self, request, *args, **kwargs):
-        user_id = request.data.get('uesr_id')
-        positive_answer = request.data.getlist('positive_answer')
-        negative_answer = request.data.getlist('negative_answer')
-        for answer in positive_answer:
-            seralizer = self.serializer_class(context={'question' : "positive", 'answer' : answer})
-            seralizer.is_valid(raise_exception=True)
-            seralizer.save()
-        for answer in negative_answer:
-            seralizer = self.serializer_class(context={'question' : "negative", 'answer' : answer})
-            seralizer.is_valid(raise_exception=True)
-            seralizer.save()
+    def post(self, request, question):
+        if question not in ['positive', 'negative']:
+            return Response({
+                'success' : False,
+                'status_code' : status.HTTP_400_BAD_REQUEST,
+                'message' : "question 파라미터 값이 잘못되었습니다."
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        answers = request.data.get('answer', [])
+
+        if not isinstance(answers, list):
+            return Response({
+                'success': False,
+                'status_code': status.HTTP_400_BAD_REQUEST,
+                'message' : "답변은 배열 형식이어야 합니다."
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        id = request.user.id
+        user_id = users.objects.get(id=id)
+        survey_responses = []
+        for answer in answers:
+            if Survey.objects.filter(question=question, answer=answer, user_id=user_id).exists():
+                continue
+            survey_data = {'answer': answer}
+            serializer = UserSurveySerializer(data=survey_data, context={'request': request, 'question': question})
+            if serializer.is_valid():
+                survey_responses.append(serializer.save())
+
+        response_serializer = UserSurveySerializer(survey_responses, many=True)
 
         return Response({
             'success' : True,
             'status_code': status.HTTP_201_CREATED,
-            'message' : "요청에 성공하였습니다."
+            'message' : "요청에 성공하였습니다.",
+            "data" : response_serializer.data
         },status=status.HTTP_201_CREATED)
-
