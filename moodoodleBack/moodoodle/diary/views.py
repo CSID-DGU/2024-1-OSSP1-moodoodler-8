@@ -157,8 +157,9 @@ class MonthlyCalendarView(ListAPIView):
 
         if date(year, month, 1) > current_date:
             raise ValueError("접근 불가능한 날짜입니다.")
-
-        return Diary.objects.filter(date__range=(start_date, end_date))
+        id = self.request.user
+        user_id = users.objects.get(id=id)
+        return Diary.objects.filter(date__range=(start_date, end_date), user_id=user_id)
 
     def list(self, request, *args, **kwargs):
         year = int(self.kwargs['year'])
@@ -211,7 +212,8 @@ class YearlyCalendarView(ListAPIView):
 
         if year > current_year:
             raise ValueError("접근 불가능한 연도입니다.")
-        user_id = self.request.user.user_id
+        id = self.request.user.id
+        user_id = users.objects.get(id=id)
         return Diary.objects.filter(date__range=(start_date, end_date), user_id=user_id)
 
     def list(self, request, *args, **kwargs):
