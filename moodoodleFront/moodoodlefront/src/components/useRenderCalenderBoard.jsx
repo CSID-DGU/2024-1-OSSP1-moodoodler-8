@@ -1,15 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import useMoodCalendar from '../hooks/useMoodCalendar';
 
-const useRenderCalenderBoard = (selectedDay, handleSelectDate, arr, setArr) => {
-  const { moodcolorlist, setMoodcolorlist } = useMoodCalendar();
+const useRenderCalenderBoard = (selectedDate, setSelectedDate) => {
+  const { setYearMonth, moodcolorlist } = useMoodCalendar(selectedDate);
+  const [arr, setArr] = useState([null]);
+  const [moodArr, setMoodArr] = useState([]);
 
   const initArr = (firstDay, daysInMonth) => {
     return Array.from({ length: firstDay + daysInMonth }, (v, i) =>
       i < firstDay
         ? null
-        : dayjs(selectedDay)
+        : dayjs(selectedDate)
             .startOf('month')
             .set('date', i - firstDay + 1)
             .format('YYYY-MM-DD')
@@ -17,43 +19,45 @@ const useRenderCalenderBoard = (selectedDay, handleSelectDate, arr, setArr) => {
   };
 
   const moodColorArr = (firstDay, daysInMonth) => {
-    return Array.from({ length: firstDay + daysInMonth }, (v, i) => (i < dayjs().date() ? moodcolorlist[i] : null));
-  };
-
-  const main_mood_color_list = (firstDay, daysInMonth) => {
-    return dayjs(selectedDay).month() === dayjs().month()
-      ? setMoodcolorlist(moodColorArr(firstDay, daysInMonth))
-      : moodcolorlist;
+    return Array.from({ length: firstDay + daysInMonth }, (v, i) =>
+      i < firstDay ? null : moodcolorlist[i - firstDay]
+    );
   };
 
   useEffect(() => {
-    handleSelectDate(selectedDay);
-    localStorage.setItem('selectedDay', selectedDay);
-    const firstDay = dayjs(selectedDay).startOf('month').day();
-    const daysInMonth = dayjs(selectedDay).daysInMonth();
+    setSelectedDate(selectedDate);
+    localStorage.setItem('selectedDate', selectedDate);
+    setYearMonth({ year: dayjs(selectedDate).format('YYYY'), month: dayjs(selectedDate).format('MM') });
+    const firstDay = dayjs(selectedDate).startOf('month').day();
+    const daysInMonth = dayjs(selectedDate).daysInMonth();
     setArr(initArr(firstDay, daysInMonth));
-    main_mood_color_list(firstDay, daysInMonth);
-    console.log(moodcolorlist);
-    console.log(selectedDay);
-  }, [selectedDay]);
+    setMoodArr(moodColorArr(firstDay, daysInMonth));
+  }, [selectedDate]);
 
   const content = arr.map((v, i) => (
     <div className="flex justify-center" key={v ? v.toString() : `${v}${i}`}>
       {v &&
-        (moodcolorlist[i - (arr.length - dayjs(selectedDay).daysInMonth())] !== null ? (
-          <div
-            className={`flex justify-center items-center w-[22px] h-[22px] rounded-full bg-[#${
-              moodcolorlist[i - (arr.length - dayjs(selectedDay).daysInMonth())]
-            }] text-center cursor-pointer bg-opacity-80`}
-            date={v}
-            onClick={() => handleSelectDate(v)}>
-            {dayjs(v).date()}
-          </div>
+        (moodArr[i] !== null ? (
+          dayjs(selectedDate).format('YYYY-MM') <= dayjs().format('YYYY-MM') ? (
+            <div
+              className={`flex justify-center items-center w-[22px] h-[22px] rounded-full bg-[#${moodArr[i]}] text-center cursor-pointer bg-opacity-80`}
+              date={v}
+              onClick={() => setSelectedDate(v)}>
+              {dayjs(v).date()}
+            </div>
+          ) : (
+            <div
+              className="flex justify-center items-center w-[22px] h-[22px] rounded-full bg-gray-scale-1 text-center cursor-pointer"
+              date={v}
+              onClick={() => setSelectedDate(v)}>
+              {dayjs(v).date()}
+            </div>
+          )
         ) : (
           <div
             className="flex justify-center items-center w-[22px] h-[22px] rounded-full bg-gray-scale-1 text-center cursor-pointer"
             date={v}
-            onClick={() => handleSelectDate(v)}>
+            onClick={() => setSelectedDate(v)}>
             {dayjs(v).date()}
           </div>
         ))}

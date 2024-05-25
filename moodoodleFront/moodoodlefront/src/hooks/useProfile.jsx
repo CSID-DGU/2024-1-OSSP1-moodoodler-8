@@ -21,7 +21,6 @@ export default function useProfile() {
           withCredentials: true,
         }
       );
-      console.log(getProfileResponse);
       setProfile({
         nickname: getProfileResponse.data.data.nickname,
         description: getProfileResponse.data.data.description,
@@ -43,7 +42,6 @@ export default function useProfile() {
         `/user/mypage/${localStorage.getItem('id')}/`,
         patchUserInfoData
       );
-      console.log(profile.isPublic);
       handleProfileComponent();
       setIsModified((prev) => !prev);
     } catch (error) {

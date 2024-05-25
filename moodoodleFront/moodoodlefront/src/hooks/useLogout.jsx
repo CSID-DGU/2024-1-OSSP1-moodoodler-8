@@ -9,11 +9,11 @@ export default function useLogout() {
       .post('/user/logout/')
       .then(() => {
         localStorage.removeItem('id');
+        localStorage.removeItem('selectedDate');
         navigate('/');
       })
       .catch((error) => {
-        const { message } = error.response.data;
-        alert(message);
+        console.log(error.response);
       });
 
   return { logout };

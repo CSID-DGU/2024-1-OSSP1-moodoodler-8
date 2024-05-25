@@ -30,7 +30,7 @@ export default function SignUp() {
     setConfirmPassword(event.target.value);
   };
 
-  const [selectedDate, setDate] = useState({ year: '', month: '', day: '' });
+  const [selectedDate, setDate] = useState({ year: '2000', month: '01', day: '01' });
 
   const updateDateData = (event, type) => {
     setDate({ ...selectedDate, [type]: event.target.value });

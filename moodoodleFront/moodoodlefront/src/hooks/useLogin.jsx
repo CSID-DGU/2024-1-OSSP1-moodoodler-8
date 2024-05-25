@@ -3,10 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { defaultAxios } from '../axios/defaultAxios';
 
 export default function useLogin() {
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [loginData, setLoginData] = useState({ id: '', password: '' });
-
   const updateLoginFormData = (event) => {
     const targetId = event.target.id;
     setLoginData((prev) => ({ ...prev, [targetId]: event.target.value }));

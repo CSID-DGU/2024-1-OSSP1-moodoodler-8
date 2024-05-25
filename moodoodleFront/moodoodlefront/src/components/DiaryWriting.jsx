@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
-import { defaultAxios } from '../axios/defaultAxios';
 import dayjs from 'dayjs';
 import CustomButton from './CustomButton';
-import { useNavigate } from 'react-router-dom';
+import useDiaryWrite from '../hooks/useDiaryWrite';
 
 export default function DiaryWriting() {
-  const navigate = useNavigate();
   const [content, setContent] = useState('');
-  const selectedDay = localStorage.getItem('selectedDay');
-  let [inputCount, setInputCount] = useState(0);
+  const [inputCount, setInputCount] = useState(0);
+  const { selectedDate, handleSubmit } = useDiaryWrite();
 
   const handleSetValue = (e) => {
     setContent(e.target.value);
@@ -19,29 +17,14 @@ export default function DiaryWriting() {
     setInputCount(e.target.value.length);
   };
 
-  const handleSubmit = async () => {
-    const postData = {
-      id: localStorage.getItem('id'),
-      date: selectedDay,
-      content: content,
-    };
-    try {
-      const postDiaryResponse = await defaultAxios.post('/diary/create/', postData);
-      console.log(postDiaryResponse.data);
-      setContent('');
-      navigate(`/analysis/${selectedDay}`);
-    } catch (error) {
-      console.log(error.response);
-    }
-  };
-
   return (
     <div className="flex justify-center items-center w-[342px] h-[456px] bg-white rounded-[20px] shadow-componentShadow">
       <div className="flex flex-col justify-between items-center w-[307px] h-[390px]">
         <div className="flex flex-col h-[46px] justify-between items-center">
           <p className="font-bold text-base text-darkNavy">일기 쓰기</p>
           <p className="font-medium text-sm text-darkGray">
-            {dayjs(selectedDay).format('MMM')}. {dayjs(selectedDay).format('DD')}, {dayjs(selectedDay).format('YYYY')}
+            {dayjs(selectedDate).format('MMM')}. {dayjs(selectedDate).format('DD')},{' '}
+            {dayjs(selectedDate).format('YYYY')}
           </p>
         </div>
         <textarea
@@ -57,7 +40,7 @@ export default function DiaryWriting() {
             <span>/300 자</span>
           </p>
         </div>
-        <CustomButton text="등록 및 분석하기" color="pink" onClick={handleSubmit} />
+        <CustomButton text="등록 및 분석하기" color="pink" onClick={() => handleSubmit({ content, setContent })} />
       </div>
     </div>
   );

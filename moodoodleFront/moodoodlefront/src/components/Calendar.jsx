@@ -1,23 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import dayjs from 'dayjs';
 import useRenderCalenderBoard from './useRenderCalenderBoard';
-import useMoodCalendar from '../hooks/useMoodCalendar';
 
 const days = ['일', '월', '화', '수', '목', '금', '토'];
 
 export default function Calendar({ handleColorChipToggle, selectedDate, setSelectedDate }) {
-  const splited = selectedDate.split('-');
-  const [year_month, setYear_month] = useState({
-    year: splited[0],
-    month: splited[1],
-  });
-  const [arr, setArr] = useState([null]);
-  const { getMoodCalendar } = useMoodCalendar();
-
-  const handleSelectDate = (v) => {
-    setSelectedDate(v);
-  };
-
   const handlePrevMonth = (selectedDate) => {
     const newDate = dayjs(selectedDate).subtract(1, 'month').endOf('month').format('YYYY-MM-DD');
     setSelectedDate(newDate);
@@ -28,15 +15,7 @@ export default function Calendar({ handleColorChipToggle, selectedDate, setSelec
     setSelectedDate(newDate);
   };
 
-  const board = useRenderCalenderBoard(selectedDate, handleSelectDate, arr, setArr);
-
-  useEffect(() => {
-    setYear_month({ year: splited[0], month: splited[1] });
-  }, [selectedDate]);
-
-  useEffect(() => {
-    getMoodCalendar(year_month.year, year_month.month);
-  }, [year_month]);
+  const board = useRenderCalenderBoard(selectedDate, setSelectedDate);
 
   return (
     <div className="flex relative justify-center items-center w-[342px] h-[304px] rounded-[20px] shadow-componentShadow">

@@ -5,8 +5,8 @@ import CustomButton from './CustomButton';
 
 export default function DiaryShow({ content, selectedDate, text, color, handleDayMoodAnalysisToggle }) {
   return (
-    <div className="flex justify-center items-center w-[342px] h-[256px] rounded-[20px] bg-white shadow-componentShadow">
-      <div className="flex flex-col justify-between items-center w-[175px] h-[198px]">
+    <div className="flex justify-center items-center w-[342px] h-[300px] rounded-[20px] bg-white shadow-componentShadow">
+      <div className="flex flex-col justify-between items-center w-[175px] h-[250px]">
         <div className="flex flex-col h-[46px] justify-between items-center">
           <p className="font-bold text-base text-darkNavy">나의 감정 일기</p>
           <p className="font-medium text-sm text-darkGray">

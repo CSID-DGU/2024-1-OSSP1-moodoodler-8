@@ -10,7 +10,7 @@ export default function MainProfile({ isCalendar, setIsCalendar }) {
 
   useEffect(() => {
     getUserProfile();
-  }, [localStorage.getItem('user_id'), nickname, description]);
+  }, [localStorage.getItem('id'), nickname, description]);
 
   return (
     <div className="flex flex-row h-[82px] justify-center items-center">
@@ -22,7 +22,7 @@ export default function MainProfile({ isCalendar, setIsCalendar }) {
             <div className="font-medium text-xs">{description}</div>
           </div>
         </div>
-        <ToggleContainer is={isCalendar} setIs={setIsCalendar} />
+        <ToggleContainer isPublic={isCalendar} setIs={setIsCalendar} year />
       </div>
     </div>
   );
