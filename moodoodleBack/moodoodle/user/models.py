@@ -48,9 +48,10 @@ class SurveyManager(models.Manager):
         )
         survey.save(using=self._db)
         return survey
-class Survey(models.Model):
+    
+class survey(models.Model):
     survey_id = models.AutoField(primary_key=True)
-    user_id = models.ForeignKey(users, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(users, on_delete=models.CASCADE, db_column='user_id')
     question = models.CharField(max_length=50)
     answer = models.CharField(max_length=50)
 
