@@ -139,7 +139,6 @@ class DiaryDeleteView(DestroyAPIView):
                 'message' : "요청에 성공하였습니다."
             }, status=status.HTTP_200_OK)
 
-
 class DiaryDetailView(APIView):
     serializer_class = DiaryDetailSerializer
     # permission_classes = [IsAuthenticated]
@@ -179,7 +178,7 @@ class MonthlyCalendarView(ListAPIView):
 
         if date(year, month, 1) > current_date:
             raise ValueError("접근 불가능한 날짜입니다.")
-        id = self.kwargs.get('id')
+        id = self.kwargs['id']
         user_id = users.objects.get(id=id)
         return Diary.objects.filter(date__range=(start_date, end_date), user_id=user_id)
 
@@ -234,7 +233,7 @@ class YearlyCalendarView(ListAPIView):
 
         if year > current_year:
             raise ValueError("접근 불가능한 연도입니다.")
-        id = self.kwargs.get('id')
+        id = self.kwargs['id']
         user_id = users.objects.get(id=id)
         return Diary.objects.filter(date__range=(start_date, end_date), user_id=user_id)
 
