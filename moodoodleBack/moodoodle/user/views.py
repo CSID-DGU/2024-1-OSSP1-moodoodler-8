@@ -133,7 +133,8 @@ class UserMoodReportView(ListAPIView):
 
         start_date = date(year, month, 1)
         end_date = date(year, month, monthrange(year, month)[1])
-        user_id = request.user
+        id = self.kwargs.get('id')
+        user_id = users.objects.get(id=id)
         diary_list = Diary.objects.filter(user_id=user_id, date__range=[start_date, end_date])
 
         mood_totals = {}
@@ -238,7 +239,7 @@ class UserSurveyView(CreateAPIView):
                 'message' : "답변은 배열 형식이어야 합니다."
             }, status=status.HTTP_400_BAD_REQUEST)
 
-        id = request.user.id
+        id = request.data.get('id')
         user_id = users.objects.get(id=id)
         survey_responses = []
         for answer in answers:

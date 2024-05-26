@@ -1,17 +1,17 @@
 from rest_framework import serializers
-
+from .models import users
 from .models import Diary, Diary_Mood
 from collections import defaultdict
 
 class DiaryCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Diary
-        fields = ('diary_id', 'date', 'content')
-        read_only_fields = ['diary_id']
+        fields = ('diary_id', 'user_id', 'date', 'content')
+        read_only_fields = ('diary_id',)
+
 
     def create(self, validated_data):
-        user_id = self.context['request'].user
-        diary = Diary.objects.create(**validated_data, user_id=user_id)
+        diary = Diary.objects.create(**validated_data)
         return diary
 
 class DiaryUpdateSerializer(serializers.ModelSerializer):
