@@ -4,9 +4,8 @@ import CustomButton from './CustomButton';
 import useDiaryWrite from '../hooks/useDiaryWrite';
 
 export default function DiaryWriting() {
-  const [content, setContent] = useState('');
   const [inputCount, setInputCount] = useState(0);
-  const { selectedDate, handleSubmit } = useDiaryWrite();
+  const { content, setContent, selectedDate, handleSubmit } = useDiaryWrite();
 
   const handleSetValue = (e) => {
     setContent(e.target.value);

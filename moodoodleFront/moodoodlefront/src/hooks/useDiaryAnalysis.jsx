@@ -46,9 +46,9 @@ export default function useDiaryAnalysis() {
           diary_id: diary_id,
         }
       );
-      setAnalysisResult(getDiaryAnalysisrResponse.data);
+      setAnalysisResult(getDiaryAnalysisrResponse.data.data.detail);
     } catch (error) {
-      console.error('Error getting profile:', error.response);
+      console.error('Error getting diary Analysis:', error.response);
     }
   };
 

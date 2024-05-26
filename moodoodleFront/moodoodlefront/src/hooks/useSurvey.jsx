@@ -10,8 +10,7 @@ export default function useSurvey() {
       });
       console.log(postPositiveSurveyAnswersResponse.status_code);
     } catch (error) {
-      const { status_code } = error.response.data.status_code;
-      console.error('Error submitting answers:', status_code);
+      console.error('Error submitting answers:', error.response);
     }
   };
 
@@ -24,8 +23,7 @@ export default function useSurvey() {
       });
       console.log(postNegativeSurveyAnswersResponse.status_code);
     } catch (error) {
-      const { status_code } = error.response.status_code;
-      console.error('Error submitting answers:', status_code);
+      console.error('Error submitting answers:', error.response);
     }
   };
 

@@ -4,10 +4,9 @@ import dayjs from 'dayjs';
 
 export default function useMoodCalendar(selectedDate) {
   const [yearMonth, setYearMonth] = useState({
-    year: dayjs(selectedDate).format('YYYY'),
-    month: dayjs(selectedDate).format('MM'),
+    year: dayjs().format('YYYY'),
+    month: dayjs().format('MM'),
   });
-
   const [daysDiary, setDaysDiary] = useState([]);
   const [moodcolorlist, setMoodcolorlist] = useState([]);
 
@@ -21,11 +20,10 @@ export default function useMoodCalendar(selectedDate) {
           month: yearMonth.month,
         }
       );
-      console.log(selectedDate);
+      console.log(getMoodCalendarResponse.data);
+      console.log('이거는 getMoodCalendar 안에서');
       setDaysDiary(getMoodCalendarResponse.data.result);
-      console.log(daysDiary);
       setMoodcolorlist(daysDiary.map((diary) => diary.main_mood_color));
-      console.log(moodcolorlist);
     } catch (error) {
       console.log(error.response);
     }
@@ -33,7 +31,8 @@ export default function useMoodCalendar(selectedDate) {
 
   useEffect(() => {
     getMoodCalendar();
-  }, [yearMonth]);
+    console.log('이거는 useMoodCalendar 안에서');
+  }, [localStorage.getItem('selectedDate'), selectedDate]);
 
   return { yearMonth, setYearMonth, daysDiary, moodcolorlist, setMoodcolorlist, getMoodCalendar };
 }

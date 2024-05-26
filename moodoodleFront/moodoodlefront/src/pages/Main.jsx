@@ -4,15 +4,16 @@ import { useOutletContext } from 'react-router-dom';
 import DiaryWritePopup from '../components/DiaryWritePopup';
 import Calendar from '../components/Calendar';
 import DiaryShow from '../components/DiaryShow';
-import useMoodCalendar from '../hooks/useMoodCalendar';
 import YearCalendar from '../components/YearCalendar';
 import ProhibitionComponent from '../components/ProhibitionComponent';
 
 export default function Main() {
   const context = useOutletContext();
-  const [selectedDate, setSelectedDate] = useState(dayjs().format('YYYY-MM-DD'));
-  const date = parseInt(dayjs(selectedDate).format('DD')) - 1;
-  const { daysDiary } = useMoodCalendar(selectedDate);
+  const [isModified, setIsModified] = useState(false);
+
+  const handleModified = () => {
+    setIsModified((prev) => !prev);
+  };
 
   return (
     <div className="relative">
@@ -22,23 +23,26 @@ export default function Main() {
         ) : (
           <Calendar
             handleColorChipToggle={context.handleColorChipToggle}
-            selectedDate={selectedDate}
-            setSelectedDate={setSelectedDate}
+            selectedDate={context.selectedDate}
+            setSelectedDate={context.setSelectedDate}
           />
         )}
-        {selectedDate <= dayjs().format('YYYY-MM-DD') ? (
-          daysDiary.length < date + 1 ? (
-            <DiaryWritePopup selectedDate={selectedDate} />
-          ) : daysDiary[date].content ? (
+        {context.selectedDate <= dayjs().format('YYYY-MM-DD') ? (
+          context.daysDiary.length < context.date + 1 ? (
+            <DiaryWritePopup selectedDate={context.selectedDate} />
+          ) : context.daysDiary[context.date].content ? (
             <DiaryShow
-              content={daysDiary[date].content}
-              selectedDate={selectedDate}
+              content={context.daysDiary[context.date].content}
+              diary_id={context.daysDiary[context.date].diary_id}
+              selectedDate={context.selectedDate}
               text="분석 결과 보기"
               color="orange"
               handleDayMoodAnalysisToggle={context.handleDayMoodAnalysisToggle}
+              handleModified={handleModified}
+              isModified={isModified}
             />
           ) : (
-            <DiaryWritePopup selectedDate={selectedDate} />
+            <DiaryWritePopup selectedDate={context.selectedDate} />
           )
         ) : (
           <ProhibitionComponent />
