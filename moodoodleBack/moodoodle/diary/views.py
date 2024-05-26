@@ -170,21 +170,21 @@ class MonthlyCalendarView(ListAPIView):
     # permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        year = int(self.kwargs['year'])
-        month = int(self.kwargs['month'])
+        year = int(self.kwargs.get('year'))
+        month = int(self.kwargs.get('month'))
         start_date = date(year, month, 1)
         end_date = date(year, month, monthrange(year, month)[1])
         current_date = date.today()
 
         if date(year, month, 1) > current_date:
             raise ValueError("접근 불가능한 날짜입니다.")
-        id = self.kwargs['id']
+        id = self.kwargs.get('id')
         user_id = users.objects.get(id=id)
         return Diary.objects.filter(date__range=(start_date, end_date), user_id=user_id)
 
     def list(self, request, *args, **kwargs):
-        year = int(self.kwargs['year'])
-        month = int(self.kwargs['month'])
+        year = int(self.kwargs.get('year'))
+        month = int(self.kwargs.get('month'))
         start_date = date(year, month, 1)
         end_date = date(year, month, monthrange(year, month)[1])
 
@@ -226,19 +226,19 @@ class YearlyCalendarView(ListAPIView):
 
     def get_queryset(self):
 
-        year = int(self.kwargs['year'])
+        year = int(self.kwargs.get('year'))
         start_date = date(year, 1, 1)
         end_date = date(year, 12, monthrange(year, 12)[1])
         current_year = date.today().year
 
         if year > current_year:
             raise ValueError("접근 불가능한 연도입니다.")
-        id = self.kwargs['id']
+        id = self.kwargs.get('id')
         user_id = users.objects.get(id=id)
         return Diary.objects.filter(date__range=(start_date, end_date), user_id=user_id)
 
     def list(self, request, *args, **kwargs):
-        year = int(self.kwargs['year'])
+        year = int(self.kwargs.get('year'))
         try:
             queryset = self.get_queryset()
         except ValueError as e:
