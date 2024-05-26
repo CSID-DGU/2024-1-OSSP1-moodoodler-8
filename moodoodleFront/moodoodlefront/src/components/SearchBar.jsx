@@ -1,16 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import useFriendSearch from '../hooks/useFriendSearch';
 
 export default function SearchBar() {
-  const navigate = useNavigate();
-  const [friendID, setFriendID] = useState('');
-
-  const handleSetID = (e) => {
-    setFriendID(e.target.value);
-  };
-  const handleSubmit = () => {
-    navigate('/search');
-  };
+  const { setFriendID, search } = useFriendSearch();
 
   return (
     <div className='w-[338px] h-[39px] relative'>
@@ -18,9 +10,9 @@ export default function SearchBar() {
         <input
           className='w-[280px] text-[14px] bg-gray-scale-1/[0.66] text-left text-gray-scale-3'
           placeholder='친구의 아이디를 검색해보세요'
-          onChange={(e) => handleSetID(e)}
+          onChange={(e) => setFriendID(e)}
         />
-        <button onClick={handleSubmit}>
+        <button onClick={() => search()}>
           <img src='/assets/search.svg' alt='search' />
         </button>
       </div>

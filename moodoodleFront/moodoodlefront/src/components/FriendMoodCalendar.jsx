@@ -1,7 +1,7 @@
 import React from 'react';
 import MoodAnalysis from './MoodAnalysis';
 
-export default function MoodAnalysisModal({
+export default function FriendMoodCalendar({
   isModal,
   handleDayMoodAnalysisToggle,
 }) {

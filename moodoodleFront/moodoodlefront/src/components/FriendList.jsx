@@ -26,6 +26,7 @@ export default function FriendList() {
             description={friend.description}
             src2='/assets/calendar.svg'
             alt2='calendar'
+            onClick2=''
           />
         ))}
       </div>
