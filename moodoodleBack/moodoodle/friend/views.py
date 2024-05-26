@@ -20,7 +20,7 @@ class FriendListView(ListAPIView):
         friends_list = []
 
         for friends in user_friends:
-            if Friend.objects.filter(to_user_id=friends.from_user_id, from_user_id=friends.to_user_id).exists() and Friend.objects.filter(to_user_id=friends.to_user_id, from_user_id=friends.from_user_id).exists():
+            if Friend.objects.filter(to_user_id=friends.from_user_id, from_user_id=friends.to_user_id).exists():
                 friends_list.append(friends.to_user_id)
         return users.objects.filter(pk__in=friends_list)
 
@@ -56,6 +56,7 @@ class FriendSearchView(RetrieveAPIView):
                 'success': True,
                 'status_code': status.HTTP_200_OK,
                 'message': '요청에 성공하였습니다.',
+                'id': serializer.data.get('id'),
                 'nickname': serializer.data.get('nickname'),
                 'profile_image': serializer.data.get('profile_image'),
                 'description': serializer.data.get('description')
@@ -76,7 +77,7 @@ class FriendAddView(CreateAPIView):
     def post(self, request, to_user_id):
         from_user = self.request.user
 
-        if from_user.pk == to_user_id:
+        if from_user.id == to_user_id:
             response = {
                 'success': False,
                 'status_code': status.HTTP_400_BAD_REQUEST,
@@ -85,7 +86,7 @@ class FriendAddView(CreateAPIView):
             return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            to_user = users.objects.get(pk=to_user_id)
+            to_user = users.objects.get(id=to_user_id)
         except users.DoesNotExist:
             response = {
                 'success': False,
@@ -135,10 +136,11 @@ class FriendDeleteView(DestroyAPIView):
 
     def delete(self, request, to_user_id):
         from_user = self.request.user
+        to_user = users.objects.get(id=to_user_id)
 
         try:
-            friends1 = Friend.objects.get(from_user=from_user, to_user_id=to_user_id)
-            friends2 = Friend.objects.get(from_user_id=to_user_id, to_user=from_user)
+            friends1 = Friend.objects.get(from_user=from_user, to_user=to_user)
+            friends2 = Friend.objects.get(from_user=to_user, to_user=from_user)
         except Friend.DoesNotExist:
             response = {
                 'success' : False,
@@ -168,18 +170,22 @@ class FriendCalendarView(ListAPIView):
         start_date = date(year, month, 1)
         end_date = date(year, month, monthrange(year, month)[1])
         current_date = date.today()
+
+        try:
+            friend_user = users.objects.get(id=friend_id)
+        except users.DoesNotExist:
+            raise ValueError("유저를 찾을 수 없습니다.")
         
-        if not Friend.objects.filter(from_user_id=user.pk, to_user_id=friend_id).exists() and not Friend.objects.filter(from_user_id=friend_id, to_user_id=user.pk).exists():
+        if not Friend.objects.filter(from_user_id=user.pk, to_user_id=friend_user.pk).exists():
             raise ValueError("친구 관계가 아닙니다.")
 
-        friend_user = users.objects.filter(user_id=friend_id, public=True).first()
-        if not friend_user:
+        if not friend_user.public:
             raise ValueError("친구의 달력이 공개되어 있지 않습니다.")
         
         if date(year, month, 1) > current_date:
             raise ValueError("접근 불가능한 날짜입니다.")
 
-        return Diary.objects.filter(date__range=(start_date, end_date), user_id=friend_id)
+        return Diary.objects.filter(date__range=(start_date, end_date), user_id=friend_user.pk)
 
     def list(self, request, *args, **kwargs):
         try:    
@@ -227,9 +233,9 @@ class FriendRequestView(ListAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        friends_list = Friend.objects.filter(to_user_id=user.pk).values_list('from_user_id', flat=True)
-        friend_requests = Friend.objects.filter(to_user_id=user.pk).exclude(from_user_id__in=friends_list)
-        return friend_requests
+        friend_list = Friend.objects.filter(to_user=user)
+        friends_request = friend_list.exclude(from_user__in=Friend.objects.filter(from_user=user).values('to_user'))
+        return friends_request
     
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset()
@@ -248,8 +254,9 @@ class FriendAcceptView(CreateAPIView):
 
     def post(self, request, from_user_id, *args, **kwargs):
         to_user = request.user
+        from_user = users.objects.get(id=from_user_id)
         try:
-            if Friend.objects.filter(from_user=from_user_id, to_user=to_user).exists() and Friend.objects.filter(from_user=to_user, to_user=from_user_id).exists():
+            if Friend.objects.filter(from_user=from_user, to_user=to_user).exists() and Friend.objects.filter(from_user=to_user, to_user=from_user).exists():
                 response = {
                     'success': False,
                     'status_code': status.HTTP_400_BAD_REQUEST,
@@ -257,8 +264,8 @@ class FriendAcceptView(CreateAPIView):
                 }
                 return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
-            Friend.objects.get(from_user_id=from_user_id, to_user=to_user)
-            friend_data = {'from_user': to_user.pk, 'to_user': from_user_id}
+            Friend.objects.get(from_user_id=from_user.pk, to_user_id=to_user.pk)
+            friend_data = {'from_user': to_user.pk, 'to_user': from_user.pk}
             serializer = self.serializer_class(data=friend_data)
             serializer.is_valid(raise_exception=True)
             serializer.save()
@@ -283,8 +290,9 @@ class FriendRejectView(DestroyAPIView):
 
     def delete(self, request, from_user_id, *args, **kwargs):
         to_user = self.request.user
+        from_user = users.objects.get(id=from_user_id)
         try:
-            friend = Friend.objects.get(from_user_id=from_user_id, to_user_id=to_user.pk)
+            friend = Friend.objects.get(from_user_id=from_user.pk, to_user_id=to_user.pk)
             friend.delete()
             response = {
                 'success': True,
