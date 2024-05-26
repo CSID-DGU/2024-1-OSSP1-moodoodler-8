@@ -11,6 +11,6 @@ urlpatterns = [
     path('login/', UserLoginView.as_view()),
     path('logout/', UserLogoutView.as_view()),
     path('mypage/', MypageAPIView.as_view()),
-    path('mypage/report/<int:year>/<int:month>/', UserMoodReportView.as_view()),
-    path('survey/', UserSurveyView.as_view())
+    path('mypage/report/<str:id>/<int:year>/<int:month>/', UserMoodReportView.as_view()),
+    path('survey/<str:question>/', UserSurveyView.as_view())
 ]
