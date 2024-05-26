@@ -140,7 +140,7 @@ class MypageAPIView(RetrieveUpdateAPIView):
 class UserMoodReportView(ListAPIView):
     # permission_classes = [IsAuthenticated]
     queryset = Diary_Mood.objects.all()
-    def get(self, request, year, month):
+    def get(self, request, id, year, month):
         year = self.kwargs.get('year')
         month = self.kwargs.get('month')
         if date(year, month, 1) > date.today():
@@ -152,9 +152,9 @@ class UserMoodReportView(ListAPIView):
 
         start_date = date(year, month, 1)
         end_date = date(year, month, monthrange(year, month)[1])
-        id = self.kwargs.get('id')
-        user_id = users.objects.get(id=id)
-        diary_list = Diary.objects.filter(user_id=user_id, date__range=[start_date, end_date])
+        id =self.kwargs.get('id')
+        user = users.objects.get(id=id)
+        diary_list = Diary.objects.filter(user_id=user.user_id, date__range=[start_date, end_date])
 
         mood_totals = {}
 
