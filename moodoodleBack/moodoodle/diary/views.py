@@ -101,7 +101,7 @@ class DiaryUpdateView(RetrieveUpdateAPIView):
                 'status_code': status.HTTP_400_BAD_REQUEST,
                 'message': "날짜 혹은 일기 내용이 비었습니다."
             }, status=status.HTTP_400_BAD_REQUEST)
-        data = {'date': date, 'content': content}
+        data = {'user_id': user.user_id, 'date': date, 'content': content}
         serializer = self.get_serializer(self.get_object(), data=data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()

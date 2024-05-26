@@ -246,7 +246,7 @@ class UserSurveyView(CreateAPIView):
             if Survey.objects.filter(question=question, answer=answer, user_id=user_id).exists():
                 continue
             survey_data = {'answer': answer}
-            serializer = UserSurveySerializer(data=survey_data, context={'request': request, 'question': question})
+            serializer = UserSurveySerializer(data=survey_data, context={'user_id': user_id, 'question': question})
             if serializer.is_valid():
                 survey_responses.append(serializer.save())
 

@@ -36,8 +36,7 @@ class UserSurveySerializer(serializers.ModelSerializer):
         read_only_fields = ['user_id', 'question']
 
     def create(self, validated_data):
-        request = self.context.get('request')
-        user_id = request.user
+        user_id = self.context.get('user_id')
         question = self.context.get('question')
         answer = validated_data['answer']
         survey = Survey.objects.create(user_id=user_id, question=question, answer=answer)
