@@ -131,12 +131,13 @@ class DiaryDeleteView(DestroyAPIView):
                     'message' : "일기 접근 권한이 없습니다."
                 }, status=status.HTTP_403_FORBIDDEN)
             diary.delete()
+            diary_mood = Diary_Mood.objects.get(diary_id=diary.diary_id)
+            diary_mood.delete()
             return Response({
                 'success' : True,
                 'status_code': status.HTTP_200_OK,
                 'message' : "요청에 성공하였습니다."
             }, status=status.HTTP_200_OK)
-
 
 class DiaryDetailView(APIView):
     serializer_class = DiaryDetailSerializer
@@ -169,8 +170,8 @@ class MonthlyCalendarView(ListAPIView):
     # permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        year = int(self.kwargs['year'])
-        month = int(self.kwargs['month'])
+        year = int(self.kwargs.get('year'))
+        month = int(self.kwargs.get('month'))
         start_date = date(year, month, 1)
         end_date = date(year, month, monthrange(year, month)[1])
         current_date = date.today()
@@ -182,8 +183,8 @@ class MonthlyCalendarView(ListAPIView):
         return Diary.objects.filter(date__range=(start_date, end_date), user_id=user_id)
 
     def list(self, request, *args, **kwargs):
-        year = int(self.kwargs['year'])
-        month = int(self.kwargs['month'])
+        year = int(self.kwargs.get('year'))
+        month = int(self.kwargs.get('month'))
         start_date = date(year, month, 1)
         end_date = date(year, month, monthrange(year, month)[1])
 
@@ -225,7 +226,7 @@ class YearlyCalendarView(ListAPIView):
 
     def get_queryset(self):
 
-        year = int(self.kwargs['year'])
+        year = int(self.kwargs.get('year'))
         start_date = date(year, 1, 1)
         end_date = date(year, 12, monthrange(year, 12)[1])
         current_year = date.today().year
@@ -237,7 +238,7 @@ class YearlyCalendarView(ListAPIView):
         return Diary.objects.filter(date__range=(start_date, end_date), user_id=user_id)
 
     def list(self, request, *args, **kwargs):
-        year = int(self.kwargs['year'])
+        year = int(self.kwargs.get('year'))
         try:
             queryset = self.get_queryset()
         except ValueError as e:
