@@ -1,6 +1,8 @@
 import React from 'react';
+import useMonthlyReport from '../hooks/useMonthlyReport';
 
 export default function MypageMenu({ handleReportComponent, handleProfileComponent, handleLogout }) {
+  const { getMonthlyReport } = useMonthlyReport();
   return (
     <div className="flex justify-center items-center w-[342px] h-[86px] rounded-[20px] border border-darkGray/20">
       <div className="flex flex-row w-[273px] justify-between items-center">
@@ -13,7 +15,10 @@ export default function MypageMenu({ handleReportComponent, handleProfileCompone
         </button>
         <button
           type="button"
-          onClick={handleProfileComponent}
+          onClick={() => {
+            handleProfileComponent();
+            getMonthlyReport();
+          }}
           className="flex flex-col items-center w-[59px] h-[51px] gap-[7px]">
           <img src="/assets/profileIcon.svg" alt="profileIcon" className="w-[29px] h-[29px]" />
           <p className="text-darkGray text-[12px] font-semibold">프로필 관리</p>

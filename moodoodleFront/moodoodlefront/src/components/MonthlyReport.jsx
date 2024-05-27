@@ -14,7 +14,7 @@ export default function MonthlyReport({
   setSelectedDate,
   handleColorChipToggle,
 }) {
-  const { monthlyReport, monthTagList, date, setDate, getMonthlyReport } = useMonthlyReport();
+  const { monthlyReport, monthTagList, date, setDate } = useMonthlyReport();
 
   const { profile } = useProfile();
 
@@ -34,10 +34,6 @@ export default function MonthlyReport({
       year: dayjs(selectedDate).format('YYYY'),
       month: dayjs(selectedDate).format('MM'),
     });
-  }, [dayjs(selectedDate).format('YYYY'), dayjs(selectedDate).format('MM')]);
-
-  useEffect(() => {
-    getMonthlyReport();
   }, [dayjs(selectedDate).format('YYYY'), dayjs(selectedDate).format('MM')]);
 
   return (

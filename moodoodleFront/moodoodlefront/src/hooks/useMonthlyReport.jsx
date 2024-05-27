@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { defaultAxios } from '../axios/defaultAxios';
 import dayjs from 'dayjs';
 
@@ -7,6 +7,7 @@ export default function useMonthlyReport() {
     year: dayjs().format('YYYY'),
     month: dayjs().format('MM'),
   });
+
   const [monthlyReport, setMonthlyReport] = useState([]);
   const [monthTagList, setMonthTagList] = useState([]);
 
@@ -29,6 +30,10 @@ export default function useMonthlyReport() {
       console.log(error.response);
     }
   };
+
+  useEffect(() => {
+    getMonthlyReport();
+  }, [date]);
 
   return {
     monthlyReport,
