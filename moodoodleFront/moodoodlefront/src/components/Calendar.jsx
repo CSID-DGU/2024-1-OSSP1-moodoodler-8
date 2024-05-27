@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
-import { useState, useEffect } from 'react';
 import useMoodCalendar from '../hooks/useMoodCalendar';
 
 const days = ['일', '월', '화', '수', '목', '금', '토'];
 
 export default function Calendar({ handleColorChipToggle, selectedDate, setSelectedDate }) {
+  const { setYearMonth, moodcolorlist } = useMoodCalendar(selectedDate);
+  const [arr, setArr] = useState([]);
+  const [moodArr, setMoodArr] = useState([]);
+
   const handlePrevMonth = (selectedDate) => {
     const newDate = dayjs(selectedDate).subtract(1, 'month').endOf('month').format('YYYY-MM-DD');
     setSelectedDate(newDate);
@@ -15,10 +18,6 @@ export default function Calendar({ handleColorChipToggle, selectedDate, setSelec
     const newDate = dayjs(selectedDate).add(1, 'month').startOf('month').format('YYYY-MM-DD');
     setSelectedDate(newDate);
   };
-
-  const { setYearMonth, moodcolorlist } = useMoodCalendar(selectedDate);
-  const [arr, setArr] = useState([null]);
-  const [moodArr, setMoodArr] = useState([]);
 
   const initArr = (firstDay, daysInMonth) => {
     return Array.from({ length: firstDay + daysInMonth }, (v, i) =>
@@ -33,19 +32,16 @@ export default function Calendar({ handleColorChipToggle, selectedDate, setSelec
 
   const moodColorArr = (firstDay, daysInMonth) => {
     return Array.from({ length: firstDay + daysInMonth }, (v, i) =>
-      i < firstDay ? null : moodcolorlist[i - firstDay]
+      i < firstDay ? null : moodcolorlist[i - firstDay] || null
     );
   };
 
   useEffect(() => {
-    localStorage.setItem('selectedDate', selectedDate);
-    setSelectedDate(selectedDate);
-    setYearMonth({ year: dayjs(selectedDate).format('YYYY'), month: dayjs(selectedDate).format('MM') });
     const firstDay = dayjs(selectedDate).startOf('month').day();
     const daysInMonth = dayjs(selectedDate).daysInMonth();
     setArr(initArr(firstDay, daysInMonth));
     setMoodArr(moodColorArr(firstDay, daysInMonth));
-  }, [selectedDate]);
+  }, [selectedDate, moodcolorlist]);
 
   return (
     <div className="flex relative justify-center items-center w-[342px] h-[304px] rounded-[20px] shadow-componentShadow">

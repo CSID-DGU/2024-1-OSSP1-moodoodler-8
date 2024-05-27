@@ -12,27 +12,27 @@ export default function useMoodCalendar(selectedDate) {
 
   const getMoodCalendar = async () => {
     try {
-      const getMoodCalendarResponse = await defaultAxios.get(
-        `/diary/month/${localStorage.getItem('id')}/${yearMonth.year}/${yearMonth.month}/`,
-        {
-          id: localStorage.getItem('id'),
-          year: yearMonth.year,
-          month: yearMonth.month,
-        }
+      const response = await defaultAxios.get(
+        `/diary/month/${localStorage.getItem('id')}/${yearMonth.year}/${yearMonth.month}/`
       );
-      console.log(getMoodCalendarResponse.data);
-      console.log('이거는 getMoodCalendar 안에서');
-      setDaysDiary(getMoodCalendarResponse.data.result);
-      setMoodcolorlist(daysDiary.map((diary) => diary.main_mood_color));
+      const diaryData = response.data.result;
+      setDaysDiary(diaryData);
+      setMoodcolorlist(diaryData.map((diary) => diary.main_mood_color));
     } catch (error) {
-      console.log(error.response);
+      console.error(error);
     }
   };
 
   useEffect(() => {
     getMoodCalendar();
-    console.log('이거는 useMoodCalendar 안에서');
-  }, [localStorage.getItem('selectedDate'), selectedDate]);
+  }, [yearMonth]);
 
-  return { yearMonth, setYearMonth, daysDiary, moodcolorlist, setMoodcolorlist, getMoodCalendar };
+  useEffect(() => {
+    setYearMonth({
+      year: dayjs(selectedDate).format('YYYY'),
+      month: dayjs(selectedDate).format('MM'),
+    });
+  }, [selectedDate]);
+
+  return { yearMonth, setYearMonth, daysDiary, moodcolorlist, getMoodCalendar };
 }
