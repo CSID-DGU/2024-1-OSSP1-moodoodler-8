@@ -29,6 +29,14 @@ export default function FriendList() {
             onClick2=''
           />
         ))}
+        <FriendProfile
+          key='test3'
+          nickname='test3'
+          description='금전칭구'
+          src2='/assets/calendar.svg'
+          alt2='calendar'
+          onClick2={() => {}}
+        />
       </div>
     </div>
   );

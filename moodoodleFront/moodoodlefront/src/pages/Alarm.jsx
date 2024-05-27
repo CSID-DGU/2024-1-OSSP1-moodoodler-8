@@ -1,51 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { defaultAxios } from '../axios/defaultAxios';
-import { useNavigate } from 'react-router-dom';
-import useFriendRequest from '../hooks/useFriendRequest';
+import useFriendAlarm from '../hooks/useFriendAlarm';
 import FriendProfile from '../components/FriendProfile';
 
 export default function Alarm() {
-  const { friendreqList, getFriendReqList } = useFriendRequest();
-  const navigate = useNavigate();
+  const { alarmList, getAlarmList, RequestAccept, RequestDeny } = useFriendAlarm();
 
   useEffect(() => {
-    getFriendReqList();
-  }, [getFriendReqList]);
+    getAlarmList();
+  }, [getAlarmList]);
 
   const handleAcceptClick = (friendId) => {
     RequestAccept({ friend_id: friendId });
   };
   const handleDenyClick = (friendId) => {
     RequestDeny({ friend_id: friendId });
-  };
-  // 나중에 저 둘은 hook use에 옮겨놔야겠다
-  const RequestAccept = async ({ friend_id }) => {
-    const postData = {
-      from_user_id: localStorage.getItem('id'),
-    };
-    try {
-      const friendAcceptResponse = await defaultAxios.post(`/friend/accept/${friend_id}`, postData);
-      console.log(friendAcceptResponse.data);
-      // alert 사용해서 친구를 수락했습니다 띄우기 넣을 예정
-      navigate(`/friend`);
-    } catch (error) {
-      const { status_code } = error.response.status_code;
-      console.error('Error submitting post:', status_code);
-    }
-  };
-  const RequestDeny = async ({ friend_id }) => {
-    const postData = {
-      from_user_id: localStorage.getItem('id'),
-    };
-    try {
-      const friendAcceptResponse = await defaultAxios.post(`/friend/deny/${friend_id}`, postData);
-      console.log(friendAcceptResponse.data);
-      // alert 사용해서 친구를 거절하시겠습니까? 재확인 넣을 예정
-      navigate(`/friend`);
-    } catch (error) {
-      // const { status_code } = error.response.status_code;
-      // console.error('Error submitting post:', status_code);
-    }
   };
 
   return (
@@ -66,7 +34,7 @@ export default function Alarm() {
             alt2='deny'
             onClick2={() => handleDenyClick('testfriend')}
           />
-          {Array.from(friendreqList.values()).map((friend) => (
+          {Array.from(alarmList.values()).map((friend) => (
             <FriendProfile
               nickname={friend.nickname}
               description={friend.description}

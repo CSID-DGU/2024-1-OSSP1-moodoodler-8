@@ -1,10 +1,12 @@
 import React from 'react';
 import FriendProfile from '../components/FriendProfile';
 import { useLocation } from 'react-router-dom';
+import useFriendRequest from '../hooks/useFriendRequest';
 
 export default function FriendSearch() {
   const location = useLocation();
   const { searchData } = location.state || {};
+  const { handleRequest } = useFriendRequest();
 
   return (
     <div className='flex flex-col items-center w-[342px] h-[619px] relative gap-[20px] rounded-[20px] bg-white shadow-componentShadow'>
@@ -19,7 +21,7 @@ export default function FriendSearch() {
             description={searchData.description}
             src2='/assets/friendreq.svg'
             alt2='friendrequest'
-            onClick2={() => {}}
+            onClick2={() => handleRequest(searchData.id)}
           />
         </div>
       ) : (
