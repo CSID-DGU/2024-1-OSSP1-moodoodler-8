@@ -2,16 +2,18 @@
 from calendar import monthrange
 from datetime import date
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from rest_framework import status
-from rest_framework.generics import CreateAPIView, UpdateAPIView, RetrieveAPIView, ListAPIView
+from rest_framework.generics import CreateAPIView, UpdateAPIView, RetrieveUpdateAPIView, ListAPIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from . import serializers
 from .models import users, Survey
-from diary.models import Diary, Diary_Mood
-from .serializers import UserRegistrationSerializer, UserLoginSerializer, MypageSerializer, UserLogoutSerializer, UserSurveySerializer
+from drf_yasg.utils import swagger_auto_schema
+from diary.models import Diary
+from diary_mood.models import Diary_Mood
+from .serializers import UserRegistrationSerializer, UserLoginSerializer, MypageSerializer, UserLogoutSerializer, DuplicatedSerializer, UserSurveySerializer
 
 class UserRegistrationView(CreateAPIView):
     serializer_class = UserRegistrationSerializer
@@ -55,29 +57,48 @@ class UserLoginView(CreateAPIView):
                 'message' : "로그인에 실패하였습니다."
             }, status=status.HTTP_404_NOT_FOUND)
 
+class DuplicatedView(CreateAPIView):
+    permission_classes = (AllowAny,)
+    serializer_class = DuplicatedSerializer
     
-class MypageAPIView(UpdateAPIView):
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        id = request.data.get('id')
+        if users.objects.filter(id=id).exists():
+            response = {
+                'success' : False,
+                'status_code' : status.HTTP_403_FORBIDDEN,
+                'message' : "중복되는 아이디입니다.",
+            }
+            return Response(response, status=status.HTTP_403_FORBIDDEN)
+        else:
+            return Response({
+            'success' : True,
+            'status_code': status.HTTP_200_OK,
+            'message' : "중복되지 않는 아이디입니다."
+        }, status=status.HTTP_200_OK)
+
+
+class MypageAPIView(RetrieveUpdateAPIView):
     # permission_classes = (IsAuthenticated,)
     serializer_class = MypageSerializer
     queryset = users.objects.all()
     # lookup_field = 'id'
     
     def get_object(self):
-        queryset = self.filter_queryset(self.get_queryset())
-        obj = queryset.get(pk=self.request.user.user_id)
-        self.check_object_permissions(self.request, obj)
-        return obj
+        id = self.kwargs.get('id')
+        return get_object_or_404(users, id=id)
     
     def get(self, request, *args, **kwargs):
-        id = request.user.id
         try:
-            user = users.objects.get(id=id)
-            serializer = MypageSerializer(user)
+            user = self.get_object()
+            serializer_data = request.data
+            serializer = self.serializer_class(user, data=serializer_data, partial=True)
+            serializer.is_valid(raise_exception=True)
             response_data = {
                 'success' : True,
                 'status_code': status.HTTP_200_OK,
                 'message' : "요청에 성공하였습니다.",
-                'id' : id,
                 'data' : serializer.data
             }
             return Response(response_data, status=status.HTTP_200_OK)
@@ -89,15 +110,14 @@ class MypageAPIView(UpdateAPIView):
             }, status=status.HTTP_404_NOT_FOUND)
     
     def patch(self, request, *args, **kwargs):
-        id = request.user.id
         serializer_data = request.data
         try:
-            user = users.objects.get(id=id)
+            user = self.get_object()
         except users.DoesNotExist:
             return Response({
                 'success': False,
                 'status_code': status.HTTP_404_NOT_FOUND,
-                'message' : "유저가 존재하지 않습니다."
+                'message' : "해당 유저가 없습니다."
             }, status=status.HTTP_404_NOT_FOUND)
         serializer = self.serializer_class(
             user, data=serializer_data, partial=True
@@ -121,7 +141,7 @@ class MypageAPIView(UpdateAPIView):
 class UserMoodReportView(ListAPIView):
     # permission_classes = [IsAuthenticated]
     queryset = Diary_Mood.objects.all()
-    def get(self, request, year, month):
+    def get(self, request, id, year, month):
         year = self.kwargs.get('year')
         month = self.kwargs.get('month')
         if date(year, month, 1) > date.today():
@@ -133,8 +153,9 @@ class UserMoodReportView(ListAPIView):
 
         start_date = date(year, month, 1)
         end_date = date(year, month, monthrange(year, month)[1])
-        user_id = request.user
-        diary_list = Diary.objects.filter(user_id=user_id, date__range=[start_date, end_date])
+        id =self.kwargs.get('id')
+        user = users.objects.get(id=id)
+        diary_list = Diary.objects.filter(user_id=user.user_id, date__range=[start_date, end_date])
 
         mood_totals = {}
 
@@ -199,44 +220,62 @@ class UserMoodReportView(ListAPIView):
             'detail': detail
         }, status=status.HTTP_200_OK)
 
-class UserLogoutView(RetrieveAPIView):
+class UserLogoutView(CreateAPIView):
     # permission_classes = (IsAuthenticated,)
     queryset = users.objects.all()
     serializer_class = UserLogoutSerializer
 
-    def get_object(self):
-        queryset = self.filter_queryset(self.get_queryset())
-        obj = queryset.get(pk=self.request.user.user_id)
-        self.check_object_permissions(self.request, obj)
-        return obj
-
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         logout(request)
-        return Response({
-                'success' : True,
-                'status_code': status.HTTP_200_OK,
-                'message': "로그아웃에 성공하였습니다."
-            }, status=status.HTTP_200_OK)
-
+        response_data = {
+            'success': True,
+            'status code': status.HTTP_200_OK,
+            'message': "로그아웃 되었습니다.",
+        }
+        return Response(response_data, status=status.HTTP_200_OK)
+        
 class UserSurveyView(CreateAPIView):
     # permission_classes = (IsAuthenticated,)
     serializer_class = UserSurveySerializer
-    def post(self, request, *args, **kwargs):
-        user_id = request.data.get('uesr_id')
-        positive_answer = request.data.getlist('positive_answer')
-        negative_answer = request.data.getlist('negative_answer')
-        for answer in positive_answer:
-            seralizer = self.serializer_class(context={'question' : "positive", 'answer' : answer})
-            seralizer.is_valid(raise_exception=True)
-            seralizer.save()
-        for answer in negative_answer:
-            seralizer = self.serializer_class(context={'question' : "negative", 'answer' : answer})
-            seralizer.is_valid(raise_exception=True)
-            seralizer.save()
+    def post(self, request, question):
+        if question not in ['positive', 'negative']:
+            return Response({
+                'success' : False,
+                'status_code' : status.HTTP_400_BAD_REQUEST,
+                'message' : "question 파라미터 값이 잘못되었습니다."
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        answers = request.data.get('answer', [])
+
+        if not answers:
+            return Response({
+                'success' : False,
+                'status_code' : status.HTTP_400_BAD_REQUEST,
+                'message' : "장르를 1개 이상 선택해주세요."
+            }, status=status.HTTP_400_BAD_REQUEST)
+        if not isinstance(answers, list):
+            return Response({
+                'success': False,
+                'status_code': status.HTTP_400_BAD_REQUEST,
+                'message' : "답변은 배열 형식이어야 합니다."
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        id = request.data.get('id')
+        user_id = users.objects.get(id=id)
+        survey_responses = []
+        for answer in answers:
+            if Survey.objects.filter(question=question, answer=answer, user_id=user_id).exists():
+                continue
+            survey_data = {'answer': answer}
+            serializer = UserSurveySerializer(data=survey_data, context={'user_id': user_id, 'question': question})
+            if serializer.is_valid():
+                survey_responses.append(serializer.save())
+
+        response_serializer = UserSurveySerializer(survey_responses, many=True)
 
         return Response({
             'success' : True,
             'status_code': status.HTTP_201_CREATED,
-            'message' : "요청에 성공하였습니다."
+            'message' : "요청에 성공하였습니다.",
+            "data" : response_serializer.data
         },status=status.HTTP_201_CREATED)
-
