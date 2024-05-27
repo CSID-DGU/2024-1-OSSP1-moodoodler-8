@@ -11,7 +11,8 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from . import serializers
 from .models import users, Survey
 from drf_yasg.utils import swagger_auto_schema
-from diary.models import Diary, Diary_Mood
+from diary.models import Diary
+from diary_mood.models import Diary_Mood
 from .serializers import UserRegistrationSerializer, UserLoginSerializer, MypageSerializer, UserLogoutSerializer, DuplicatedSerializer, UserSurveySerializer
 
 class UserRegistrationView(CreateAPIView):

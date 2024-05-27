@@ -8,11 +8,13 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 
 from . import serializers
-from .models import Diary, Diary_Mood
+from .models import Diary
+from diary_mood.models import Diary_Mood
 from user.models import users
 from .serializers import DiaryCreateSerializer, DiaryUpdateSerializer, DiaryDetailSerializer, serializers, CalendarSerializer
 from calendar import monthrange
 from datetime import date, timedelta
+from diary_mood.views import DiaryMoodCreateView
 
 class DiaryCreateView(CreateAPIView):
     serializer_class = DiaryCreateSerializer
@@ -53,6 +55,7 @@ class DiaryCreateView(CreateAPIView):
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
+        DiaryMoodCreateView.create(self, request=request, diary_id=serializer.data.get("diary_id"))
         return Response({
             'success' : True,
             'status_code' : status.HTTP_201_CREATED,
