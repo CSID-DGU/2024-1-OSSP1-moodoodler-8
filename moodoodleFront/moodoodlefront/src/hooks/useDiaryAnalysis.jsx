@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import { defaultAxios } from '../axios/defaultAxios';
 
 export default function useDiaryAnalysis() {
   const [analysisResult, setAnalysisResult] = useState([
@@ -39,17 +39,16 @@ export default function useDiaryAnalysis() {
 
   const getDiaryAnalysis = async (diary_id) => {
     try {
-      const getDiaryAnalysisrResponse = await axios.get(
-        `/diary/detail/${diary_id}`,
+      const getDiaryAnalysisrResponse = await defaultAxios.get(
+        `/diary/detail/${localStorage.getItem('id')}/${diary_id}/`,
         {
-          user_id: localStorage.getItem('user_id'),
-          diary_id: { diary_id },
-        },
+          id: localStorage.getItem('id'),
+          diary_id: diary_id,
+        }
       );
-      setAnalysisResult(getDiaryAnalysisrResponse.detail);
+      setAnalysisResult(getDiaryAnalysisrResponse.data.data.detail);
     } catch (error) {
-      const { message } = error.response.data;
-      console.log(message);
+      console.error('Error getting diary Analysis:', error.response);
     }
   };
 

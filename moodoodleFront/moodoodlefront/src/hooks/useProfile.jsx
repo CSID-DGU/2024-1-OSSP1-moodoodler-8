@@ -1,26 +1,53 @@
 import { useState } from 'react';
-import axios from 'axios';
+import { defaultAxios } from '../axios/defaultAxios';
 
 export default function useProfile() {
   const [profile, setProfile] = useState({
-    nickname: '무두들러',
-    description: '안녕하세요. 무두들러입니다!',
-    profile_image: '/assets/profile.svg',
-    public: false,
+    nickname: '',
+    description: '',
+    isPublic: false,
   });
 
-  const getUserProfile = async (body) => {
+  const [isModified, setIsModified] = useState(false);
+
+  const getUserProfile = async () => {
     try {
-      const userProfileResponse = await axios.get('/user/mypage', body);
+      const getProfileResponse = await defaultAxios.get(
+        `/user/mypage/${localStorage.getItem('id')}/`,
+        {
+          id: localStorage.getItem('id'),
+        },
+        {
+          withCredentials: true,
+        }
+      );
       setProfile({
-        nickname: userProfileResponse.nickname,
-        description: userProfileResponse.description,
-        profile_image: userProfileResponse.profile_image,
+        nickname: getProfileResponse.data.data.nickname,
+        description: getProfileResponse.data.data.description,
+        isPublic: getProfileResponse.data.data.public,
       });
     } catch (error) {
-      const { message } = error.response.data;
-      console.log(message);
+      console.error(error.response);
     }
   };
-  return { profile, getUserProfile };
+
+  const patchUserProfile = async (handleProfileComponent) => {
+    const patchUserInfoData = {
+      nickname: profile.nickname,
+      description: profile.description,
+      public: profile.isPublic,
+    };
+    try {
+      const patchProfileManagementResponse = await defaultAxios.patch(
+        `/user/mypage/${localStorage.getItem('id')}/`,
+        patchUserInfoData
+      );
+      handleProfileComponent();
+      setIsModified((prev) => !prev);
+    } catch (error) {
+      console.error(error.response);
+    }
+  };
+
+  return { profile, setProfile, getUserProfile, patchUserProfile, isModified };
 }

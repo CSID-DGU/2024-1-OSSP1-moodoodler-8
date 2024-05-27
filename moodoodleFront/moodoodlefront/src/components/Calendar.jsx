@@ -1,98 +1,115 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import dayjs from 'dayjs';
-import useRenderCalenderBoard from './useRenderCalenderBoard';
+import { useState, useEffect } from 'react';
 import useMoodCalendar from '../hooks/useMoodCalendar';
 
 const days = ['일', '월', '화', '수', '목', '금', '토'];
 
-export default function Calendar({
-  handleColorChipToggle,
-  selectedDate,
-  setSelectedDate,
-}) {
-  const splited = selectedDate.split('-');
-  const [year_month, setYear_month] = useState({
-    year: splited[0],
-    month: splited[1],
-  });
-  const [arr, setArr] = useState([null]);
-  const { getMoodCalendar } = useMoodCalendar();
-
-  const handleSelectDate = (v) => {
-    setSelectedDate(v);
-  };
-
+export default function Calendar({ handleColorChipToggle, selectedDate, setSelectedDate }) {
   const handlePrevMonth = (selectedDate) => {
-    const newDate = dayjs(selectedDate)
-      .subtract(1, 'month')
-      .endOf('month')
-      .format('YYYY-MM-DD');
+    const newDate = dayjs(selectedDate).subtract(1, 'month').endOf('month').format('YYYY-MM-DD');
     setSelectedDate(newDate);
   };
 
   const handleNextMonth = (selectedDate) => {
-    const newDate = dayjs(selectedDate)
-      .add(1, 'month')
-      .startOf('month')
-      .format('YYYY-MM-DD');
+    const newDate = dayjs(selectedDate).add(1, 'month').startOf('month').format('YYYY-MM-DD');
     setSelectedDate(newDate);
   };
 
-  const board = useRenderCalenderBoard(
-    selectedDate,
-    handleSelectDate,
-    arr,
-    setArr,
-  );
+  const { setYearMonth, moodcolorlist } = useMoodCalendar(selectedDate);
+  const [arr, setArr] = useState([null]);
+  const [moodArr, setMoodArr] = useState([]);
+
+  const initArr = (firstDay, daysInMonth) => {
+    return Array.from({ length: firstDay + daysInMonth }, (v, i) =>
+      i < firstDay
+        ? null
+        : dayjs(selectedDate)
+            .startOf('month')
+            .set('date', i - firstDay + 1)
+            .format('YYYY-MM-DD')
+    );
+  };
+
+  const moodColorArr = (firstDay, daysInMonth) => {
+    return Array.from({ length: firstDay + daysInMonth }, (v, i) =>
+      i < firstDay ? null : moodcolorlist[i - firstDay]
+    );
+  };
 
   useEffect(() => {
-    setYear_month({ year: splited[0], month: splited[1] });
+    localStorage.setItem('selectedDate', selectedDate);
+    setSelectedDate(selectedDate);
+    setYearMonth({ year: dayjs(selectedDate).format('YYYY'), month: dayjs(selectedDate).format('MM') });
+    const firstDay = dayjs(selectedDate).startOf('month').day();
+    const daysInMonth = dayjs(selectedDate).daysInMonth();
+    setArr(initArr(firstDay, daysInMonth));
+    setMoodArr(moodColorArr(firstDay, daysInMonth));
   }, [selectedDate]);
 
-  useEffect(() => {
-    getMoodCalendar(year_month.year, year_month.month);
-  }, [year_month]);
-
   return (
-    <div className='flex relative justify-center items-center w-[342px] h-[304px] rounded-[20px] shadow-componentShadow'>
-      <div className='flex flex-col justify-between items-center w-[290px] h-[260px]'>
-        <div className='flex flex-row justify-between items-center w-[283px] h-[18px]'>
+    <div className="flex relative justify-center items-center w-[342px] h-[304px] rounded-[20px] shadow-componentShadow">
+      <div className="flex flex-col justify-between items-center w-[290px] h-[260px]">
+        <div className="flex flex-row justify-between items-center w-[283px] h-[18px]">
           <img
-            src='/assets/leftArrow.svg'
-            alt='leftArrow'
-            className='w-[9px] h-[7px] cursor-pointer'
+            src="/assets/leftArrow.svg"
+            alt="leftArrow"
+            className="w-[9px] h-[7px] cursor-pointer"
             onClick={() => handlePrevMonth(selectedDate)}
           />
-          <p className='text-[17px] font-semibold text-darkNavy'>
-            {dayjs(selectedDate).format('MMM')}{' '}
-            {dayjs(selectedDate).format('YYYY')}
+          <p className="text-[17px] font-semibold text-darkNavy">
+            {dayjs(selectedDate).format('MMM')} {dayjs(selectedDate).format('YYYY')}
           </p>
           <img
-            src='/assets/rightArrow.svg'
-            alt='rightArrow'
-            className='w-[9px] h-[7px] cursor-pointer'
+            src="/assets/rightArrow.svg"
+            alt="rightArrow"
+            className="w-[9px] h-[7px] cursor-pointer"
             onClick={() => handleNextMonth(selectedDate)}
           />
         </div>
-        <div className='flex flex-col justify-between items-center w-[290px] h-[218px] border-t border-[#E4E5E7]'>
-          <div className='flex justify-center w-[290px] pt-[13px] grid grid-cols-7 '>
+        <div className="flex flex-col justify-between items-center w-[290px] h-[218px] border-t border-[#E4E5E7]">
+          <div className="flex justify-center w-[290px] pt-[13px] grid grid-cols-7 ">
             {days.map((v) => (
-              <div className='font-medium text-[10px] text-center' key={v}>
+              <div className="font-medium text-[10px] text-center" key={v}>
                 {v}
               </div>
             ))}
           </div>
-          <div className='w-[290px] h-[171px] grid grid-cols-7 text-center text-[8px] text-darkGreen'>
-            {board}
+          <div className="w-[290px] h-[171px] grid grid-cols-7 text-center text-[8px] text-darkGreen">
+            {arr.map((v, i) => (
+              <div className="flex justify-center" key={v ? v.toString() : `${v}${i}`}>
+                {v &&
+                  (moodArr[i] !== null ? (
+                    dayjs(selectedDate).format('YYYY-MM') <= dayjs().format('YYYY-MM') ? (
+                      <div
+                        className={`flex justify-center items-center w-[22px] h-[22px] rounded-full bg-[#${moodArr[i]}] text-center cursor-pointer bg-opacity-80`}
+                        date={v}
+                        onClick={() => setSelectedDate(v)}>
+                        {dayjs(v).date()}
+                      </div>
+                    ) : (
+                      <div
+                        className="flex justify-center items-center w-[22px] h-[22px] rounded-full bg-gray-scale-1 text-center cursor-pointer"
+                        date={v}
+                        onClick={() => setSelectedDate(v)}>
+                        {dayjs(v).date()}
+                      </div>
+                    )
+                  ) : (
+                    <div
+                      className="flex justify-center items-center w-[22px] h-[22px] rounded-full bg-gray-scale-1 text-center cursor-pointer"
+                      date={v}
+                      onClick={() => setSelectedDate(v)}>
+                      {dayjs(v).date()}
+                    </div>
+                  ))}
+              </div>
+            ))}
           </div>
         </div>
       </div>
-      <button
-        className='absolute right-[15px] bottom-[15px]'
-        type='button'
-        onClick={handleColorChipToggle}
-      >
-        <img src='/assets/more.svg' alt='컬러칩 보기' />
+      <button className="absolute right-[15px] bottom-[15px]" type="button" onClick={handleColorChipToggle}>
+        <img src="/assets/more.svg" alt="컬러칩 보기" />
       </button>
     </div>
   );

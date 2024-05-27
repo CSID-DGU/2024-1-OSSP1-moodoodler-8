@@ -1,19 +1,19 @@
-import axios from 'axios';
+import { defaultAxios } from '../axios/defaultAxios';
 import { useNavigate } from 'react-router-dom';
 
 export default function useLogout() {
   const navigate = useNavigate();
 
   const logout = () =>
-    axios
-      .post('/user/logout')
+    defaultAxios
+      .post('/user/logout/')
       .then(() => {
-        localStorage.removeItem('user_id');
-        navigate('/start');
+        localStorage.removeItem('id');
+        localStorage.removeItem('selectedDate');
+        navigate('/');
       })
       .catch((error) => {
-        const { message } = error.response.data;
-        alert(message);
+        console.log(error.response);
       });
 
   return { logout };
