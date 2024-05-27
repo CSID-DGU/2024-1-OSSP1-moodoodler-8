@@ -13,14 +13,14 @@ export default function DiaryModifiedComponent({ content, diary_id, handleModifi
   return (
     <>
       <textarea
-        className="w-[298px] h-[145px] p-[10px] text-[13px] font-normal rounded-[20px] border-[0.8px] border-outlineGray outline-none resize-none"
-        maxLength="300"
+        className='w-[298px] h-[145px] p-[10px] text-[13px] font-normal rounded-[20px] border-[0.8px] border-outlineGray outline-none resize-none'
+        maxLength='300'
         onChange={(e) => handleSetValue(e)}
         defaultValue={content}
       />
       <CustomButton
-        text="수정하기"
-        color="orange"
+        text='수정하기'
+        color='orange'
         onClick={() => handleModifiedDiary(diary_id, modifiedContent, setModifiedContent, handleModified)}
       />
     </>

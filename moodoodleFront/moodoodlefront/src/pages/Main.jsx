@@ -35,8 +35,8 @@ export default function Main() {
               content={context.daysDiary[context.date].content}
               diary_id={context.daysDiary[context.date].diary_id}
               selectedDate={context.selectedDate}
-              text="분석 결과 보기"
-              color="orange"
+              text='분석 결과 보기'
+              color='orange'
               handleDayMoodAnalysisToggle={context.handleDayMoodAnalysisToggle}
               handleModified={handleModified}
               isModified={isModified}

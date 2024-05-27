@@ -12,7 +12,7 @@ export default function ToggleContainer({ is, isPublic, setIs, year }) {
   return (
     <>
       <div
-        className="relative cursor-pointer"
+        className='relative cursor-pointer'
         onClick={year ? () => toggleYearHandler() : () => toggleProfileHandler()}>
         <div
           className={`w-[37px] h-[18px] rounded-[30px] duration-[0.5s] ${
