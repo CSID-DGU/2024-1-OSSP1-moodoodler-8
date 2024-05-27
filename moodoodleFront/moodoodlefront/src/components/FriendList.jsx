@@ -18,10 +18,10 @@ export default function FriendList() {
         </button>
       </div>
       <div className='flex flex-col gap-[5px]'>
+        {/* 여긴 다시 재수정 필요 */}
         {Array.from(friendList.values()).map((friend) => (
           <FriendProfile
             key={friend.nickname}
-            img={friend.profile_image}
             nickname={friend.nickname}
             description={friend.description}
             src2='/assets/calendar.svg'

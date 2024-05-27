@@ -13,9 +13,6 @@ export default function Header() {
         <Link to='/main'>
           <img src='/assets/moodoodleLogo.svg' alt='logo' />
         </Link>
-        <button type='button'>
-          <img src='/assets/bell.svg' alt='알람' />
-        </button>
       </div>
     </div>
   );

@@ -1,28 +1,32 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { defaultAxios } from '../axios/defaultAxios';
 
 export default function useFriendSearch() {
   const navigate = useNavigate();
-  const [friendID, setFriendID] = useState();
-  const [searchData, setSearchData] = useState({ id: '' });
+  const [friendID, setFriendID] = useState('');
+  const [searchData, setSearchData] = useState({});
 
-  const search = async (body) => {
+  const updateFriendID = (event) => {
+    const friendID = event.target.value;
+    setFriendID(friendID);
+  };
+
+  const search = async () => {
     try {
-      const getSearchResponse = await defaultAxios.get(`/friend/search/${friendID}`, {
-        id: localStorage.getItem('id'),
-      });
+      const getSearchResponse = await defaultAxios.get(`/friend/search/${friendID}`);
       setSearchData({
         id: getSearchResponse.data.id,
         nickname: getSearchResponse.data.nickname,
-        profile_image: getSearchResponse.data.profile_image,
         description: getSearchResponse.data.description,
       });
-      navigate('/search');
+      console.log(getSearchResponse.data);
+      navigate('/search', { state: { searchData: getSearchResponse.data } });
     } catch (error) {
       console.log(error.response);
-    } finally {
+      navigate('/search', { state: { searchData: false } });
     }
   };
-  return { friendID, setFriendID, searchData, setSearchData, search };
+
+  return { friendID, setFriendID, searchData, setSearchData, updateFriendID, search };
 }

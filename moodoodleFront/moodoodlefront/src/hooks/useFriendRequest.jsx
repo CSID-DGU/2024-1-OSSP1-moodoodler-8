@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { defaultAxios } from '../axios/defaultAxios';
 
-export default function useFriendProfile() {
+export default function useFriendRequest() {
   // 친구 요청 리스트 설정, Map 객체로 초기화
   const [friendreqList, setFriendReqList] = useState(new Map());
 
