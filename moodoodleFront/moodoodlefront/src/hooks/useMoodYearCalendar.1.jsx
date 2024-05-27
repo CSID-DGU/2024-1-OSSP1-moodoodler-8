@@ -591,9 +591,9 @@ export default function useMoodYearCalendar() {
       setMonthlyDiary(getMoodYearCalendarResponse.data.result);
       getMonthlyList(monthlyDiary);
     } catch (error) {
-      const { status_code } = error.response.data.status_code;
+      const { status_code } = error.response.status_code;
       console.log(status_code);
-      if ((error.response = 401)) {
+      if (status_code === 401) {
         getNullMoodColorList(monthlyDiary);
       }
     }

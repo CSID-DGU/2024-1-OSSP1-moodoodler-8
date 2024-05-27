@@ -9,11 +9,10 @@ export default function AnalysisPage() {
   const { daysDiary } = useMoodCalendar();
   const selectedDate = useParams();
 
-  // 날짜가 안 바뀜 api 연결하고 수정 예정
   return (
     <div className="flex flex-col justify-between items-center gap-[15px]">
-      <MoodAnalysis diary_id={daysDiary[dayjs().date() - 1].diary_id} />
-      <DiaryShow content={daysDiary[dayjs().date() - 1].content} text="메인으로" color="skyblue" />
+      <MoodAnalysis diary_id={daysDiary[dayjs(selectedDate).format('DD') - 1].diary_id} />
+      <DiaryShow content={daysDiary[dayjs(selectedDate).format('DD') - 1].content} text="메인으로" color="skyblue" />
     </div>
   );
 }

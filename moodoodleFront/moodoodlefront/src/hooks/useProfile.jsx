@@ -5,23 +5,49 @@ export default function useProfile() {
   const [profile, setProfile] = useState({
     nickname: '',
     description: '',
-    profile_image: '',
-    public: false,
+    isPublic: false,
   });
+
+  const [isModified, setIsModified] = useState(false);
 
   const getUserProfile = async () => {
     try {
-      const getProfileResponse = await defaultAxios.get('/user/mypage', {
-        id: localStorage.getItem('id'),
-      });
+      const getProfileResponse = await defaultAxios.get(
+        `/user/mypage/${localStorage.getItem('id')}/`,
+        {
+          id: localStorage.getItem('id'),
+        },
+        {
+          withCredentials: true,
+        }
+      );
       setProfile({
-        nickname: getProfileResponse.data.nickname,
-        description: getProfileResponse.data.description,
-        profile_image: getProfileResponse.data.profile_image,
+        nickname: getProfileResponse.data.data.nickname,
+        description: getProfileResponse.data.data.description,
+        isPublic: getProfileResponse.data.data.public,
       });
     } catch (error) {
-      console.error('Error getting profile:');
+      console.error(error.response);
     }
   };
-  return { profile, getUserProfile };
+
+  const patchUserProfile = async (handleProfileComponent) => {
+    const patchUserInfoData = {
+      nickname: profile.nickname,
+      description: profile.description,
+      public: profile.isPublic,
+    };
+    try {
+      const patchProfileManagementResponse = await defaultAxios.patch(
+        `/user/mypage/${localStorage.getItem('id')}/`,
+        patchUserInfoData
+      );
+      handleProfileComponent();
+      setIsModified((prev) => !prev);
+    } catch (error) {
+      console.error(error.response);
+    }
+  };
+
+  return { profile, setProfile, getUserProfile, patchUserProfile, isModified };
 }

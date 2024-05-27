@@ -8,15 +8,16 @@ export default function Survey() {
   const [isFirstStep, setIsFirstStep] = useState(true);
   const [positives, setPositives] = useState([]);
   const [negatives, setNegatives] = useState([]);
-  const { postSurveyAnswers } = useSurvey();
+  const { postPositiveSurveyAnswers, postNegativeSurveyAnswers } = useSurvey();
 
   const handleFirstStepSubmit = () => {
     setIsFirstStep((prev) => !prev);
+    postPositiveSurveyAnswers(positives);
   };
 
   const handleFinalStepSubmit = () => {
     setIsFirstStep((prev) => !prev);
-    postSurveyAnswers(positives, negatives);
+    postNegativeSurveyAnswers(negatives);
     setPositives([]);
     setNegatives([]);
     navigate('/login');
@@ -25,7 +26,7 @@ export default function Survey() {
   return (
     <div className="flex flex-col justify-center items-center h-screen">
       <div className="flex flex-col justify-center items-center w-[390px] h-screen bg-white gap-[28px]">
-        <Link to="/start">
+        <Link to="/">
           <img src="/assets/moodoodleLogoMain.svg" alt="logo" />
         </Link>
         {isFirstStep ? (

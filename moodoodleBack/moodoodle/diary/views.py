@@ -19,25 +19,38 @@ class DiaryCreateView(CreateAPIView):
     # permission_classes = [IsAuthenticated]
     queryset = Diary.objects.all()
     def create(self, request, *args, **kwargs):
-        id = request.user.id
-        user_id = users.objects.get(id=id)
+        login_id = request.data.get('id')
+        if not login_id:
+            return Response({
+                'success' : False,
+                'status_code' : status.HTTP_400_BAD_REQUEST,
+                'message' : "유저 ID가 제공되지 않았습니다."
+            }, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            user = users.objects.get(id=login_id)
+        except users.DoesNotExist:
+            return Response({
+                'success' : False,
+                'status_code' : status.HTTP_400_BAD_REQUEST,
+                'message': "유효하지 않은 유저 ID입니다."
+            }, status=status.HTTP_400_BAD_REQUEST)
         date = request.data.get('date')
         content = request.data.get('content')
-        if date is None or content is None:
+        if not date or not content:
             return Response({
                 'success': False,
                 'status_code': status.HTTP_400_BAD_REQUEST,
                 'message': "날짜 혹은 일기 내용이 비었습니다."
             }, status=status.HTTP_400_BAD_REQUEST)
 
-        if Diary.objects.filter(user_id=user_id, date=date).first():
+        if Diary.objects.filter(user_id=user.user_id, date=date).exists():
             return Response({
                 'success': False,
                 'status_code': status.HTTP_400_BAD_REQUEST,
                 'message': "이미 이 날짜에 작성된 일기가 있습니다."
             }, status=status.HTTP_400_BAD_REQUEST)
-
-        serializer = self.get_serializer(data=request.data)
+        data = {'user_id': user.user_id, 'date': date, 'content': content}
+        serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response({
@@ -58,15 +71,22 @@ class DiaryUpdateView(RetrieveUpdateAPIView):
 
     def update(self, request, *args, **kwargs):
         diary = self.get_object()
-        id = request.user.id
-        user_id = users.objects.get(id=id)
-        if user_id != diary.user_id:
+        login_id = request.data.get('id')
+        try:
+            user = users.objects.get(id=login_id)
+        except users.DoesNotExist:
+            return Response({
+                'success' : False,
+                'status_code' : status.HTTP_400_BAD_REQUEST,
+                'message': "유효하지 않은 유저 ID입니다."
+            }, status=status.HTTP_400_BAD_REQUEST)
+        if diary.user_id != user:
             return Response({
                 'success': False,
                 'status_code': status.HTTP_403_FORBIDDEN,
                 'message': "일기 접근 권한이 없습니다."
             }, status=status.HTTP_403_FORBIDDEN)
-        if Diary.objects.filter(user_id=user_id, date=request.data.get('date')).exclude(diary_id=diary.diary_id).first():
+        if Diary.objects.filter(user_id=user.user_id, date=request.data.get('date')).exclude(diary_id=diary.diary_id).first():
             return Response({
                 'success': False,
                 'status_code': status.HTTP_400_BAD_REQUEST,
@@ -81,8 +101,8 @@ class DiaryUpdateView(RetrieveUpdateAPIView):
                 'status_code': status.HTTP_400_BAD_REQUEST,
                 'message': "날짜 혹은 일기 내용이 비었습니다."
             }, status=status.HTTP_400_BAD_REQUEST)
-
-        serializer = self.get_serializer(self.get_object(), data=request.data, partial=True)
+        data = {'user_id': user.user_id, 'date': date, 'content': content}
+        serializer = self.get_serializer(self.get_object(), data=data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response({
@@ -102,7 +122,7 @@ class DiaryDeleteView(DestroyAPIView):
 
     def delete(self, request, *args, **kwargs):
             diary = self.get_object()
-            id = request.user.id
+            id = self.kwargs.get('id')
             user_id = users.objects.get(id=id)
             if diary.user_id != user_id:
                 return Response({
@@ -111,12 +131,13 @@ class DiaryDeleteView(DestroyAPIView):
                     'message' : "일기 접근 권한이 없습니다."
                 }, status=status.HTTP_403_FORBIDDEN)
             diary.delete()
+            diary_mood = Diary_Mood.objects.get(diary_id=diary.diary_id)
+            diary_mood.delete()
             return Response({
                 'success' : True,
                 'status_code': status.HTTP_200_OK,
                 'message' : "요청에 성공하였습니다."
             }, status=status.HTTP_200_OK)
-
 
 class DiaryDetailView(APIView):
     serializer_class = DiaryDetailSerializer
@@ -125,7 +146,7 @@ class DiaryDetailView(APIView):
     def get(self, request, *args, **kwargs):
         diary_id = self.kwargs.get('pk')
         diary = get_object_or_404(Diary, diary_id=diary_id)
-        id = request.user.id
+        id = self.kwargs.get('id')
         user_id = users.objects.get(id=id)
         if diary.user_id != user_id:
             return Response({
@@ -149,20 +170,21 @@ class MonthlyCalendarView(ListAPIView):
     # permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        year = int(self.kwargs['year'])
-        month = int(self.kwargs['month'])
+        year = int(self.kwargs.get('year'))
+        month = int(self.kwargs.get('month'))
         start_date = date(year, month, 1)
         end_date = date(year, month, monthrange(year, month)[1])
         current_date = date.today()
 
         if date(year, month, 1) > current_date:
             raise ValueError("접근 불가능한 날짜입니다.")
-
-        return Diary.objects.filter(date__range=(start_date, end_date))
+        id = self.kwargs.get('id')
+        user_id = users.objects.get(id=id)
+        return Diary.objects.filter(date__range=(start_date, end_date), user_id=user_id)
 
     def list(self, request, *args, **kwargs):
-        year = int(self.kwargs['year'])
-        month = int(self.kwargs['month'])
+        year = int(self.kwargs.get('year'))
+        month = int(self.kwargs.get('month'))
         start_date = date(year, month, 1)
         end_date = date(year, month, monthrange(year, month)[1])
 
@@ -204,18 +226,19 @@ class YearlyCalendarView(ListAPIView):
 
     def get_queryset(self):
 
-        year = int(self.kwargs['year'])
+        year = int(self.kwargs.get('year'))
         start_date = date(year, 1, 1)
         end_date = date(year, 12, monthrange(year, 12)[1])
         current_year = date.today().year
 
         if year > current_year:
             raise ValueError("접근 불가능한 연도입니다.")
-        user_id = self.request.user.user_id
+        id = self.kwargs.get('id')
+        user_id = users.objects.get(id=id)
         return Diary.objects.filter(date__range=(start_date, end_date), user_id=user_id)
 
     def list(self, request, *args, **kwargs):
-        year = int(self.kwargs['year'])
+        year = int(self.kwargs.get('year'))
         try:
             queryset = self.get_queryset()
         except ValueError as e:

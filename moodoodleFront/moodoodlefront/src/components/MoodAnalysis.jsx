@@ -10,7 +10,7 @@ export default function MoodAnalysis({ isModal, handleDayMoodAnalysisToggle, dia
 
   useEffect(() => {
     getDiaryAnalysis(diary_id);
-  }, []);
+  }, [diary_id]);
 
   return (
     <div className="relative flex flex-col justify-center items-center w-[342px] h-[472px] rounded-[20px] bg-white shadow-componentShadow">

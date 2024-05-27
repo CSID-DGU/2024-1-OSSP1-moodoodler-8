@@ -23,8 +23,10 @@ export default function SurveyComponent({ title, direction, answers, setAnswers,
   };
 
   useEffect(() => {
-    setAnswers([...answers, selectedGenre]);
-    console.log(answers);
+    if (selectedGenre !== '') {
+      setAnswers([...answers, selectedGenre]);
+      console.log(answers);
+    }
   }, [selectedGenre]);
 
   return (

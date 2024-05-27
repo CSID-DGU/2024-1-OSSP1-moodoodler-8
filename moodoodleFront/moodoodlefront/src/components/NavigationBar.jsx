@@ -9,7 +9,7 @@ export default function NavigationBar() {
           <img src="/assets/friend.svg" alt="friend" />
           <p className="text-center text-[10px] font-semibold text-darkGray/90">친구관리</p>
         </Link>
-        <Link to="/" className="flex flex-col items-center">
+        <Link to="/main" className="flex flex-col items-center">
           <img src="/assets/home.svg" alt="home" />
           <p className="text-center text-[10px] font-semibold text-darkGray/90">홈</p>
         </Link>

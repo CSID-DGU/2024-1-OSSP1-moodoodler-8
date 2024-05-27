@@ -3,10 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { defaultAxios } from '../axios/defaultAxios';
 
 export default function useLogin() {
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [loginData, setLoginData] = useState({ id: '', password: '' });
-
   const updateLoginFormData = (event) => {
     const targetId = event.target.id;
     setLoginData((prev) => ({ ...prev, [targetId]: event.target.value }));
@@ -14,14 +13,15 @@ export default function useLogin() {
 
   const login = async (body) => {
     try {
-      setLoading(true);
-      const loginResponse = await defaultAxios.post('/user/login/', body);
+      setLoading(false);
+      const loginResponse = await defaultAxios.post('/user/login/', body, {
+        withCredentials: true,
+      });
       localStorage.setItem('id', loginResponse.data.data.id);
-      navigate('/');
+      navigate('/main');
     } catch (error) {
       console.log(error.response);
-    } finally {
-      setLoading(false);
+      setLoading(true);
     }
   };
   return { loading, loginData, setLoginData, updateLoginFormData, login };

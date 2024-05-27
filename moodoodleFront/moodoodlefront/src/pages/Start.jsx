@@ -4,7 +4,7 @@ import MainButton from '../components/MainButton';
 
 export default function Start() {
   return (
-    <div className="realtvie flex flex-col justify-center items-center w-[390px] h-screen bg-gradient-to-br from-yellow-100 via-red-100 to-purple-100">
+    <div className="realtvie flex flex-col justify-center items-center w-full h-screen bg-gradient-to-br from-yellow-100 via-red-100 to-purple-100">
       <div className="flex flex-col justify-between items-center w-[319px] h-[207px]">
         <div className="text-[16px] font-bold text-center text-black">
           여러분의 감정을

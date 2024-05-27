@@ -39,14 +39,16 @@ export default function useDiaryAnalysis() {
 
   const getDiaryAnalysis = async (diary_id) => {
     try {
-      const getDiaryAnalysisrResponse = await defaultAxios.get(`/diary/detail/${diary_id}`, {
-        id: localStorage.getItem('id'),
-        diary_id: diary_id,
-      });
-      setAnalysisResult(getDiaryAnalysisrResponse.data.detail);
+      const getDiaryAnalysisrResponse = await defaultAxios.get(
+        `/diary/detail/${localStorage.getItem('id')}/${diary_id}/`,
+        {
+          id: localStorage.getItem('id'),
+          diary_id: diary_id,
+        }
+      );
+      setAnalysisResult(getDiaryAnalysisrResponse.data.data.detail);
     } catch (error) {
-      const { status_code } = error.response.data.status_code;
-      console.error('Error getting profile:', status_code);
+      console.error('Error getting diary Analysis:', error.response);
     }
   };
 

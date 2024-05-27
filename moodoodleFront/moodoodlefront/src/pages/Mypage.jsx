@@ -12,6 +12,7 @@ export default function Mypage() {
   const [isClickedReport, setIsClickedReport] = useState(false);
   const [isClickedProfile, setIsClickedProfile] = useState(false);
   const [selectedDate, setSelectedDate] = useRecoilState(selectedDateState);
+  const { logout } = useLogout();
 
   function handleReportComponent() {
     setIsClickedReport((prev) => !prev);
@@ -24,8 +25,6 @@ export default function Mypage() {
   function handleColorChipToggle() {
     setIsClick((prev) => !prev);
   }
-
-  const { logout } = useLogout();
 
   return (
     <div>
@@ -46,7 +45,7 @@ export default function Mypage() {
             <MypageMenu
               handleReportComponent={handleReportComponent}
               handleProfileComponent={handleProfileComponent}
-              onClick={logout}
+              handleLogout={logout}
             />
           </>
         )}
