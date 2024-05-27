@@ -133,9 +133,11 @@ class DiaryDeleteView(DestroyAPIView):
                     'status_code': status.HTTP_403_FORBIDDEN,
                     'message' : "일기 접근 권한이 없습니다."
                 }, status=status.HTTP_403_FORBIDDEN)
+            if Diary_Mood.objects.get(diary_id=diary.diary_id):
+                diary_mood = Diary_Mood.objects.get(diary_id=diary.diary_id)
+                diary_mood.delete()
+
             diary.delete()
-            diary_mood = Diary_Mood.objects.get(diary_id=diary.diary_id)
-            diary_mood.delete()
             return Response({
                 'success' : True,
                 'status_code': status.HTTP_200_OK,
