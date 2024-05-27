@@ -3,27 +3,26 @@ import ToggleContainer from './ToggleContainer';
 import useProfile from '../hooks/useProfile';
 
 export default function MainProfile({ isCalendar, setIsCalendar }) {
-  const { profile, getUserProfile } = useProfile();
+  const {
+    profile: { nickname, description },
+    getUserProfile,
+  } = useProfile();
 
   useEffect(() => {
     getUserProfile();
-  }, [localStorage.getItem('user_id')]);
+  }, [localStorage.getItem('id'), nickname, description]);
 
   return (
-    <div className='flex flex-row h-[82px] justify-center items-center'>
-      <div className='flex flex-row justify-between items-center w-[330px] h-[48px]'>
-        <div className='flex flex-row items-center gap-x-[27px]'>
-          <img
-            src={`${profile.profile_image}`}
-            alt='프로필 사진'
-            className='rounded-full'
-          />
-          <div className='flex flex-col h-[36px] justify-between'>
-            <div className='font-bold text-sm'>{profile.nickname}</div>
-            <div className='font-medium text-xs'>{profile.description}</div>
+    <div className="flex flex-row h-[82px] justify-center items-center">
+      <div className="flex flex-row justify-between items-center w-[330px] h-[48px]">
+        <div className="flex flex-row items-center gap-x-[27px]">
+          <img src="/assets/profile.svg" alt="프로필 사진" className="rounded-full" />
+          <div className="flex flex-col h-[36px] justify-between">
+            <div className="font-bold text-sm">{nickname}</div>
+            <div className="font-medium text-xs">{description}</div>
           </div>
         </div>
-        <ToggleContainer is={isCalendar} setIs={setIsCalendar} />
+        <ToggleContainer isPublic={isCalendar} setIs={setIsCalendar} year />
       </div>
     </div>
   );
