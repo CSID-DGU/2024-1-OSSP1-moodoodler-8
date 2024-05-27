@@ -12,6 +12,7 @@ export default function Mypage() {
   const [isClickedReport, setIsClickedReport] = useState(false);
   const [isClickedProfile, setIsClickedProfile] = useState(false);
   const [selectedDate, setSelectedDate] = useRecoilState(selectedDateState);
+  const { logout } = useLogout();
 
   function handleReportComponent() {
     setIsClickedReport((prev) => !prev);
@@ -25,11 +26,9 @@ export default function Mypage() {
     setIsClick((prev) => !prev);
   }
 
-  const { logout } = useLogout();
-
   return (
     <div>
-      <div className='flex flex-col justify-center items-center gap-[12px]'>
+      <div className="flex flex-col justify-center items-center gap-[12px]">
         {isClickedProfile ? (
           <ProfileManagement handleProfileComponent={handleProfileComponent} />
         ) : isClickedReport ? (
@@ -46,7 +45,7 @@ export default function Mypage() {
             <MypageMenu
               handleReportComponent={handleReportComponent}
               handleProfileComponent={handleProfileComponent}
-              onClick={logout}
+              handleLogout={logout}
             />
           </>
         )}

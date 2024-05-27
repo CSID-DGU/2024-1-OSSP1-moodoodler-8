@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import { defaultAxios } from '../axios/defaultAxios';
 
 export default function useMoodYearCalendar() {
   const [monthlyDiary, setMonthlyDiary] = useState([
@@ -584,19 +584,16 @@ export default function useMoodYearCalendar() {
 
   const getMoodYearCalendar = async (year) => {
     try {
-      const getMoodYearCalendarResponse = await axios.get(
-        `/diary/year/${year}`,
-        {
-          user_id: localStorage.getItem('user_id'),
-          year: { year },
-        },
-      );
-      setMonthlyDiary(getMoodYearCalendarResponse.result);
+      const getMoodYearCalendarResponse = await defaultAxios.get(`/diary/year/${year}`, {
+        id: localStorage.getItem('id'),
+        year: { year },
+      });
+      setMonthlyDiary(getMoodYearCalendarResponse.data.result);
       getMonthlyList(monthlyDiary);
     } catch (error) {
-      const { message } = error.response.data;
-      <window className='alert'>{message}</window>;
-      if ((error.response = 401)) {
+      const { status_code } = error.response.status_code;
+      console.log(status_code);
+      if (status_code === 401) {
         getNullMoodColorList(monthlyDiary);
       }
     }
