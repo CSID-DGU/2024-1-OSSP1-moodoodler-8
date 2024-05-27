@@ -5,7 +5,7 @@ import useMoodCalendar from '../hooks/useMoodCalendar';
 const days = ['일', '월', '화', '수', '목', '금', '토'];
 
 export default function Calendar({ handleColorChipToggle, selectedDate, setSelectedDate }) {
-  const { setYearMonth, moodcolorlist } = useMoodCalendar(selectedDate);
+  const { moodcolorlist } = useMoodCalendar(selectedDate);
   const [arr, setArr] = useState([]);
   const [moodArr, setMoodArr] = useState([]);
 
@@ -39,6 +39,7 @@ export default function Calendar({ handleColorChipToggle, selectedDate, setSelec
   useEffect(() => {
     const firstDay = dayjs(selectedDate).startOf('month').day();
     const daysInMonth = dayjs(selectedDate).daysInMonth();
+    localStorage.setItem('selectedDate', selectedDate);
     setArr(initArr(firstDay, daysInMonth));
     setMoodArr(moodColorArr(firstDay, daysInMonth));
   }, [selectedDate, moodcolorlist]);

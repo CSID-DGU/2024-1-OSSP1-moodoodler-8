@@ -12,12 +12,14 @@ export default function Survey() {
 
   const handleFirstStepSubmit = () => {
     setIsFirstStep((prev) => !prev);
+    console.log(positives);
     postPositiveSurveyAnswers(positives);
   };
 
   const handleFinalStepSubmit = () => {
     setIsFirstStep((prev) => !prev);
     postNegativeSurveyAnswers(negatives);
+    console.log(negatives);
     setPositives([]);
     setNegatives([]);
     navigate('/login');

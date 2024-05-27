@@ -3,9 +3,9 @@ import dayjs from 'dayjs';
 import CustomButton from './CustomButton';
 import useDiaryWrite from '../hooks/useDiaryWrite';
 
-export default function DiaryWriting() {
+export default function DiaryWriting({ selectedDate }) {
   const [inputCount, setInputCount] = useState(0);
-  const { content, setContent, selectedDate, handleSubmit } = useDiaryWrite();
+  const { content, setContent, handleSubmit } = useDiaryWrite();
 
   const handleSetValue = (e) => {
     setContent(e.target.value);
@@ -39,7 +39,7 @@ export default function DiaryWriting() {
             <span>/300 자</span>
           </p>
         </div>
-        <CustomButton text="등록 및 분석하기" color="pink" onClick={() => handleSubmit({ content, setContent })} />
+        <CustomButton text="등록 및 분석하기" color="pink" onClick={() => handleSubmit()} />
       </div>
     </div>
   );

@@ -6,12 +6,12 @@ import useMoodCalendar from './useMoodCalendar';
 export default function useDiaryWrite() {
   const [content, setContent] = useState('');
   const navigate = useNavigate();
-  const selectedDate = localStorage.getItem('selectedDate');
+  const { getMoodCalendar } = useMoodCalendar();
 
   const handleSubmit = async () => {
     const postDiaryData = {
       id: localStorage.getItem('id'),
-      date: selectedDate,
+      date: localStorage.getItem('selectedDate'),
       content: content,
     };
     try {
@@ -19,13 +19,20 @@ export default function useDiaryWrite() {
       console.log(postDiaryResponse.data.data.diary_id);
       localStorage.setItem('diary_id', postDiaryResponse.data.data.diary_id);
       setContent('');
-      navigate(`/analysis/${selectedDate}`);
+      getMoodCalendar();
+      navigate(`/analysis/${localStorage.getItem('selectedDate')}`);
     } catch (error) {
       console.log(error.response.status);
     }
   };
 
-  const handleModifiedDiary = async ({ diary_id, modifiedContent, setModifiedContent, handleModified }) => {
+  const handleModifiedDiary = async ({
+    selectedDate,
+    diary_id,
+    modifiedContent,
+    setModifiedContent,
+    handleModified,
+  }) => {
     const putDiaryData = {
       id: localStorage.getItem('id'),
       diary_id: diary_id,
@@ -53,11 +60,11 @@ export default function useDiaryWrite() {
         deleteDiaryData
       );
       console.log(deleteDiaryResponse.data);
-
+      getMoodCalendar();
       handleModified();
     } catch (error) {
       console.log(error.response);
     }
   };
-  return { content, setContent, selectedDate, handleSubmit, handleModifiedDiary, handleDeleteDiary };
+  return { content, setContent, handleSubmit, handleModifiedDiary, handleDeleteDiary };
 }

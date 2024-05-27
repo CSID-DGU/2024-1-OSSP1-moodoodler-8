@@ -8,7 +8,7 @@ export default function useSurvey() {
         question: 'positive',
         answer: positives,
       });
-      console.log(postPositiveSurveyAnswersResponse.status_code);
+      console.log(postPositiveSurveyAnswersResponse);
     } catch (error) {
       console.error('Error submitting answers:', error.response);
     }
@@ -21,7 +21,7 @@ export default function useSurvey() {
         question: 'negative',
         answer: negatives,
       });
-      console.log(postNegativeSurveyAnswersResponse.status_code);
+      console.log(postNegativeSurveyAnswersResponse);
     } catch (error) {
       console.error('Error submitting answers:', error.response);
     }

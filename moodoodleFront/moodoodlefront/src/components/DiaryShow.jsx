@@ -26,9 +26,15 @@ export default function DiaryShow({
           </p>
         </div>
         {isModified ? (
-          <DiaryModifiedComponent content={content} diary_id={diary_id} handleModified={handleModified} />
+          <DiaryModifiedComponent
+            selectedDate={selectedDate}
+            content={content}
+            diary_id={diary_id}
+            handleModified={handleModified}
+          />
         ) : (
           <DiaryContent
+            diary_id={diary_id}
             content={content}
             text={text}
             color={color}
@@ -39,7 +45,6 @@ export default function DiaryShow({
           <button
             onClick={() => {
               handleDeleteDiary({ diary_id, handleModified });
-              handleModified();
             }}>
             <img src="/assets/trash.svg" alt="삭제하기" className="absolute top-[29px] right-[29px]" />
           </button>

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { defaultAxios } from '../axios/defaultAxios';
+import dayjs from 'dayjs';
 
 export default function useLogin() {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ export default function useLogin() {
         withCredentials: true,
       });
       localStorage.setItem('id', loginResponse.data.data.id);
+      localStorage.setItem('selectedDate', dayjs().format('YYYY-MM-DD'));
       navigate('/main');
     } catch (error) {
       console.log(error.response);

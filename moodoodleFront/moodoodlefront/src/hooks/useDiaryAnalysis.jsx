@@ -38,6 +38,7 @@ export default function useDiaryAnalysis() {
   ]);
 
   const getDiaryAnalysis = async (diary_id) => {
+    console.log(diary_id);
     try {
       const getDiaryAnalysisrResponse = await defaultAxios.get(
         `/diary/detail/${localStorage.getItem('id')}/${diary_id}/`,
