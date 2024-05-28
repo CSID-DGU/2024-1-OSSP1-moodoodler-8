@@ -48,5 +48,5 @@ class MusicMoodView(CreateAPIView):
             # "diary mood" : diary,
             # "mood data" : ret,
             # "musics" : musics[2],
-            "cosine" : sim_idx[:10]
+            "recomand music" : sim_idx[:10]
         }, status=status.HTTP_200_OK)
