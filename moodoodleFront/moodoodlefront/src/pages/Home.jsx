@@ -32,7 +32,7 @@ export default function Home() {
   return (
     <>
       <Header />
- <div className='relative'>
+      <div className='relative'>
         {location.pathname === '/mypage' ||
         location.pathname === '/friend' ||
         location.pathname === '/alarm' ||
@@ -52,7 +52,7 @@ export default function Home() {
           ''
         )}
         <Outlet
-          className="overflow-auto"
+          className='overflow-auto'
           context={{
             isCalendar,
             isClick,

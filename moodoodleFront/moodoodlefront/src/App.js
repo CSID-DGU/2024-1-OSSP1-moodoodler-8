@@ -28,7 +28,7 @@ function App() {
                   <Route path='/login' element={<Login />} />
                   <Route path='/signup' element={<SignUp />} />
                   <Route path='/survey' element={<Survey />} />
-                    <Route path="/welcome" element={<Welcome />} />
+                  <Route path='/welcome' element={<Welcome />} />
                   <Route exact path='/' element={<Home />}>
                     <Route path='/main' element={<Main />} />
                     <Route path='/diary/:selectedDate' element={<DiaryWritePage />} />
@@ -37,7 +37,6 @@ function App() {
                     <Route path='/friend' element={<Friend />} />
                     <Route path='/alarm' element={<Alarm />} />
                     <Route path='/search' element={<Search />} />
-
                   </Route>
                 </Routes>
               </div>
