@@ -21,8 +21,8 @@ function App() {
       <BrowserRouter>
         <div className='bg-white'>
           <section className='w-screen h-screen flex flex-col m-auto bg-white'>
-            <Pc className='flex flex-col m-auto'>
-              <div className='flex-1 relative'>
+            <Pc className='flex flex-col w-screen h-screen m-auto'>
+              <div className='flex-1'>
                 <Routes>
                   <Route path='/' element={<Start />} />
                   <Route path='/login' element={<Login />} />
