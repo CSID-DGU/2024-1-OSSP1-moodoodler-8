@@ -47,7 +47,7 @@ export default function MoodAnalysis({ isModal, handleDayMoodAnalysisToggle, dia
             )}
           </div>
         </div>
-        <div className="w-[206px] h-[32px] text-darkGray text-center text-[13px] whitespace-pre-line">
+        <div className="w-[220px] h-[32px] text-darkGray text-center text-[13px] whitespace-pre-line">
           {comment.COMMENT[mainColorName]}
         </div>
         <div className="flex flex-col h-[135px] justify-between items-center">

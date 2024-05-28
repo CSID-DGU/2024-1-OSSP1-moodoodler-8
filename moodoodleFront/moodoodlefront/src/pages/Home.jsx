@@ -28,7 +28,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <div className="relative">
+      <div className="relative min-h-screen">
         {location.pathname === ('/mypage' || '/friend') ? (
           <div className="h-[12px]" />
         ) : (
@@ -45,6 +45,7 @@ export default function Home() {
           ''
         )}
         <Outlet
+          className="overflow-auto"
           context={{
             isCalendar,
             isClick,
