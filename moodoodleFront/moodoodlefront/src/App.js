@@ -11,6 +11,7 @@ import AnalysisPage from './pages/AnalysisPage';
 import Friend from './pages/Friend';
 import Mypage from './pages/Mypage';
 import Survey from './pages/Survey';
+import Welcome from './pages/Welcome';
 import Alarm from './pages/Alarm';
 import Search from './pages/Search';
 
@@ -27,6 +28,7 @@ function App() {
                   <Route path='/login' element={<Login />} />
                   <Route path='/signup' element={<SignUp />} />
                   <Route path='/survey' element={<Survey />} />
+                    <Route path="/welcome" element={<Welcome />} />
                   <Route exact path='/' element={<Home />}>
                     <Route path='/main' element={<Main />} />
                     <Route path='/diary/:selectedDate' element={<DiaryWritePage />} />
@@ -35,6 +37,7 @@ function App() {
                     <Route path='/friend' element={<Friend />} />
                     <Route path='/alarm' element={<Alarm />} />
                     <Route path='/search' element={<Search />} />
+
                   </Route>
                 </Routes>
               </div>

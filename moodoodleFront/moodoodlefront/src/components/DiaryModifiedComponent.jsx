@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import CustomButton from './CustomButton';
 import useDiaryWrite from '../hooks/useDiaryWrite';
+import { useOutletContext } from 'react-router-dom';
 
-export default function DiaryModifiedComponent({ content, diary_id, handleModified }) {
+export default function DiaryModifiedComponent({ selectedDate, content, diary_id, handleModified }) {
+  const context = useOutletContext();
   const { handleModifiedDiary } = useDiaryWrite();
   const [modifiedContent, setModifiedContent] = useState(content);
 
@@ -21,7 +23,9 @@ export default function DiaryModifiedComponent({ content, diary_id, handleModifi
       <CustomButton
         text="수정하기"
         color="orange"
-        onClick={() => handleModifiedDiary({ diary_id, modifiedContent, setModifiedContent, handleModified })}
+        onClick={() =>
+          handleModifiedDiary({ selectedDate, diary_id, modifiedContent, setModifiedContent, handleModified })
+        }
       />
     </>
   );

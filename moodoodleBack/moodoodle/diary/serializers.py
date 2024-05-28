@@ -66,9 +66,6 @@ class DiaryDetailSerializer(serializers.ModelSerializer):
         details = sorted(details, key=lambda x: x["ratio"], reverse=True)
         return details
 
-
-
-    
 class CalendarSerializer(serializers.ModelSerializer):
     main_mood_color = serializers.SerializerMethodField()
 
