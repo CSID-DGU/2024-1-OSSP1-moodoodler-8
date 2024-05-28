@@ -27,7 +27,7 @@ export default function MoodAnalysis({ isModal, handleDayMoodAnalysisToggle, dia
   }, [diary_id]);
 
   return (
-    <div className="relative flex flex-col justify-center items-center w-[342px] h-[472px] rounded-[20px] bg-white shadow-componentShadow">
+        <div className="relative flex flex-col justify-center items-center w-[342px] h-[472px] rounded-[20px] bg-white shadow-componentShadow">
       <div className="flex flex-col h-[409px] justify-between items-center">
         <div className="flex flex-col h-[200px] justify-between items-center">
           <p className="font-bold text-normal text-darkNavy">감정 태그</p>

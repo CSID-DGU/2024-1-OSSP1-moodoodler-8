@@ -15,8 +15,8 @@ export default function DiaryModifiedComponent({ selectedDate, content, diary_id
   return (
     <>
       <textarea
-        className="w-[298px] h-[145px] p-[10px] text-[13px] font-normal rounded-[20px] border-[0.8px] border-outlineGray outline-none resize-none"
-        maxLength="300"
+        className='w-[298px] h-[145px] p-[10px] text-[13px] font-normal rounded-[20px] border-[0.8px] border-outlineGray outline-none resize-none'
+        maxLength='300'
         onChange={(e) => handleSetValue(e)}
         defaultValue={content}
       />

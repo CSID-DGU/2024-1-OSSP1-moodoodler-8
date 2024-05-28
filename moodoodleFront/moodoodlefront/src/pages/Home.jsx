@@ -32,9 +32,12 @@ export default function Home() {
   return (
     <>
       <Header />
-      <div className="relative h-screen">
-        {location.pathname === ('/mypage' || '/friend') ? (
-          <div className="h-[12px]" />
+ <div className='relative'>
+        {location.pathname === '/mypage' ||
+        location.pathname === '/friend' ||
+        location.pathname === '/alarm' ||
+        location.pathname === '/search' ? (
+          <div className='h-[12px]' />
         ) : (
           <MainProfile isCalendar={isCalendar} setIsCalendar={setIsCalendar} />
         )}
