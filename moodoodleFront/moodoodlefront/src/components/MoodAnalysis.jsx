@@ -2,9 +2,10 @@ import React, { useEffect } from 'react';
 import MoodHashTag from './MoodHashTag';
 import useDiaryAnalysis from '../hooks/useDiaryAnalysis';
 import useProfile from '../hooks/useProfile';
+import comment from '../constants/comment';
 
 export default function MoodAnalysis({ isModal, handleDayMoodAnalysisToggle, diary_id }) {
-  const { mainColor, analysisResult, getDiaryAnalysis } = useDiaryAnalysis();
+  const { mainColor, mainColorName, analysisResult, getDiaryAnalysis } = useDiaryAnalysis();
   const { profile, getUserProfile } = useProfile();
 
   useEffect(() => {
@@ -46,9 +47,8 @@ export default function MoodAnalysis({ isModal, handleDayMoodAnalysisToggle, dia
             )}
           </div>
         </div>
-        <div className="text-darkGray text-center text-[13px] whitespace-pre-line">
-          희망 가득~ <br />
-          활기찬 노래로 하루를 마무리해보아요!
+        <div className="w-[206px] h-[32px] text-darkGray text-center text-[13px] whitespace-pre-line">
+          {comment.COMMENT[mainColorName]}
         </div>
         <div className="flex flex-col h-[135px] justify-between items-center">
           <p className="font-bold text-normal text-darkNavy">오늘의 추천 음악</p>

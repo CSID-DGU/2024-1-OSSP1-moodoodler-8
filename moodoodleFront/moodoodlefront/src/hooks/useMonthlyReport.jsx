@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react';
 import { defaultAxios } from '../axios/defaultAxios';
 import dayjs from 'dayjs';
 
-export default function useMonthlyReport() {
+export default function useMonthlyReport({ selectedDate }) {
   const [date, setDate] = useState({
-    year: dayjs().format('YYYY'),
-    month: dayjs().format('MM'),
+    year: dayjs(selectedDate).format('YYYY'),
+    month: dayjs(selectedDate).format('MM'),
   });
+  const [mainColor, setMainColor] = useState({});
+  const [dataArray, setdataArray] = useState([{ id: '', value: '', color: '' }]);
 
   const [monthlyReport, setMonthlyReport] = useState([]);
   const [monthTagList, setMonthTagList] = useState([]);
@@ -14,28 +16,31 @@ export default function useMonthlyReport() {
   const getMonthlyReport = async () => {
     try {
       const getMonthlyReportResponse = await defaultAxios.get(
-        `/user/mypage/report/${localStorage.getItem('id')}/${date.year}/${date.month}/`,
-        {
-          id: localStorage.getItem('id'),
-          year: date.year,
-          month: date.month,
-        }
+        `/user/mypage/report/${localStorage.getItem('id')}/${date.year}/${date.month}/`
       );
-      console.log(getMonthlyReportResponse.data);
       setMonthlyReport(getMonthlyReportResponse.data.detail.mood_color_list);
+      setMainColor(getMonthlyReportResponse.data.detail.mood_color_list[0]);
+
       setMonthTagList(getMonthlyReportResponse.data.detail.mood_tag_list);
-      console.log(monthlyReport);
-      console.log(monthTagList);
     } catch (error) {
-      console.log(error.response);
+      console.error('Error fetching monthly report:', error.response);
     }
   };
+
+  useEffect(() => {
+    setDate({
+      year: dayjs(selectedDate).format('YYYY'),
+      month: dayjs(selectedDate).format('MM'),
+    });
+  }, [selectedDate]);
 
   useEffect(() => {
     getMonthlyReport();
   }, [date]);
 
   return {
+    mainColor,
+    dataArray,
     monthlyReport,
     monthTagList,
     date,
