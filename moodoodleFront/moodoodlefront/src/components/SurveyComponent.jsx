@@ -30,16 +30,16 @@ export default function SurveyComponent({ title, direction, answers, setAnswers,
   }, [selectedGenre]);
 
   return (
-    <div className="flex flex-col justify-center items-center w-[338px] h-[660px] rounded-[30px] bg-white gap-[28px] shadow-componentShadow">
-      <div className="flex flex-col w-[283px] h-[73px] text-center">
-        <p className="text-[16px] font-semibold">{title}</p>
-        <p className="text-[14px] font-semibold">
+    <div className='flex flex-col justify-center items-center w-[338px] h-[660px] rounded-[30px] bg-white gap-[28px] shadow-componentShadow'>
+      <div className='flex flex-col w-[283px] h-[73px] text-center'>
+        <p className='text-[16px] font-semibold'>{title}</p>
+        <p className='text-[14px] font-semibold'>
           [{direction}]적인 감정일 때 어떤 장르의 음악을 듣나요?
           <br />({detailMood[direction]})
         </p>
-        <p className="text-darkGray text-[12px]">복수 선택 가능</p>
+        <p className='text-darkGray text-[12px]'>복수 선택 가능</p>
       </div>
-      <div className="flex flex-col justify-between items-center w-[313px] h-[444px]">
+      <div className='flex flex-col justify-between items-center w-[313px] h-[444px]'>
         {genres.GENRE.map((genre) => (
           <GenreButton
             key={genre.id}
@@ -52,7 +52,7 @@ export default function SurveyComponent({ title, direction, answers, setAnswers,
           />
         ))}
       </div>
-      <CustomButton text={buttonText[direction]} color="purple" onClick={onClickHandleSubmit} />
+      <CustomButton text={buttonText[direction]} color='purple' onClick={onClickHandleSubmit} />
     </div>
   );
 }

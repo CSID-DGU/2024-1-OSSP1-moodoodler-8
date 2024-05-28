@@ -10,7 +10,7 @@ module.exports = {
         buttonShadow: '0px 0px 8px 0px rgba(0, 0, 0, 0.10)',
         componentShadow: '0px 0px 20px 0px rgba(0, 0, 0, 0.05)',
         hashtagShadow: '0px 0px 5px 0px rgba(0, 0, 0, 0.20)',
-        loginShadow: '0px 0px 18.85px 0 rgba(0,0,0,0.05)',
+        loginShadow: '0px 0px 18.85px 0px rgba(0,0,0,0.05)',
       },
       colors: {
         darkNavy: '#0F2552',
@@ -20,6 +20,7 @@ module.exports = {
         lightBlue: '#81b5ff',
         'gray-scale-1': '#F7F7F7',
         'gray-scale-2': '#AFAFAF',
+        'gray-scale-3': '#7E7E7E',
       },
     },
   },

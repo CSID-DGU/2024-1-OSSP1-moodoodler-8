@@ -10,9 +10,9 @@ export default function AnalysisPage() {
   const selectedDate = useParams();
 
   return (
-    <div className="flex flex-col justify-between items-center gap-[15px]">
+    <div className='flex flex-col justify-between items-center gap-[15px]'>
       <MoodAnalysis diary_id={daysDiary[dayjs(selectedDate).format('DD') - 1].diary_id} />
-      <DiaryShow content={daysDiary[dayjs(selectedDate).format('DD') - 1].content} text="메인으로" color="skyblue" />
+      <DiaryShow content={daysDiary[dayjs(selectedDate).format('DD') - 1].content} text='메인으로' color='skyblue' />
     </div>
   );
 }

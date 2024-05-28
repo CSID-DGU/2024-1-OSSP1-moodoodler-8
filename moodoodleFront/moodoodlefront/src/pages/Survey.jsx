@@ -24,23 +24,23 @@ export default function Survey() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen">
-      <div className="flex flex-col justify-center items-center w-[390px] h-screen bg-white gap-[28px]">
-        <Link to="/">
-          <img src="/assets/moodoodleLogoMain.svg" alt="logo" />
+    <div className='flex flex-col justify-center items-center h-screen'>
+      <div className='flex flex-col justify-center items-center w-[390px] h-screen bg-white gap-[28px]'>
+        <Link to='/'>
+          <img src='/assets/moodoodleLogoMain.svg' alt='logo' />
         </Link>
         {isFirstStep ? (
           <SurveyComponent
-            title="첫 번째 질문"
-            direction="긍정"
+            title='첫 번째 질문'
+            direction='긍정'
             answers={positives}
             setAnswers={setPositives}
             handleSubmit={handleFirstStepSubmit}
           />
         ) : (
           <SurveyComponent
-            title="두 번째 질문"
-            direction="부정"
+            title='두 번째 질문'
+            direction='부정'
             answers={negatives}
             setAnswers={setNegatives}
             handleSubmit={handleFinalStepSubmit}
