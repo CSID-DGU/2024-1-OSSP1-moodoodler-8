@@ -7,6 +7,7 @@ export default function useLogin() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [loginData, setLoginData] = useState({ id: '', password: '' });
+
   const updateLoginFormData = (event) => {
     const targetId = event.target.id;
     setLoginData((prev) => ({ ...prev, [targetId]: event.target.value }));

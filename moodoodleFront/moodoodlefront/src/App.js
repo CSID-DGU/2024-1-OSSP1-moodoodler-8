@@ -10,6 +10,7 @@ import DiaryWritePage from './pages/DiaryWritePage';
 import AnalysisPage from './pages/AnalysisPage';
 import Mypage from './pages/Mypage';
 import Survey from './pages/Survey';
+import Welcome from './pages/Welcome';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
                   <Route path="/login" element={<Login />} />
                   <Route path="/signup" element={<SignUp />} />
                   <Route path="/survey" element={<Survey />} />
+                  <Route path="/welcome" element={<Welcome />} />
                   <Route exact path="/" element={<Home />}>
                     <Route path="/main" element={<Main />} />
                     <Route path="/diary/:selectedDate" element={<DiaryWritePage />} />
