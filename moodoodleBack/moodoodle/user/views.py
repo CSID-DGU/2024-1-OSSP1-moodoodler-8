@@ -193,14 +193,14 @@ class UserMoodReportView(ListAPIView):
         for kor_name, ratio in mood_totals.items():
             if ratio > 0:
                 mood_color_list.append({
-                    'mood_name': kor_name,
-                    'mood_color': "#" + mood_colors[kor_name],
-                    'total_ratio': ratio
+                    'id': kor_name,
+                    'color': "#" + mood_colors[kor_name],
+                    'value': ratio
                 })
-        sorted_mood_color_list = sorted(mood_color_list, key=lambda x: x['total_ratio'], reverse=True)
+        sorted_mood_color_list = sorted(mood_color_list, key=lambda x: x['value'], reverse=True)
 
         mood_tag_list = []
-        for kor_name, ratio in sorted(mood_totals.items(), key=lambda item: item[1], reverse=True)[:5]:
+        for kor_name, ratio in sorted(mood_totals.items(), key=lambda item: item[1], reverse=True)[:3]:
             if ratio > 0:
                 mood_tag_list.append({
                     'tag_name': kor_name,
