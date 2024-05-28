@@ -28,7 +28,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <div className="relative min-h-screen">
+      <div className="relative h-screen">
         {location.pathname === ('/mypage' || '/friend') ? (
           <div className="h-[12px]" />
         ) : (

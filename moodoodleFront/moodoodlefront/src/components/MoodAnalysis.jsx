@@ -4,6 +4,16 @@ import useDiaryAnalysis from '../hooks/useDiaryAnalysis';
 import useProfile from '../hooks/useProfile';
 import comment from '../constants/comment';
 
+const colorVariants = {
+  DBD3FB: 'text-[#DBD3FB]',
+  FEF4A0: 'text-[#FEF4A0]',
+  FF9191: 'text-[#FF9191]',
+  B5D3FF: 'text-[#B5D3FF]',
+  B3F4B2: 'text-[#B3F4B2]',
+  FBCFE0: 'text-[#FBCFE0]',
+  FECFAD: 'text-[#FECFAD]',
+};
+
 export default function MoodAnalysis({ isModal, handleDayMoodAnalysisToggle, diary_id }) {
   const { mainColor, mainColorName, analysisResult, getDiaryAnalysis } = useDiaryAnalysis();
   const { profile, getUserProfile } = useProfile();
@@ -32,7 +42,8 @@ export default function MoodAnalysis({ isModal, handleDayMoodAnalysisToggle, dia
               <div className="flex flex-row w-[230px] justify-center flex-wrap whitespace-pre-wrap text-darkGray text-center text-[13px]">
                 {analysisResult.map((result, v) => (
                   <div className="flex flex-row text-darkGray text-center text-[13px] whitespace-pre-wrap" key={v}>
-                    <p className={`text-semibold text-[#${result.mood_color}]`}>[{result.mood_name}]</p>이(가) &nbsp;
+                    <p className={`text-semibold ${colorVariants[result.mood_color]}`}>[{result.mood_name}]</p>이(가)
+                    &nbsp;
                     <span>{result.ratio}%</span>
                     &nbsp;
                   </div>

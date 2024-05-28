@@ -7,6 +7,16 @@ import MoodPieChart from './MoodPieChart';
 import MoodColor from './MoodColor';
 import ProhibitionReport from './ProhibitionReport';
 
+const colorVariants = {
+  DBD3FB: 'text-[#DBD3FB]',
+  FEF4A0: 'text-[#FEF4A0]',
+  FF9191: 'text-[#FF9191]',
+  B5D3FF: 'text-[#B5D3FF]',
+  B3F4B2: 'text-[#B3F4B2]',
+  FBCFE0: 'text-[#FBCFE0]',
+  FECFAD: 'text-[#FECFAD]',
+};
+
 export default function MonthlyReport({
   isClick,
   handleReportComponent,
