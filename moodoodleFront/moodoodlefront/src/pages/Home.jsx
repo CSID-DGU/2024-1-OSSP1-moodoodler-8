@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import { Outlet, useLocation } from 'react-router-dom';
 import Header from '../components/Header';
@@ -15,7 +15,7 @@ export default function Home() {
   const location = useLocation();
   const [selectedDate, setSelectedDate] = useState(dayjs().format('YYYY-MM-DD'));
   const date = parseInt(dayjs(selectedDate).format('DD')) - 1;
-  const { daysDiary } = useMoodCalendar(selectedDate);
+  const { daysDiary, getMoodCalendar } = useMoodCalendar(selectedDate);
 
   function handleColorChipToggle() {
     setIsClick((prev) => !prev);
@@ -24,6 +24,10 @@ export default function Home() {
   function handleDayMoodAnalysisToggle() {
     setIsDateClick((prev) => !prev);
   }
+
+  useEffect(() => {
+    getMoodCalendar();
+  }, [daysDiary]);
 
   return (
     <>

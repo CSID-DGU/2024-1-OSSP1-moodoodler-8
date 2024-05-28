@@ -7,7 +7,7 @@ import useDiaryAnalysis from './useDiaryAnalysis';
 export default function useDiaryWrite() {
   const [content, setContent] = useState('');
   const navigate = useNavigate();
-  const { getMoodCalendar } = useMoodCalendar();
+  const { getMoodCalendar } = useMoodCalendar(localStorage.getItem('selectedDate'));
   const { getDiaryAnalysis } = useDiaryAnalysis();
 
   const handleSubmit = async () => {
@@ -46,6 +46,7 @@ export default function useDiaryWrite() {
     try {
       const putDiaryResponse = await defaultAxios.put(`/diary/update/${diary_id}/`, putDiaryData);
       console.log(putDiaryResponse.data);
+      getMoodCalendar();
       setModifiedContent('');
       handleModified();
     } catch (error) {

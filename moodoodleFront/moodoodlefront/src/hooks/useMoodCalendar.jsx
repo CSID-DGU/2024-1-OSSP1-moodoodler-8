@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import { defaultAxios } from '../axios/defaultAxios';
 import dayjs from 'dayjs';
-import useDiaryWrite from './useDiaryWrite';
 
-export default function useMoodCalendar(selectedDate) {
+export default function useMoodCalendar(selectedDate, isModified) {
   const [yearMonth, setYearMonth] = useState({
     year: dayjs().format('YYYY'),
     month: dayjs().format('MM'),
@@ -26,7 +25,7 @@ export default function useMoodCalendar(selectedDate) {
 
   useEffect(() => {
     getMoodCalendar();
-  }, [yearMonth]);
+  }, [yearMonth, isModified]);
 
   useEffect(() => {
     setYearMonth({

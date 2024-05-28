@@ -6,6 +6,8 @@ export default function useDiaryAnalysis() {
   const [mainColorName, setMainColorName] = useState('');
   const [analysisResult, setAnalysisResult] = useState([]);
 
+  const [song, setSong] = useState({});
+
   const getDiaryAnalysis = async (diary_id) => {
     console.log(diary_id);
     try {
@@ -25,5 +27,18 @@ export default function useDiaryAnalysis() {
     }
   };
 
-  return { mainColor, mainColorName, analysisResult, getDiaryAnalysis };
+  const getRecommandationMusic = async (diary_id) => {
+    console.log(diary_id);
+    try {
+      const getRecommandationMusicResponse = await defaultAxios.get(`/music/recomand/${diary_id}/`, {
+        diary_id: diary_id,
+      });
+      console.log(getRecommandationMusicResponse.data.recommand_music);
+      setSong(getRecommandationMusicResponse.data.recommand_music);
+    } catch (error) {
+      console.error('Error getting Music:', error.response);
+    }
+  };
+
+  return { mainColor, mainColorName, analysisResult, getDiaryAnalysis, song, getRecommandationMusic };
 }
