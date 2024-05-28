@@ -1,7 +1,8 @@
 # friend serializers.py
 from rest_framework import serializers
 from user.models import users
-from diary.models import Diary, Diary_Mood
+from diary.models import Diary
+from diary_mood.models import Diary_Mood
 from .models import Friend
 
 class FriendSerializer(serializers.ModelSerializer):
@@ -29,7 +30,7 @@ class FriendCalendarSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Diary
-        fields = ('diary_id', 'date', 'content', 'main_mood_color')
+        fields = ('diary_id', 'date', 'main_mood_color')
 
     def get_main_mood_color(self, obj):
         moods = Diary_Mood.objects.get(diary_id=obj.diary_id)

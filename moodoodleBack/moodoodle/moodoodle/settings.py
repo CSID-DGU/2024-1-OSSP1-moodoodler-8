@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'user.apps.UserConfig',
     'diary.apps.DiaryConfig',
+    'diary_mood.apps.DiaryMoodConfig',
     'friend.apps.FriendConfig',
     'music.apps.MusicConfig',
     'corsheaders',

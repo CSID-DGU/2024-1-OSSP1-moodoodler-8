@@ -11,7 +11,8 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from . import serializers
 from .models import users, Survey
 from drf_yasg.utils import swagger_auto_schema
-from diary.models import Diary, Diary_Mood
+from diary.models import Diary
+from diary_mood.models import Diary_Mood
 from .serializers import UserRegistrationSerializer, UserLoginSerializer, MypageSerializer, UserLogoutSerializer, DuplicatedSerializer, UserSurveySerializer
 
 class UserRegistrationView(CreateAPIView):
@@ -192,14 +193,14 @@ class UserMoodReportView(ListAPIView):
         for kor_name, ratio in mood_totals.items():
             if ratio > 0:
                 mood_color_list.append({
-                    'mood_name': kor_name,
-                    'mood_color': "#" + mood_colors[kor_name],
-                    'total_ratio': ratio
+                    'id': kor_name,
+                    'color': "#" + mood_colors[kor_name],
+                    'value': ratio
                 })
-        sorted_mood_color_list = sorted(mood_color_list, key=lambda x: x['total_ratio'], reverse=True)
+        sorted_mood_color_list = sorted(mood_color_list, key=lambda x: x['value'], reverse=True)
 
         mood_tag_list = []
-        for kor_name, ratio in sorted(mood_totals.items(), key=lambda item: item[1], reverse=True)[:5]:
+        for kor_name, ratio in sorted(mood_totals.items(), key=lambda item: item[1], reverse=True)[:3]:
             if ratio > 0:
                 mood_tag_list.append({
                     'tag_name': kor_name,
@@ -246,6 +247,12 @@ class UserSurveyView(CreateAPIView):
 
         answers = request.data.get('answer', [])
 
+        if not answers:
+            return Response({
+                'success' : False,
+                'status_code' : status.HTTP_400_BAD_REQUEST,
+                'message' : "장르를 1개 이상 선택해주세요."
+            }, status=status.HTTP_400_BAD_REQUEST)
         if not isinstance(answers, list):
             return Response({
                 'success': False,
