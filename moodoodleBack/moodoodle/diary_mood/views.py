@@ -51,4 +51,4 @@ class DiaryMoodCreateView(CreateAPIView):
                                               normal=mood_data[4],
                                               happy=mood_data[5],
                                               aversion=mood_data[6],
-                                              color="dummy")
+                                              color="FBCFE0")
