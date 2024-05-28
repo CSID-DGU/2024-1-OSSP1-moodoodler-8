@@ -43,7 +43,7 @@ class FriendSearchView(RetrieveAPIView):
 
     def get_object(self):
         queryset = users.objects.all()
-        id_kwargs = {self.lookup_field: self.kwargs.get('self.lookup_field')}
+        id_kwargs = {self.lookup_field: self.kwargs[self.lookup_field]}
         obj = queryset.filter(**id_kwargs).first()
         if not obj:
             raise ValueError('유저가 존재하지 않습니다.')
