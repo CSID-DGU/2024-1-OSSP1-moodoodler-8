@@ -4,7 +4,7 @@ import DiaryShowInAnalysis from '../components/DiaryShowInAnalysis';
 
 export default function AnalysisPage() {
   return (
-    <div className="flex flex-col justify-between items-center gap-[15px]">
+<div className="flex flex-col justify-between items-center gap-[15px]">
       <MoodAnalysis diary_id={localStorage.getItem('diary_id')} />
       <DiaryShowInAnalysis
         content={localStorage.getItem('content')}

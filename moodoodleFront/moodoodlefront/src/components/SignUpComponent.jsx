@@ -40,117 +40,117 @@ export default function SignUp() {
     isUniqued.userId && checkPasswordPattern(password) && checkPasswordReEnter(password, confirmPassword) && nickname;
 
   return (
-    <div className="flex w-[338px] h-[650px] rounded-[20px] justify-center items-center bg-white mt-[-5px] shadow-loginShadow">
-      <div className="flex flex-col w-[283px] h-[550px] justify-between items-center">
-        <form className="login-form flex flex-col gap-[19px]">
-          <div className="flex flex-col items-start gap-[10px]">
-            <div className="">
+    <div className='flex w-[338px] h-[650px] rounded-[20px] justify-center items-center bg-white mt-[-5px] shadow-loginShadow'>
+      <div className='flex flex-col w-[283px] h-[550px] justify-between items-center'>
+        <form className='login-form flex flex-col gap-[19px]'>
+          <div className='flex flex-col items-start gap-[10px]'>
+            <div className=''>
               <label className={textStyle}>
-                &nbsp; 아이디 <span className="text-orange-600">*</span>
+                &nbsp; 아이디 <span className='text-orange-600'>*</span>
               </label>
               <input
                 className={boxStyle}
-                type="text"
-                id="id"
+                type='text'
+                id='id'
                 value={id}
                 onChange={(event) => {
                   updateSignupFormData(event);
                   resetValidation(event.target.id);
                 }}
                 onReset={setSignupInfo}
-                placeholder="4자~10자의 영문, 숫자"
+                placeholder='4자~10자의 영문, 숫자'
               />
             </div>
             <CustomButton
-              text="중복확인"
-              color="pink"
+              text='중복확인'
+              color='pink'
               disabled={!checkUserIdPattern(id)}
               onClick={() => checkIdDuplicate(id)}
             />
           </div>
-          <div className="flex flex-col justify-center items-start">
-            <label className={textStyle} htmlFor="password">
-              &nbsp; 비밀번호 <span className="text-orange-600">*</span>
+          <div className='flex flex-col justify-center items-start'>
+            <label className={textStyle} htmlFor='password'>
+              &nbsp; 비밀번호 <span className='text-orange-600'>*</span>
             </label>
             <input
               className={boxStyle}
-              type="password"
-              id="password"
+              type='password'
+              id='password'
               value={password}
               onChange={(event) => updateSignupFormData(event)}
               onReset={setSignupInfo}
-              placeholder="8자 이상의 영문 대소문자/숫자/특수문자"
+              placeholder='8자 이상의 영문 대소문자/숫자/특수문자'
             />
-            <div className="h-[13px] mt-[7px] text-[12px] text-red-600">
+            <div className='h-[13px] mt-[7px] text-[12px] text-red-600'>
               {REGEX.passwordPattern.test(password) || password === '' ? (
                 ''
               ) : (
-                <p className="text-red-600">8자 이상의 영문 대소문자/숫자/특수문자를 사용해주세요.</p>
+                <p className='text-red-600'>8자 이상의 영문 대소문자/숫자/특수문자를 사용해주세요.</p>
               )}
             </div>
           </div>
-          <div className="flex flex-col justify-center items-start">
-            <label className={textStyle} htmlFor="confirm-password">
-              &nbsp; 비밀번호 재입력 <span className="text-orange-600">*</span>
+          <div className='flex flex-col justify-center items-start'>
+            <label className={textStyle} htmlFor='confirm-password'>
+              &nbsp; 비밀번호 재입력 <span className='text-orange-600'>*</span>
             </label>
             <input
               className={boxStyle}
-              type="password"
-              id="confirmPassword"
+              type='password'
+              id='confirmPassword'
               value={confirmPassword}
               onChange={handleConfirmPwd}
-              placeholder="비밀번호를 재입력 해주세요"
+              placeholder='비밀번호를 재입력 해주세요'
             />
-            <div className="h-[13px] mt-[7px] text-center text-[12px] text-red-600">
+            <div className='h-[13px] mt-[7px] text-center text-[12px] text-red-600'>
               {confirmPassword === password ? '' : <p>비밀번호를 다시 입력해주세요.</p>}
             </div>
           </div>
-          <div className="flex flex-col justify-center items-start">
-            <label className={textStyle} htmlFor="nickname">
-              &nbsp; 닉네임 <span className="text-orange-600">*</span>
+          <div className='flex flex-col justify-center items-start'>
+            <label className={textStyle} htmlFor='nickname'>
+              &nbsp; 닉네임 <span className='text-orange-600'>*</span>
             </label>
-            <div className="flex justify-center items-center">
+            <div className='flex justify-center items-center'>
               <input
                 className={boxStyle}
-                type="text"
-                id="nickname"
+                type='text'
+                id='nickname'
                 value={nickname}
                 onChange={(event) => updateSignupFormData(event)}
                 onReset={setSignupInfo}
               />
             </div>
           </div>
-          <div className="flex flex-col justify-center items-start">
-            <label className={textStyle} htmlFor="birthdate">
+          <div className='flex flex-col justify-center items-start'>
+            <label className={textStyle} htmlFor='birthdate'>
               &nbsp; 생년월일
             </label>
-            <div className="flex flex-row justify-between w-[283px] items-center text-[14px]">
+            <div className='flex flex-row justify-between w-[283px] items-center text-[14px]'>
               <select
                 className={`w-[130px] ${selectStyle}`}
-                defaultValue="2000"
+                defaultValue='2000'
                 onChange={(event) => updateDateData(event, 'year')}>
                 {YEARS.map((year) => (
-                  <option className={textStyle} value={year} key={year} id="year">
+                  <option className={textStyle} value={year} key={year} id='year'>
                     {year}
                   </option>
                 ))}
               </select>
               <select
                 className={`w-[69px] ${selectStyle}`}
-                defaultValue="2000"
+                defaultValue='2000'
                 onChange={(event) => updateDateData(event, 'month')}>
                 {MONTHS.map((month) => (
-                  <option className={textStyle} value={month} key={month} id="month">
+                  <option className={textStyle} value={month} key={month} id='month'>
                     {month}
                   </option>
                 ))}
               </select>
               <select
                 className={`w-[69px] ${selectStyle}`}
-                defaultValue="2000"
+                defaultValue='2000'
                 onChange={(e) => updateDateData(e, 'day')}>
                 {DATES.map((day) => (
-                  <option className={textStyle} value={day} key={day} id="day">
+                  <option className={textStyle} value={day} key={day} id='day'>
                     {day}
                   </option>
                 ))}
@@ -158,15 +158,15 @@ export default function SignUp() {
             </div>
           </div>
         </form>
-        <div className="flex flex-col gap-[10px] items-center">
+        <div className='flex flex-col gap-[10px] items-center'>
           <LoginButton
-            text="설문조사"
+            text='설문조사'
             disabled={isValid ? false : true}
             onClick={() => postSignupInfo(`${selectedDate.year}-${selectedDate.month}-${selectedDate.day}`)}
           />
-          <div className="flex justify-center items-center">
-            <p className="text-xs text-left text-darkGray">이미 계정이 있으신가요? &nbsp; |</p>
-            <Link className="text-[13px] font-bold text-lightBlue" to="/login">
+          <div className='flex justify-center items-center'>
+            <p className='text-xs text-left text-darkGray'>이미 계정이 있으신가요? &nbsp; |</p>
+            <Link className='text-[13px] font-bold text-lightBlue' to='/login'>
               &nbsp; &nbsp;로그인
             </Link>
           </div>
