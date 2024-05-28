@@ -28,7 +28,6 @@ export default function useFriendProfile() {
       // Map 객체 상태로 설정
       setFriendList(friendMap);
       setHasFriend(friendMap.size > 0);
-      console.log(friendMap);
     } catch (error) {
       console.error('Error getting profile:', error);
     }
@@ -44,9 +43,7 @@ export default function useFriendProfile() {
           to_user_id: to_user_id,
         }
       );
-
       const result = getFriendCalendarResponse.data;
-      console.log(result);
     } catch (error) {
       console.error('Error getting calendar:', error);
     }

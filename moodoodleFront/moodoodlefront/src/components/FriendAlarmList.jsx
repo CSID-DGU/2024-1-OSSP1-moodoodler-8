@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import useFriendAlarm from '../hooks/useFriendAlarm';
 import FriendProfile from '../components/FriendProfile';
 
 export default function FriendAlarmList() {
-  const { alarmList, getAlarmList, RequestAccept, RequestDeny } = useFriendAlarm();
+  const { alarmList, getAlarmList, hasAlarm, RequestAccept, RequestDeny } = useFriendAlarm();
 
   useEffect(() => {
     getAlarmList();
-  }, []);
+  }, [getAlarmList]);
 
   const handleAcceptClick = (friendId) => {
     RequestAccept({ friend_id: friendId });
@@ -22,18 +22,22 @@ export default function FriendAlarmList() {
         <p className='self-end font-bold text-center text-darkNavy w-full'>친구 신청</p>
       </div>
       <div className='flex flex-col gap-[5px]'>
-        {Array.from(alarmList.values()).map((friend) => (
-          <FriendProfile
-            nickname={friend.nickname}
-            description={friend.description}
-            src1='/assets/accept.svg'
-            alt1='accept'
-            onClick1={() => handleAcceptClick(friend.id)}
-            src2='assets/deny.svg'
-            alt2='deny'
-            onClick2={() => handleDenyClick(friend.id)}
-          />
-        ))}
+        {hasAlarm ? (
+          Array.from(alarmList.values()).map((friend) => (
+            <FriendProfile
+              nickname={friend.nickname}
+              description={friend.description}
+              src1='/assets/accept.svg'
+              alt1='accept'
+              onClick1={() => handleAcceptClick(friend.id)}
+              src2='assets/deny.svg'
+              alt2='deny'
+              onClick2={() => handleDenyClick(friend.id)}
+            />
+          ))
+        ) : (
+          <p className='text-sm font-semibold text-center text-darkgray'>조용하네요...</p>
+        )}
       </div>
     </div>
   );

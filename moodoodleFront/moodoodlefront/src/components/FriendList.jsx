@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import useFriendProfile from '../hooks/useFriendProfile';
 import FriendProfile from '../components/FriendProfile';
 import Dropdown from './Dropdown';
 import useDetectClose from '../hooks/useDetectClose';
 
 export default function FriendList() {
-  const { friendList, getFriendList, handleDeleteFriend, isDelete, setIsDelete } = useFriendProfile();
+  const { friendList, getFriendList, handleDeleteFriend, hasFriend, isDelete, setIsDelete } = useFriendProfile();
   const [isOpen, ref, toggleDropdown] = useDetectClose(false);
 
   useEffect(() => {
     getFriendList();
-  }, []);
+  }, [getFriendList]);
 
   const handleDelete = (to_user_id) => {
     if (window.confirm('삭제하시겠습니까?')) {
@@ -28,17 +28,20 @@ export default function FriendList() {
         </div>
       </div>
       <div className='flex flex-col gap-[5px]'>
-        {Array.from(friendList.values()).map((friend) => (
-          /* 삭제가 활성화되었는가 아닌가를 확인 */
-          <FriendProfile
-            key={friend.nickname}
-            nickname={friend.nickname}
-            description={friend.description}
-            src2={isDelete ? '/assets/trash.svg' : '/assets/calendar.svg'}
-            alt2={isDelete ? 'delete' : 'calendar'}
-            onClick2={isDelete ? () => handleDelete(friend.id) : () => {}}
-          />
-        ))}
+        {hasFriend ? (
+          Array.from(friendList.values()).map((friend) => (
+            <FriendProfile
+              key={friend.id} // 고유한 key prop 추가
+              nickname={friend.nickname}
+              description={friend.description}
+              src2={isDelete ? '/assets/frienddelete.svg' : '/assets/calendar.svg'}
+              alt2={isDelete ? 'delete' : 'calendar'}
+              onClick2={isDelete ? () => handleDelete(friend.id) : () => {}}
+            />
+          ))
+        ) : (
+          <p className='text-sm font-semibold text-center text-darkgray'>친구 결과 없음</p>
+        )}
       </div>
     </div>
   );
