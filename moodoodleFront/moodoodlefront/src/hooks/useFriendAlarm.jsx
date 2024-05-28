@@ -11,8 +11,8 @@ export default function useFriendAlarm() {
   const getAlarmList = async () => {
     try {
       console.log(alarmList);
-      const friendAlarmResponse = await defaultAxios.post(`/friend/request/${localStorage.getItem('id')}/`, {
-        from_user_id: localStorage.getItem('id'),
+      const friendAlarmResponse = await defaultAxios.get(`/friend/request/${localStorage.getItem('id')}/`, {
+        params: { from_user_id: localStorage.getItem('id') },
       });
       const { result } = friendAlarmResponse.data;
       // 배열을 Map으로 변환
@@ -28,13 +28,16 @@ export default function useFriendAlarm() {
       console.log(error.response.status);
     }
   };
-  // 나중에 저 둘은 hook use에 옮겨놔야겠다
+  // 친구 신청 수락
   const RequestAccept = async ({ friend_id }) => {
     const postData = {
       from_user_id: localStorage.getItem('id'),
     };
     try {
-      const friendAcceptResponse = await defaultAxios.post(`/friend/accept/${friend_id}`, postData);
+      const friendAcceptResponse = await defaultAxios.post(
+        `/friend/accept/${localStorage.getItem('id')}/${friend_id}/`,
+        postData
+      );
       console.log(friendAcceptResponse.data);
       // alert 사용해서 친구를 수락했습니다 띄우기 넣을 예정
       navigate(`/friend`);
@@ -43,18 +46,23 @@ export default function useFriendAlarm() {
       console.error('Error submitting post:', status_code);
     }
   };
+  // 친구 신청 거부
   const RequestDeny = async ({ friend_id }) => {
     const postData = {
-      from_user_id: localStorage.getItem('id'),
+      to_user_id: localStorage.getItem('id'),
+      from_user_id: friend_id,
     };
     try {
-      const friendAcceptResponse = await defaultAxios.post(`/friend/deny/${friend_id}`, postData);
+      const friendAcceptResponse = await defaultAxios.delete(
+        `/friend/reject/${localStorage.getItem('id')}/${friend_id}/`,
+        postData
+      );
       console.log(friendAcceptResponse.data);
       // alert 사용해서 친구를 거절하시겠습니까? 재확인 넣을 예정
       navigate(`/friend`);
     } catch (error) {
-      // const { status_code } = error.response.status_code;
-      // console.error('Error submitting post:', status_code);
+      const { status_code } = error.response.status_code;
+      console.error('Error submitting post:', status_code);
     }
   };
 
