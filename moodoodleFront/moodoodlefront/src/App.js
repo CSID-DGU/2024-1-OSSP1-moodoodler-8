@@ -19,8 +19,8 @@ function App() {
   return (
     <RecoilRoot>
       <BrowserRouter>
-        <div className='bg-slate-100'>
-          <section className='w-[390px] h-screen flex flex-col m-auto bg-white'>
+        <div className='bg-white'>
+          <section className='w-screen h-screen flex flex-col m-auto bg-white'>
             <Pc className='flex flex-col m-auto'>
               <div className='flex-1 relative'>
                 <Routes>
@@ -28,7 +28,7 @@ function App() {
                   <Route path='/login' element={<Login />} />
                   <Route path='/signup' element={<SignUp />} />
                   <Route path='/survey' element={<Survey />} />
-                    <Route path="/welcome" element={<Welcome />} />
+                  <Route path='/welcome' element={<Welcome />} />
                   <Route exact path='/' element={<Home />}>
                     <Route path='/main' element={<Main />} />
                     <Route path='/diary/:selectedDate' element={<DiaryWritePage />} />
@@ -37,7 +37,6 @@ function App() {
                     <Route path='/friend' element={<Friend />} />
                     <Route path='/alarm' element={<Alarm />} />
                     <Route path='/search' element={<Search />} />
-
                   </Route>
                 </Routes>
               </div>

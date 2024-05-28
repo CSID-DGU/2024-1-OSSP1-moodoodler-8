@@ -21,8 +21,8 @@ export default function DiaryModifiedComponent({ selectedDate, content, diary_id
         defaultValue={content}
       />
       <CustomButton
-        text="수정하기"
-        color="orange"
+        text='수정하기'
+        color='orange'
         onClick={() =>
           handleModifiedDiary({ selectedDate, diary_id, modifiedContent, setModifiedContent, handleModified })
         }

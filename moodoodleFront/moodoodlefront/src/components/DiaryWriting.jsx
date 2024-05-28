@@ -39,7 +39,7 @@ export default function DiaryWriting({ selectedDate }) {
             <span>/300 자</span>
           </p>
         </div>
-<CustomButton text="등록 및 분석하기" color="pink" onClick={() => handleSubmit()} />
+        <CustomButton text='등록 및 분석하기' color='pink' onClick={() => handleSubmit()} />
       </div>
     </div>
   );
