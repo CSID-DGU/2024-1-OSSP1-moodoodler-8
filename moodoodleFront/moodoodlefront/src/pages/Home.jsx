@@ -32,7 +32,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <div className='relative'>
+      <div className='relative h-full'>
         {location.pathname === '/mypage' ||
         location.pathname === '/friend' ||
         location.pathname === '/alarm' ||

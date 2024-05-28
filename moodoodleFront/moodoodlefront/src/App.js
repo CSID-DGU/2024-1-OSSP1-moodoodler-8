@@ -19,8 +19,8 @@ function App() {
   return (
     <RecoilRoot>
       <BrowserRouter>
-        <div className='bg-slate-100'>
-          <section className='w-[390px] h-screen flex flex-col m-auto bg-white'>
+        <div className='bg-white'>
+          <section className='w-screen h-screen flex flex-col m-auto bg-white'>
             <Pc className='flex flex-col m-auto'>
               <div className='flex-1 relative'>
                 <Routes>
