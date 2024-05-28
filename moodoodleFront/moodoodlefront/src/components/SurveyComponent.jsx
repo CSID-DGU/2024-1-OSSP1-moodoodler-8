@@ -52,7 +52,7 @@ export default function SurveyComponent({ title, direction, answers, setAnswers,
           />
         ))}
       </div>
-      <CustomButton text={buttonText[direction]} color='purple' onClick={onClickHandleSubmit} />
+<CustomButton text={buttonText[direction]} color="purple" onClick={() => onClickHandleSubmit()} />
     </div>
   );
 }

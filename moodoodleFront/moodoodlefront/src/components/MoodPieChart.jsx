@@ -14,7 +14,7 @@ export default function MoodPieChart({ data }) {
       borderWidth={1}
       borderColor={{
         from: 'color',
-        modifiers: [['darker', 0.2]],
+        modifiers: [['darker', 0.5]],
       }}
       arcLinkLabelsSkipAngle={10}
       arcLinkLabelsTextOffset={0}
@@ -25,7 +25,7 @@ export default function MoodPieChart({ data }) {
       arcLabelsSkipAngle={10}
       arcLabelsTextColor={{
         from: 'color',
-        modifiers: [['darker', 0]],
+        modifiers: [['darker', 1.0]],
       }}
     />
   );

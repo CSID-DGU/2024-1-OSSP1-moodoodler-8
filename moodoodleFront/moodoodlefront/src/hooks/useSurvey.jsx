@@ -1,6 +1,8 @@
+import { useNavigate } from 'react-router-dom';
 import { defaultAxios } from '../axios/defaultAxios';
 
 export default function useSurvey() {
+  const navigate = useNavigate();
   const postPositiveSurveyAnswers = async (positives) => {
     try {
       const postPositiveSurveyAnswersResponse = await defaultAxios.post(`/user/survey/positive/`, {
@@ -8,7 +10,7 @@ export default function useSurvey() {
         question: 'positive',
         answer: positives,
       });
-      console.log(postPositiveSurveyAnswersResponse.status_code);
+      console.log(postPositiveSurveyAnswersResponse);
     } catch (error) {
       console.error('Error submitting answers:', error.response);
     }
@@ -21,7 +23,8 @@ export default function useSurvey() {
         question: 'negative',
         answer: negatives,
       });
-      console.log(postNegativeSurveyAnswersResponse.status_code);
+      console.log(postNegativeSurveyAnswersResponse);
+      navigate('/welcome');
     } catch (error) {
       console.error('Error submitting answers:', error.response);
     }
