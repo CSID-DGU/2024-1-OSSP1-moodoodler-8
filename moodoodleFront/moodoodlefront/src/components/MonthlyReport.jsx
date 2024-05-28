@@ -5,6 +5,7 @@ import useProfile from '../hooks/useProfile';
 import MoodHashTag from './MoodHashTag';
 import MoodPieChart from './MoodPieChart';
 import MoodColor from './MoodColor';
+import ProhibitionReport from './ProhibitionReport';
 
 export default function MonthlyReport({
   isClick,
@@ -13,7 +14,7 @@ export default function MonthlyReport({
   setSelectedDate,
   handleColorChipToggle,
 }) {
-  const { mainColor, dataArray, monthlyReport, monthTagList, setDate } = useMonthlyReport({ selectedDate });
+  const { mainColor, monthlyReport, monthTagList, setDate } = useMonthlyReport({ selectedDate });
 
   const { profile, getUserProfile } = useProfile();
 
@@ -65,34 +66,46 @@ export default function MonthlyReport({
               onClick={handleNextMonth}
             />
           </div>
-          <div className="relative flex w-[342px] h-[300px] justify-center items-center">
-            <MoodPieChart data={dataArray} />
-            <button className="absolute right-[15px] bottom-[15px]" type="button" onClick={handleColorChipToggle}>
-              <img src="/assets/more.svg" alt="컬러칩 보기" />
-            </button>
-          </div>
-          <div className="flex flex-col w-[310px] h-[45px]">
-            <div className="flex flex-row justify-between items-center">
-              <img src="/assets/leftDQM.svg" alt="왼쪽큰따옴표" />
-              <img src="/assets/rightDQM.svg" alt="오른쪽큰따옴표" />
-            </div>
-            <div className="text-center text-[13px] text-darkGray">
-              [{profile.nickname}]님, 이번 달에는 행복한 일이 많으셨군요!
-              <br />
-              <span className={`text-[${mainColor.mood_color}]`}>[{mainColor.mood_name}]</span>이{' '}
-              {mainColor.total_ratio}%를 차지하고 있어요~
-            </div>
-          </div>
+          {dayjs(selectedDate).format('YYYY-MM') <= dayjs().format('YYYY-MM') ? (
+            <>
+              <div className="relative flex w-[342px] h-[300px] justify-center items-center">
+                <MoodPieChart data={monthlyReport} />
+                <button className="absolute right-[15px] bottom-[15px]" type="button" onClick={handleColorChipToggle}>
+                  <img src="/assets/more.svg" alt="컬러칩 보기" />
+                </button>
+              </div>
+              <div className="flex flex-col w-[310px] h-[45px]">
+                <div className="flex flex-row justify-between items-center">
+                  <img src="/assets/leftDQM.svg" alt="왼쪽큰따옴표" />
+                  <img src="/assets/rightDQM.svg" alt="오른쪽큰따옴표" />
+                </div>
+                <div className="text-center text-[13px] text-darkGray">
+                  [{profile.nickname}]님, 이번 달에는 행복한 일이 많으셨군요!
+                  <br />
+                  <span className={`text-[${mainColor.color}]`}>[{mainColor.id}]</span>이 {mainColor.value}%를 차지하고
+                  있어요~
+                </div>
+              </div>
+            </>
+          ) : (
+            <ProhibitionReport />
+          )}
         </div>
-        <div className="flex flex-col w-[268px] h-[99px] justify-between items-center">
-          <p className="font-bold text-base text-darkNavy">이달의 태그</p>
-          <div className="flex flex-row flex-wrap justify-center items-center gap-[10px]">
-            {monthTagList.length > 0 &&
-              monthTagList.map((tag, index) => (
-                <MoodHashTag key={index} mood_title={tag.tag_name} mood_color={tag.tag_color} />
-              ))}
-          </div>
-        </div>
+        {dayjs(selectedDate).format('YYYY-MM') <= dayjs().format('YYYY-MM') ? (
+          <>
+            <div className="flex flex-col w-[268px] h-[70px] justify-between items-center">
+              <p className="font-bold text-base text-darkNavy">이달의 태그</p>
+              <div className="flex flex-row flex-wrap justify-center items-center gap-[10px]">
+                {monthTagList.length > 0 &&
+                  monthTagList.map((tag, index) => (
+                    <MoodHashTag key={index} mood_title={tag.tag_name} mood_color={tag.tag_color} />
+                  ))}
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className=" w-[268px] h-[70px]" />
+        )}
       </div>
       {isClick ? <MoodColor handleColorChipToggle={handleColorChipToggle} /> : ''}
     </div>

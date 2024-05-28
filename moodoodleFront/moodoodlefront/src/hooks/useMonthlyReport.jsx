@@ -8,8 +8,6 @@ export default function useMonthlyReport({ selectedDate }) {
     month: dayjs(selectedDate).format('MM'),
   });
   const [mainColor, setMainColor] = useState({});
-  const [dataArray, setdataArray] = useState([{ id: '', value: '', color: '' }]);
-
   const [monthlyReport, setMonthlyReport] = useState([]);
   const [monthTagList, setMonthTagList] = useState([]);
 
@@ -20,7 +18,6 @@ export default function useMonthlyReport({ selectedDate }) {
       );
       setMonthlyReport(getMonthlyReportResponse.data.detail.mood_color_list);
       setMainColor(getMonthlyReportResponse.data.detail.mood_color_list[0]);
-
       setMonthTagList(getMonthlyReportResponse.data.detail.mood_tag_list);
     } catch (error) {
       console.error('Error fetching monthly report:', error.response);
@@ -40,7 +37,6 @@ export default function useMonthlyReport({ selectedDate }) {
 
   return {
     mainColor,
-    dataArray,
     monthlyReport,
     monthTagList,
     date,
