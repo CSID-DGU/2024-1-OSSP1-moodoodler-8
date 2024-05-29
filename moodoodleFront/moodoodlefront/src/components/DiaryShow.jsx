@@ -44,12 +44,17 @@ export default function DiaryShow({
           />
         )}
         {isModified ? (
-          <button
-            onClick={() => {
-              handleDeleteDiary({ diary_id, handleModified });
-            }}>
-            <img src='/assets/trash.svg' alt='삭제하기' className='absolute top-[29px] right-[29px]' />
-          </button>
+          <>
+            <button
+              onClick={() => {
+                handleDeleteDiary({ diary_id, handleModified });
+              }}>
+              <img src='/assets/trash.svg' alt='삭제하기' className='absolute top-[29px] right-[29px]' />
+            </button>
+            <button onClick={() => setIsModified((prev) => !prev)}>
+              <img src='/assets/close.svg' alt='뒤로가기' className='absolute top-[29px] left-[29px]' />
+            </button>
+          </>
         ) : (
           <button onClick={handleModified}>
             <img src='/assets/modified.svg' alt='수정하기' className='absolute top-[29px] right-[29px]' />
