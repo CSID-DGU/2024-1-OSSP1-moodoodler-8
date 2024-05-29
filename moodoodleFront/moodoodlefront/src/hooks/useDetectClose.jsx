@@ -1,25 +1,32 @@
-import { useEffect, useState } from 'react';
-// 드롭다운 형식으로 만들기
-// https://mingeesuh.tistory.com/entry/React-%EB%93%9C%EB%A1%AD%EB%8B%A4%EC%9A%B4-%EB%A9%94%EB%89%B4-%EB%A7%8C%EB%93%A4%EA%B8%B0-feat-useRef-useState
-const useDetectClose = (elem, initialState) => {
+import { useEffect, useState, useRef } from 'react';
+// 드롭다운 형식 사용하는 hook
+const useDetectClose = (initialState) => {
   const [isOpen, setIsOpen] = useState(initialState);
+  const ref = useRef(null);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
 
   useEffect(() => {
-    const onClick = (e) => {
-      if (elem.current !== null && !elem.current.contains(e.target)) {
-        setIsOpen(!isOpen);
+    const handleClickOutside = (event) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        setIsOpen(false);
       }
     };
 
     if (isOpen) {
-      window.addEventListener('click', onClick);
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
     }
 
     return () => {
-      window.removeEventListener('click', onClick);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [isOpen, elem]);
-  return [isOpen, setIsOpen];
+  }, [isOpen]);
+
+  return [isOpen, ref, toggleDropdown];
 };
 
 export default useDetectClose;
