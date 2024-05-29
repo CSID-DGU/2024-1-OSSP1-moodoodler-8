@@ -14,7 +14,7 @@ export default function useFriendSearch() {
 
   const search = async () => {
     try {
-      const getSearchResponse = await defaultAxios.get(`/friend/search/${friendID}`);
+      const getSearchResponse = await defaultAxios.get(`/friend/search/${friendID}/`);
       setSearchData({
         id: getSearchResponse.data.id,
         nickname: getSearchResponse.data.nickname,

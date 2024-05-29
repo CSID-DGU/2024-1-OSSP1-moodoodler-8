@@ -8,7 +8,7 @@ export default function SearchBar() {
     <div className='w-[338px] h-[39px] relative'>
       <div className='flex justify-around items-center w-[338px] h-[39px] rounded-[15px] bg-gray-scale-1/[0.66] shadow-headerShadow'>
         <input
-          className='w-[280px] text-[14px] bg-gray-scale-1/[0.66] text-left text-gray-scale-3'
+          className='w-[280px] text-[14px] bg-gray-scale-1/[0.66] text-left text-gray-scale-3 outline-none'
           placeholder='친구의 아이디를 검색해보세요'
           onChange={updateFriendID}
         />
