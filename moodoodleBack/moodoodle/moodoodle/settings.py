@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'friend.apps.FriendConfig',
     'music.apps.MusicConfig',
     'corsheaders',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -178,3 +179,17 @@ CORS_ALLOW_HEADERS = [
     "x-requested-with",
     "withCredentials",
 ]
+
+
+AWS_ACCESS_KEY_ID = get_env_variable("S3_KEY")
+AWS_SECRET_ACCESS_KEY = get_env_variable("S3_SECRET_KEY")
+
+AWS_STORAGE_BUCKET_NAME = "moodoodlebucket"
+
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+
+STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+
+AWS_S3_CUSTOM_DOMAIN = AWS_STORAGE_BUCKET_NAME + ".s3.ap-northeast-2.amazonaws.com"
+AWS_S3_FILE_OVERWRITE = False
+AWS_QUERYSTRING_AUTH = False
