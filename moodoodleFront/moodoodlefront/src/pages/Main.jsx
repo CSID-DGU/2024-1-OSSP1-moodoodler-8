@@ -40,6 +40,7 @@ export default function Main() {
               handleDayMoodAnalysisToggle={context.handleDayMoodAnalysisToggle}
               handleModified={handleModified}
               isModified={isModified}
+              setIsModified={setIsModified}
             />
           ) : (
             <DiaryWritePopup selectedDate={context.selectedDate} />

@@ -50,46 +50,46 @@ export default function MonthlyReport({
   }, [selectedDate, setDate]);
 
   return (
-    <div className="flex w-[342px] h-[592px] justify-center items-center shadow-componentShadow">
-      <div className="flex flex-col w-[342px] h-[548px] justify-between items-center">
-        <div className="flex flex-row w-[283px] h-[24px] justify-start items-center gap-[95px]">
-          <button type="button" onClick={handleReportComponent}>
-            <img src="/assets/leftArrow.svg" alt="뒤로가기" className="w-[7px] h-[14px]" />
+    <div className='flex w-[342px] h-[592px] justify-center items-center shadow-componentShadow'>
+      <div className='flex flex-col w-[342px] h-[548px] justify-between items-center'>
+        <div className='flex flex-row w-[283px] h-[24px] justify-start items-center gap-[95px]'>
+          <button type='button' onClick={handleReportComponent}>
+            <img src='/assets/leftArrow.svg' alt='뒤로가기' className='w-[7px] h-[14px]' />
           </button>
-          <p className="font-bold text-base text-darkNavy">월간 레포트</p>
+          <p className='font-bold text-base text-darkNavy'>월간 레포트</p>
         </div>
-        <div className="flex flex-col w-[342px] h-[375px] items-center justify-between">
-          <div className="flex flex-row justify-between items-center w-[284px] h-[19px]">
+        <div className='flex flex-col w-[342px] h-[375px] items-center justify-between'>
+          <div className='flex flex-row justify-between items-center w-[284px] h-[19px]'>
             <img
-              src="/assets/leftArrow.svg"
-              alt="leftArrow"
-              className="w-[9px] h-[7px] cursor-pointer"
+              src='/assets/leftArrow.svg'
+              alt='leftArrow'
+              className='w-[9px] h-[7px] cursor-pointer'
               onClick={handlePrevMonth}
             />
-            <p className="text-[17px] font-semibold text-darkNavy">
+            <p className='text-[17px] font-semibold text-darkNavy'>
               {dayjs(selectedDate).format('MMM')} {dayjs(selectedDate).format('YYYY')}
             </p>
             <img
-              src="/assets/rightArrow.svg"
-              alt="rightArrow"
-              className="w-[9px] h-[7px] cursor-pointer"
+              src='/assets/rightArrow.svg'
+              alt='rightArrow'
+              className='w-[9px] h-[7px] cursor-pointer'
               onClick={handleNextMonth}
             />
           </div>
           {dayjs(selectedDate).format('YYYY-MM') <= dayjs().format('YYYY-MM') ? (
             <>
-              <div className="relative flex w-[342px] h-[300px] justify-center items-center">
+              <div className='relative flex w-[342px] h-[300px] justify-center items-center'>
                 <MoodPieChart data={monthlyReport} />
-                <button className="absolute right-[15px] bottom-[15px]" type="button" onClick={handleColorChipToggle}>
-                  <img src="/assets/more.svg" alt="컬러칩 보기" />
+                <button className='absolute right-[15px] bottom-[15px]' type='button' onClick={handleColorChipToggle}>
+                  <img src='/assets/more.svg' alt='컬러칩 보기' />
                 </button>
               </div>
-              <div className="flex flex-col w-[310px] h-[45px]">
-                <div className="flex flex-row justify-between items-center">
-                  <img src="/assets/leftDQM.svg" alt="왼쪽큰따옴표" />
-                  <img src="/assets/rightDQM.svg" alt="오른쪽큰따옴표" />
+              <div className='flex flex-col w-[310px] h-[45px]'>
+                <div className='flex flex-row justify-between items-center'>
+                  <img src='/assets/leftDQM.svg' alt='왼쪽큰따옴표' />
+                  <img src='/assets/rightDQM.svg' alt='오른쪽큰따옴표' />
                 </div>
-                <div className="text-center text-[13px] text-darkGray">
+                <div className='text-center text-[13px] text-darkGray'>
                   [{profile.nickname}]님, 이번 달에는 행복한 일이 많으셨군요!
                   <br />
                   <span className={`text-[${mainColor.color}]`}>[{mainColor.id}]</span>이 {mainColor.value}%를 차지하고
@@ -103,9 +103,9 @@ export default function MonthlyReport({
         </div>
         {dayjs(selectedDate).format('YYYY-MM') <= dayjs().format('YYYY-MM') ? (
           <>
-            <div className="flex flex-col w-[268px] h-[70px] justify-between items-center">
-              <p className="font-bold text-base text-darkNavy">이달의 태그</p>
-              <div className="flex flex-row flex-wrap justify-center items-center gap-[10px]">
+            <div className='flex flex-col w-[268px] h-[70px] justify-between items-center'>
+              <p className='font-bold text-base text-darkNavy'>이달의 태그</p>
+              <div className='flex flex-row flex-wrap justify-center items-center gap-[10px]'>
                 {monthTagList.length > 0 &&
                   monthTagList.map((tag, index) => (
                     <MoodHashTag key={index} mood_title={tag.tag_name} mood_color={tag.tag_color} />
@@ -114,7 +114,7 @@ export default function MonthlyReport({
             </div>
           </>
         ) : (
-          <div className=" w-[268px] h-[70px]" />
+          <div className=' w-[268px] h-[70px]' />
         )}
       </div>
       {isClick ? <MoodColor handleColorChipToggle={handleColorChipToggle} /> : ''}

@@ -51,7 +51,7 @@ export default function useSignup() {
       setSignupInfo({ ...signupInfo, birthdate: birthdate });
       navigate('/survey');
     } catch (error) {
-      console.log(error.response.status);
+      console.log(error.response);
     }
   };
 
