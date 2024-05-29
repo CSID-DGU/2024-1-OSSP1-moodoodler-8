@@ -3,7 +3,7 @@ import colors from '../constants/colors';
 
 export default function ColorNameCode() {
   return (
-    <div className='flex flex-col w-[92px] h-[302px] items-center justify-between'>
+    <div className='flex flex-col w-[92px] h-[302px] items-center justify-between mt-[8px]'>
       {colors &&
         colors.MOOD_LIST.map((id) => (
           <div className='flex flex-row w-[84px] h-[26px] justify-between items-center' key={id.moodId}>
