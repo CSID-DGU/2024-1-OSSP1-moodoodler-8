@@ -1,21 +1,33 @@
 import React, { useEffect } from 'react';
-import useFriendProfile from '../hooks/useFriendProfile';
+import { useOutletContext } from 'react-router-dom';
 import FriendProfile from '../components/FriendProfile';
+import FriendCalendar from '../components/FriendCalendar';
 import Dropdown from './Dropdown';
 import useDetectClose from '../hooks/useDetectClose';
+import useFriendProfile from '../hooks/useFriendProfile';
 
 export default function FriendList() {
   const { friendList, getFriendList, handleDeleteFriend, hasFriend, isDelete, setIsDelete } = useFriendProfile();
   const [isOpen, ref, toggleDropdown] = useDetectClose(false);
+  const context = useOutletContext();
 
   useEffect(() => {
     getFriendList();
-  }, [getFriendList]);
+  }, []);
 
   const handleDelete = (to_user_id) => {
     if (window.confirm('삭제하시겠습니까?')) {
       handleDeleteFriend(to_user_id);
     }
+  };
+
+  const handleCalendar = (to_user) => {
+    <FriendCalendar
+      handleColorChipToggle={context.handleColorChipToggle}
+      selectedDate={context.selectedDate}
+      setSelectedDate={context.setSelectedDate}
+      to_user={to_user}
+    />;
   };
 
   return (
@@ -36,7 +48,7 @@ export default function FriendList() {
               description={friend.description}
               src2={isDelete ? '/assets/frienddelete.svg' : '/assets/calendar.svg'}
               alt2={isDelete ? 'delete' : 'calendar'}
-              onClick2={isDelete ? () => handleDelete(friend.id) : () => {}}
+              onClick2={isDelete ? () => handleDelete(friend.id) : () => handleCalendar(friend)}
             />
           ))
         ) : (
