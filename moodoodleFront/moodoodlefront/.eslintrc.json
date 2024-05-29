@@ -2,6 +2,7 @@
   "extends": ["react-app", "prettier", "plugin:prettier/recommended"],
   "plugins": ["prettier"],
   "rules": {
+    "quotes": ["error", "single"],
     "prettier/prettier": ["error", { "endOfLine": "auto" }]
   },
   "parser": "@babel/eslint-parser",

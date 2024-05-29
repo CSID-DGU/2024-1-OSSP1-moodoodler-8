@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import dayjs from 'dayjs';
 import DiaryContent from './DiaryContent';
 import DiaryModifiedComponent from './DiaryModifiedComponent';
@@ -13,8 +13,10 @@ export default function DiaryShow({
   handleDayMoodAnalysisToggle,
   handleModified,
   isModified,
+  setIsModified,
 }) {
   const { handleDeleteDiary } = useDiaryWrite();
+
   return (
     <div className='relative flex justify-center items-center w-[342px] h-[300px] rounded-[20px] bg-white shadow-componentShadow'>
       <div className='flex flex-col justify-between items-center w-[175px] h-[250px]'>
@@ -25,7 +27,7 @@ export default function DiaryShow({
             {dayjs(selectedDate).format('YYYY')}
           </p>
         </div>
-        {isModified ? (
+        {isModified && selectedDate === localStorage.getItem('selectedDate') ? (
           <DiaryModifiedComponent
             selectedDate={selectedDate}
             content={content}
