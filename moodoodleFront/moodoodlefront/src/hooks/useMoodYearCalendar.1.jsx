@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { defaultAxios } from '../axios/defaultAxios';
 import dayjs from 'dayjs';
 
-export default function useMoodYearCalendar() {
+export default function useMoodYearCalendar(isCalendar) {
   const [year, setYear] = useState(dayjs().format('YYYY'));
   const [monthlyDiary, setMonthlyDiary] = useState([]);
 
@@ -23,10 +23,6 @@ export default function useMoodYearCalendar() {
   useEffect(() => {
     getMoodYearCalendar();
   }, [year]);
-
-  useEffect(() => {
-    getMoodYearCalendar();
-  }, []);
 
   return {
     year,
