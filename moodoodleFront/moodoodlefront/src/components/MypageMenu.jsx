@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function MypageMenu({ handleReportComponent, handleProfileComponent, handleLogout }) {
   return (
-    <div className='flex justify-center items-center w-[342px] h-[86px] rounded-[20px] border border-darkGray/20'>
+    <div className='flex justify-center items-center w-[342px] h-[86px] rounded-[20px] border border-darkGray/20 rounded-[20px] shadow-componentShadow'>
       <div className='flex flex-row w-[273px] justify-between items-center'>
         <button
           type='button'
