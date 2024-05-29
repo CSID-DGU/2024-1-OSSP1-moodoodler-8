@@ -52,9 +52,7 @@ export default function YearCalendar({ handleColorChipToggle }) {
                 </div>
               ))}
             </div>
-            <div className='flex flex-row w-[173px] grid grid-cols-12'>
-              <RenderYearCalendar key={`${year}/01`} monthlyList={monthlyDiary} month={1} />
-            </div>
+            <div className='flex flex-row w-[173px] grid grid-cols-12'></div>
           </div>
           <ColorNameCode />
         </div>

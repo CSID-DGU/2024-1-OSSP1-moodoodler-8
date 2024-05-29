@@ -12,8 +12,9 @@ export default function useMoodYearCalendar() {
         id: localStorage.getItem('id'),
         year: year,
       });
-      console.log(getMoodYearCalendarResponse.data.result);
+
       setMonthlyDiary(getMoodYearCalendarResponse.data.result);
+      console.log(monthlyDiary);
     } catch (error) {
       console.log(error.response);
     }
@@ -22,6 +23,10 @@ export default function useMoodYearCalendar() {
   useEffect(() => {
     getMoodYearCalendar();
   }, [year]);
+
+  useEffect(() => {
+    getMoodYearCalendar();
+  }, []);
 
   return {
     year,
