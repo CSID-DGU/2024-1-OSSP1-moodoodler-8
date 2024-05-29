@@ -50,7 +50,7 @@ export default function MonthlyReport({
   }, [selectedDate, setDate]);
 
   return (
-    <div className='flex w-[342px] h-[592px] justify-center items-center shadow-componentShadow'>
+    <div className='flex w-[342px] h-[592px] justify-center items-center rounded-[20px] shadow-componentShadow'>
       <div className='flex flex-col w-[342px] h-[548px] justify-between items-center'>
         <div className='flex flex-row w-[283px] h-[24px] justify-start items-center gap-[95px]'>
           <button type='button' onClick={handleReportComponent}>
@@ -103,13 +103,15 @@ export default function MonthlyReport({
         </div>
         {dayjs(selectedDate).format('YYYY-MM') <= dayjs().format('YYYY-MM') ? (
           <>
-            <div className='flex flex-col w-[268px] h-[70px] justify-between items-center'>
-              <p className='font-bold text-base text-darkNavy'>이달의 태그</p>
-              <div className='flex flex-row flex-wrap justify-center items-center gap-[10px]'>
-                {monthTagList.length > 0 &&
-                  monthTagList.map((tag, index) => (
-                    <MoodHashTag key={index} mood_title={tag.tag_name} mood_color={tag.tag_color} />
-                  ))}
+            <div className='flex flex-col w-[268px] h-[80px] justify-between items-center'>
+              <div className='flex flex-col h-[67px] justify-between items-center'>
+                <p className='font-bold text-base text-darkNavy'>이달의 태그</p>
+                <div className='flex flex-row flex-wrap justify-center items-center gap-[10px]'>
+                  {monthTagList.length > 0 &&
+                    monthTagList.map((tag, index) => (
+                      <MoodHashTag key={index} mood_title={tag.tag_name} mood_color={tag.tag_color} />
+                    ))}
+                </div>
               </div>
             </div>
           </>

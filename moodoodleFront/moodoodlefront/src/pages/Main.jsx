@@ -19,7 +19,7 @@ export default function Main() {
     <div className='relative'>
       <div className='flex flex-col items-center gap-[12px]'>
         {context.isCalendar ? (
-          <YearCalendar handleColorChipToggle={context.handleColorChipToggle} />
+          <YearCalendar isCalendar={context.isCalendar} handleColorChipToggle={context.handleColorChipToggle} />
         ) : (
           <Calendar
             handleColorChipToggle={context.handleColorChipToggle}
