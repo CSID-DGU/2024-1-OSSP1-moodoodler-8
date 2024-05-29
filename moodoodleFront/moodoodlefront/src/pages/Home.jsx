@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import { Outlet, useLocation } from 'react-router-dom';
 import Header from '../components/Header';
@@ -15,7 +15,7 @@ export default function Home() {
   const location = useLocation();
   const [selectedDate, setSelectedDate] = useState(dayjs().format('YYYY-MM-DD'));
   const date = parseInt(dayjs(selectedDate).format('DD')) - 1;
-  const { daysDiary } = useMoodCalendar(selectedDate);
+  const { daysDiary, getMoodCalendar } = useMoodCalendar(selectedDate);
 
   function handleColorChipToggle() {
     setIsClick((prev) => !prev);
@@ -25,12 +25,19 @@ export default function Home() {
     setIsDateClick((prev) => !prev);
   }
 
+  useEffect(() => {
+    getMoodCalendar();
+  }, [daysDiary]);
+
   return (
     <>
       <Header />
-      <div className="relative">
-        {location.pathname === ('/mypage' || '/friend') ? (
-          <div className="h-[12px]" />
+      <div className='relative h-full'>
+        {location.pathname === '/mypage' ||
+        location.pathname === '/friend' ||
+        location.pathname === '/alarm' ||
+        location.pathname === '/search' ? (
+          <div className='h-[12px]' />
         ) : (
           <MainProfile isCalendar={isCalendar} setIsCalendar={setIsCalendar} />
         )}
@@ -45,6 +52,7 @@ export default function Home() {
           ''
         )}
         <Outlet
+          className='overflow-auto'
           context={{
             isCalendar,
             isClick,

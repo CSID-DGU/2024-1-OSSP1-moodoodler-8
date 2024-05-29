@@ -255,7 +255,7 @@ class YearlyCalendarView(ListAPIView):
 
         results = []
 
-        for month in range(1, 12):
+        for month in range(1, 13):
             month_days = []
             _, last_day = monthrange(year, month)
             for day in range(1, last_day + 1):

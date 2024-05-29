@@ -46,11 +46,12 @@ export default function useSignup() {
         created: dayjs().format('YYYY-MM-DD'),
         birthdate: birthdate,
       });
-      console.log(postSignupInfoResponse.message);
+      console.log(postSignupInfoResponse);
+      localStorage.setItem('id', signupInfo.id);
       setSignupInfo({ ...signupInfo, birthdate: birthdate });
       navigate('/survey');
     } catch (error) {
-      console.log(error.response.status);
+      console.log(error.response);
     }
   };
 
