@@ -15,7 +15,7 @@ const colorVariants = {
 };
 
 export default function MoodAnalysis({ isModal, handleDayMoodAnalysisToggle, diary_id }) {
-  const { mainColor, mainColorName, analysisResult, getDiaryAnalysis } = useDiaryAnalysis();
+  const { mainColor, mainColorName, analysisResult, getDiaryAnalysis, music, getRecommendedMusic } = useDiaryAnalysis();
   const { profile, getUserProfile } = useProfile();
 
   useEffect(() => {
@@ -24,6 +24,7 @@ export default function MoodAnalysis({ isModal, handleDayMoodAnalysisToggle, dia
 
   useEffect(() => {
     getDiaryAnalysis(diary_id);
+    getRecommendedMusic(diary_id);
   }, [diary_id]);
 
   return (
@@ -58,7 +59,7 @@ export default function MoodAnalysis({ isModal, handleDayMoodAnalysisToggle, dia
             )}
           </div>
         </div>
-        <div className='w-[220px] h-[32px] text-darkGray text-center text-[13px] whitespace-pre-line'>
+        <div className='w-[210px] h-[32px] text-darkGray text-center text-[13px] whitespace-pre-line'>
           {comment.COMMENT[mainColorName]}
         </div>
         <div className='flex flex-col h-[135px] justify-between items-center'>
