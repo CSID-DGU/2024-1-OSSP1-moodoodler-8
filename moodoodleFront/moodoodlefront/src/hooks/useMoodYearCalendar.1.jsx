@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { defaultAxios } from '../axios/defaultAxios';
 import dayjs from 'dayjs';
 
-export default function useMoodYearCalendar() {
+export default function useMoodYearCalendar(isCalendar) {
   const [year, setYear] = useState(dayjs().format('YYYY'));
   const [monthlyDiary, setMonthlyDiary] = useState([]);
 
@@ -12,8 +12,9 @@ export default function useMoodYearCalendar() {
         id: localStorage.getItem('id'),
         year: year,
       });
-      console.log(getMoodYearCalendarResponse.data.result);
+
       setMonthlyDiary(getMoodYearCalendarResponse.data.result);
+      console.log(monthlyDiary);
     } catch (error) {
       console.log(error.response);
     }
