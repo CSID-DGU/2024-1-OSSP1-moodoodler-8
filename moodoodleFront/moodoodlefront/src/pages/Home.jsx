@@ -52,7 +52,7 @@ export default function Home() {
           ''
         )}
         <Outlet
-          className='overflow-auto'
+          className=''
           context={{
             isCalendar,
             isClick,
