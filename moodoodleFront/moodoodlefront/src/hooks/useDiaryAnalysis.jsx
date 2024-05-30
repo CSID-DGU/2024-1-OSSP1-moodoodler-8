@@ -35,7 +35,7 @@ export default function useDiaryAnalysis() {
         id: localStorage.getItem('id'),
         diary_id: diary_id,
       });
-      console.log(response.data.recomand_music);
+      console.log(response.data);
       setMusicList(response.data.recomand_music);
       setMusic(musicList[0]);
     } catch (error) {

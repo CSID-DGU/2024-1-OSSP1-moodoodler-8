@@ -90,7 +90,7 @@ export default function MonthlyReport({
                   <img src='/assets/rightDQM.svg' alt='오른쪽큰따옴표' />
                 </div>
                 <div className='text-center text-[13px] text-darkGray'>
-                  [{profile.nickname}]님, 이번 달에는 행복한 일이 많으셨군요!
+                  [{profile.nickname}]님, 이번 달에는 {mainColor.id}한() 일이 많으셨군요!
                   <br />
                   <span className={`text-[${mainColor.color}]`}>[{mainColor.id}]</span>이 {mainColor.value}%를 차지하고
                   있어요~
