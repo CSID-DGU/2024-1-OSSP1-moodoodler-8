@@ -51,6 +51,13 @@ class MusicMoodView(CreateAPIView):
             for survey in surveys:
                 musics.extend(Music.objects.filter(genre=survey.answer))
 
+        if not musics:
+            return Response({
+                'success': False,
+                'status_code': status.HTTP_404_NOT_FOUND,
+                'message': "추천할 음악을 찾을 수 없습니다."
+            }, status=status.HTTP_404_NOT_FOUND)
+
         diary_mood_values = list(Diary_Mood.objects.filter(diary_id=diary_id).values_list())
         diary = [mood[2:9] for mood in diary_mood_values]
         music_mood_values = list(Music_Mood.objects.values_list())
@@ -71,9 +78,5 @@ class MusicMoodView(CreateAPIView):
             "status_code" : 200,
             "message" : "요청에 성공하였습니다.",
             "diary_id" : diary_id,
-            # "diary mood" : diary,
-            # "mood data" : ret,
-            # "musics" : musics[2],
-
             "recomand_music" : sim_idx[:10]
         }, status=status.HTTP_200_OK)
