@@ -17,9 +17,15 @@ class MusicCreateView(CreateAPIView):
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            self.cover_create(serializer)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def cover_create(self, serializer):
+        obj = serializer.save()
+        if obj.cover:
+            obj.cover = f"https://moodoodlebucket.s3.ap-northeast-2.amazonaws.com/{obj.cover}"
+            obj.save()
     
 class MusicMoodView(CreateAPIView):
     serializer_class = MusicMooodSerializer
