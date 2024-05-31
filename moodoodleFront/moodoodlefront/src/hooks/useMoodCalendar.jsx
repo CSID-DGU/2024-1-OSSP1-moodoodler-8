@@ -23,6 +23,7 @@ export default function useMoodCalendar(selectedDate, isModified, to_user_id) {
       console.error(error);
     }
   };
+
   // 친구 무드 캘린더 받아오기
   const getFriendMoodCalendar = async (to_user_id) => {
     try {

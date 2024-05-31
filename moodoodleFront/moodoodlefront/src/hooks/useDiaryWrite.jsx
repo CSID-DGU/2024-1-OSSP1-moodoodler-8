@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { defaultAxios } from '../axios/defaultAxios';
-import useMoodCalendar from './useMoodCalendar';
 import useDiaryAnalysis from './useDiaryAnalysis';
 
 export default function useDiaryWrite() {
@@ -43,7 +42,6 @@ export default function useDiaryWrite() {
     };
     try {
       const putDiaryResponse = await defaultAxios.put(`/diary/update/${diary_id}/`, putDiaryData);
-      console.log(putDiaryResponse.data);
       setModifiedContent('');
       handleModified();
     } catch (error) {
@@ -61,7 +59,6 @@ export default function useDiaryWrite() {
         `/diary/delete/${localStorage.getItem('id')}/${diary_id}/`,
         deleteDiaryData
       );
-      console.log(deleteDiaryResponse.data);
       handleModified();
     } catch (error) {
       console.log(error.response);

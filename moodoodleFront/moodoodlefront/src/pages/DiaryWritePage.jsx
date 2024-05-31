@@ -6,7 +6,7 @@ export default function DiaryWritePage() {
   const context = useOutletContext();
   return (
     <div className='flex flex-col items-center'>
-      <DiaryWriting selectedDate={context.selectedDate} />
+      <DiaryWriting selectedDate={context.selectedDate} handleUpdated={context.handleUpdated} />
     </div>
   );
 }
