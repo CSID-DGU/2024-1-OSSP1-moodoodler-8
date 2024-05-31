@@ -16,7 +16,6 @@ export default function useMoodCalendar(selectedDate, isModified, to_user_id) {
         `/diary/month/${localStorage.getItem('id')}/${yearMonth.year}/${yearMonth.month}/`
       );
       const diaryData = response.data.result;
-      console.log(diaryData);
       setDaysDiary(diaryData);
       setMoodcolorlist(diaryData.map((diary) => diary.main_mood_color));
     } catch (error) {
@@ -25,13 +24,12 @@ export default function useMoodCalendar(selectedDate, isModified, to_user_id) {
   };
 
   // 친구 무드 캘린더 받아오기
-  const getFriendMoodCalendar = async (to_user_id) => {
+  const getFriendMoodCalendar = async () => {
     try {
       const response = await defaultAxios.get(
         `/friend/calendar/${localStorage.getItem('id')}/${to_user_id}/${yearMonth.year}/${yearMonth.month}/`
       );
       const diaryData = response.data.result;
-      setDaysDiary(diaryData);
       setMoodcolorlist(diaryData.map((diary) => diary.main_mood_color));
     } catch (error) {
       console.error(error);
@@ -39,7 +37,8 @@ export default function useMoodCalendar(selectedDate, isModified, to_user_id) {
   };
 
   useEffect(() => {
-    getMoodCalendar();
+    if (to_user_id == null) getMoodCalendar();
+    else getFriendMoodCalendar(to_user_id);
   }, [yearMonth, isModified]);
 
   useEffect(() => {

@@ -7,7 +7,7 @@ export default function FriendAlarmList() {
 
   useEffect(() => {
     getAlarmList();
-  }, [getAlarmList]);
+  }, []);
 
   const handleAcceptClick = (friendId) => {
     RequestAccept({ friend_id: friendId });

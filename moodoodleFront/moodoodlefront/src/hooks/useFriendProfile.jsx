@@ -4,7 +4,6 @@ import { defaultAxios } from '../axios/defaultAxios';
 export default function useFriendProfile() {
   // 친구 프로필 설정
   const [friendList, setFriendList] = useState([]);
-  const [friendCalendar, setFriendCalendar] = useState();
   const [hasFriend, setHasFriend] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
 
@@ -30,22 +29,6 @@ export default function useFriendProfile() {
       setHasFriend(friendMap.size > 0);
     } catch (error) {
       console.error('Error getting profile:', error);
-    }
-  };
-
-  // 친구 달력 받아오기
-  const getFriendCalendar = async ({ to_user_id, year, month }) => {
-    try {
-      const getFriendCalendarResponse = await defaultAxios.get(
-        `/friend/calendar/${localStorage.getItem('id')}/${to_user_id}/${year}/${month}/`,
-        {
-          from_user_id: localStorage.getItem('id'),
-          to_user_id: to_user_id,
-        }
-      );
-      const result = getFriendCalendarResponse.data;
-    } catch (error) {
-      console.error('Error getting calendar:', error);
     }
   };
 

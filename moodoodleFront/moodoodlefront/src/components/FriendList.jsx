@@ -1,14 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import FriendProfile from '../components/FriendProfile';
 import FriendCalendar from '../components/FriendCalendar';
 import Dropdown from './Dropdown';
 import useDetectClose from '../hooks/useDetectClose';
 import useFriendProfile from '../hooks/useFriendProfile';
+import useFriendCalendar from '../hooks/useFriendCalendar';
 
 export default function FriendList() {
   const { friendList, getFriendList, handleDeleteFriend, hasFriend, isDelete, setIsDelete } = useFriendProfile();
   const [isOpen, ref, toggleDropdown] = useDetectClose(false);
+  const { showCalendar, setShowCalendar, handleShowCalendar } = useFriendCalendar();
+  const [selectedUser, setSelectedUser] = useState('');
   const context = useOutletContext();
 
   useEffect(() => {
@@ -22,12 +25,8 @@ export default function FriendList() {
   };
 
   const handleCalendar = (to_user) => {
-    <FriendCalendar
-      handleColorChipToggle={context.handleColorChipToggle}
-      selectedDate={context.selectedDate}
-      setSelectedDate={context.setSelectedDate}
-      to_user={to_user}
-    />;
+    setSelectedUser(to_user);
+    setShowCalendar(true);
   };
 
   return (
@@ -53,6 +52,15 @@ export default function FriendList() {
           ))
         ) : (
           <p className='text-sm font-semibold text-center text-darkgray'>친구 결과 없음</p>
+        )}
+        {showCalendar && (
+          <FriendCalendar
+            handleColorChipToggle={context.handleColorChipToggle}
+            selectedDate={context.selectedDate}
+            setSelectedDate={context.setSelectedDate}
+            to_user={selectedUser}
+            handleShowCalendar={handleShowCalendar}
+          />
         )}
       </div>
     </div>
