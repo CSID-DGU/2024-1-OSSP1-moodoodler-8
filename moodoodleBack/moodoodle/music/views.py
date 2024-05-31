@@ -12,7 +12,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import random as r
 
 def random_music(lis):
-    num = r.randint(0, len(lis))
+    num = r.randint(0, len(lis) - 1)
     return num
 
 
