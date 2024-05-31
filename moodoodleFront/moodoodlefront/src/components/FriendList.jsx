@@ -29,10 +29,21 @@ export default function FriendList() {
     setShowCalendar(true);
   };
 
+  const handleShow = () => {
+    setIsDelete((prev) => !prev);
+  };
+
   return (
     <div className='flex flex-col items-center w-[342px] h-[619px] relative gap-[20px] rounded-[20px] bg-white shadow-componentShadow'>
       <div className='flex justify-between w-[300px] h-[40px]'>
-        <p className='self-end font-bold text-center text-darkNavy w-full'>친구 목록</p>
+        <div className='self-end cursor-pointer' onClick={toggleDropdown} ref={ref}>
+          {isDelete ? (
+            <button className='self-start' type='button' onClick={handleShow}>
+              <img src='/assets/leftArrow.svg' alt='뒤로가기' className='w-[7px] h-[14px]' />
+            </button>
+          ) : null}
+        </div>
+        <p className='self-end font-bold text-center text-darkNavy w-full'>{isDelete ? '친구 삭제' : '친구 목록'}</p>
         <div className='self-end cursor-pointer' onClick={toggleDropdown} ref={ref}>
           <img src='/assets/moreline.svg' alt='more' />
           {isOpen && <Dropdown setIsDelete={setIsDelete} />}
