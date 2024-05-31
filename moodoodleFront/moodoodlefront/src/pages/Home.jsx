@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import { Outlet, useLocation } from 'react-router-dom';
 import Header from '../components/Header';
@@ -14,8 +14,10 @@ export default function Home() {
   const [isClick, setIsClick] = useState(false);
   const [isDateClick, setIsDateClick] = useState(false);
   const [isModified, setIsModified] = useState(false);
+  const [isUpdated, setIsUpdated] = useState(false);
   const [selectedDate, setSelectedDate] = useState(localStorage.getItem('selectedDate'));
   const date = parseInt(dayjs(selectedDate).format('DD')) - 1;
+  const { daysDiary, getMoodCalendar } = useMoodCalendar(selectedDate, isModified, isUpdated);
 
   function handleColorChipToggle() {
     setIsClick((prev) => !prev);
@@ -29,7 +31,13 @@ export default function Home() {
     setIsModified((prev) => !prev);
   };
 
-  const { daysDiary } = useMoodCalendar(selectedDate, isModified);
+  const handleUpdated = () => {
+    setIsUpdated((prev) => !prev);
+  };
+
+  useEffect(() => {
+    getMoodCalendar();
+  }, [isUpdated]);
 
   return (
     <>
@@ -67,6 +75,8 @@ export default function Home() {
             isModified,
             setIsModified,
             handleModified,
+            isUpdated,
+            handleUpdated,
           }}
         />
       </div>

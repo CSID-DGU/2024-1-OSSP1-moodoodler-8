@@ -3,6 +3,7 @@ import MoodHashTag from './MoodHashTag';
 import useDiaryAnalysis from '../hooks/useDiaryAnalysis';
 import useProfile from '../hooks/useProfile';
 import comment from '../constants/comment';
+import IMG_URL from '../constants/ImgUrl';
 
 const colorVariants = {
   DBD3FB: 'text-[#DBD3FB]',
@@ -15,8 +16,8 @@ const colorVariants = {
 };
 
 export default function MoodAnalysis({ isModal, handleDayMoodAnalysisToggle, diary_id }) {
-  const { mainColor, mainColorName, analysisResult, getDiaryAnalysis, musicInfo, getRecommendedMusic } =
-    useDiaryAnalysis();
+  const { mainColor, mainColorName, analysisResult, musicInfo, getDiaryAnalysis, getRecommendedMusic } =
+    useDiaryAnalysis(diary_id);
   const { profile, getUserProfile } = useProfile();
 
   useEffect(() => {
@@ -24,8 +25,8 @@ export default function MoodAnalysis({ isModal, handleDayMoodAnalysisToggle, dia
   }, [profile]);
 
   useEffect(() => {
-    getDiaryAnalysis(diary_id);
-    getRecommendedMusic(diary_id);
+    getDiaryAnalysis();
+    getRecommendedMusic();
   }, [diary_id]);
 
   return (
@@ -33,8 +34,8 @@ export default function MoodAnalysis({ isModal, handleDayMoodAnalysisToggle, dia
       <div className='flex flex-col h-[409px] justify-between items-center'>
         <div className='flex flex-col h-[200px] justify-between items-center'>
           <p className='font-bold text-normal text-darkNavy'>감정 태그</p>
-          <div className='flex flex-col h-[102px] justify-between items-center'>
-            <div className='w-[50px] h-[50px] mb-[10px]'>
+          <div className='flex flex-col h-[120px] justify-between items-center'>
+            <div className='w-[50px] h-[50px]'>
               <div className={`w-[50px] h-[50px] rounded-full bg-[#${mainColor}]`} />
             </div>
             <div className='flex flex-col w-[262px] justify-center items-center'>
@@ -54,10 +55,12 @@ export default function MoodAnalysis({ isModal, handleDayMoodAnalysisToggle, dia
               </div>
             </div>
           </div>
-          <div className='flex flex-row flex-wrap justify-center items-center gap-[25px]'>
-            {analysisResult.map((result, v) =>
-              v < 3 ? <MoodHashTag key={v} mood_title={result.mood_name} mood_color={result.mood_color} /> : ''
-            )}
+          <div className=''>
+            <div className='flex flex-row flex-wrap justify-center items-center gap-[25px]'>
+              {analysisResult.map((result, v) =>
+                v < 3 ? <MoodHashTag key={v} mood_title={result.mood_name} mood_color={result.mood_color} /> : ''
+              )}
+            </div>
           </div>
         </div>
         <div className='h-[32px] text-darkGray text-center text-[13px] whitespace-pre-line'>
@@ -66,11 +69,15 @@ export default function MoodAnalysis({ isModal, handleDayMoodAnalysisToggle, dia
         <div className='flex flex-col h-[135px] justify-between items-center gap-[5px]'>
           <p className='font-bold text-normal text-darkNavy'>오늘의 추천 음악</p>
           <div className='flex flex-col h-[112px] justify-between items-center'>
-            <img className='w-[75px] h-[75px] rounded-full' src={musicInfo.cover} alt='음악' />
+            <img
+              className='w-[75px] h-[75px] rounded-full'
+              src={`${IMG_URL}${musicInfo.music.cover}`}
+              alt='music_cover'
+            />
             <div className='flex flex-row gap-[5px]'>
               <img src='/assets/music.svg' alt='music' />
               <p className='font-semibold text-[12px] text-darkGray'>
-                {musicInfo.title} - {musicInfo.artist}
+                {musicInfo.music.title} - {musicInfo.music.artist}
               </p>
             </div>
           </div>
