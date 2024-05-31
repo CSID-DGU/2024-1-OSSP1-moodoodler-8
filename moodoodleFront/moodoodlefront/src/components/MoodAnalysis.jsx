@@ -30,8 +30,8 @@ export default function MoodAnalysis({ isModal, handleDayMoodAnalysisToggle, dia
   }, [diary_id]);
 
   return (
-    <div className='relative flex flex-col justify-center items-center w-[342px] h-[472px] rounded-[20px] bg-white shadow-componentShadow'>
-      <div className='flex flex-col h-[409px] justify-between items-center'>
+    <div className='relative flex flex-col justify-center items-center w-[342px] h-[531px] rounded-[20px] bg-white shadow-componentShadow'>
+      <div className='flex flex-col h-[460px] justify-between items-center'>
         <div className='flex flex-col h-[200px] justify-between items-center'>
           <p className='font-bold text-normal text-darkNavy'>감정 태그</p>
           <div className='flex flex-col h-[120px] justify-between items-center'>
@@ -66,7 +66,7 @@ export default function MoodAnalysis({ isModal, handleDayMoodAnalysisToggle, dia
         <div className='h-[32px] text-darkGray text-center text-[13px] whitespace-pre-line'>
           {comment.COMMENT[mainColorName]}
         </div>
-        <div className='flex flex-col h-[135px] justify-between items-center gap-[5px]'>
+        <div className='flex flex-col h-[186px] justify-between items-center gap-[5px]'>
           <p className='font-bold text-normal text-darkNavy'>오늘의 추천 음악</p>
           <div className='flex flex-col h-[112px] justify-between items-center'>
             <img
@@ -76,11 +76,14 @@ export default function MoodAnalysis({ isModal, handleDayMoodAnalysisToggle, dia
             />
             <div className='flex flex-row gap-[5px]'>
               <img src='/assets/music.svg' alt='music' />
-              <p className='font-semibold text-[12px] text-darkGray'>
+              <p className='font-semibold text-[13px] text-darkGray'>
                 {musicInfo.music.title} - {musicInfo.music.artist}
               </p>
             </div>
           </div>
+          <p className='text-darkGray text-center text-[12px] whitespace-pre-line'>
+            당신의 감정과 <b>{parseFloat(musicInfo.similarity * 100).toFixed(2)}%</b> 일치하는 음악입니다!
+          </p>
         </div>
       </div>
       {isModal ? (

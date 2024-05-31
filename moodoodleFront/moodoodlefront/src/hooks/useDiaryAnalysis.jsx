@@ -36,7 +36,6 @@ export default function useDiaryAnalysis(diary_id) {
         music: response.data.recomand_music.music,
         similarity: response.data.recomand_music.similarity,
       });
-      console.log(response.data.recomand_music);
     } catch (error) {
       console.error('Error getting Music:', error.response);
     }
