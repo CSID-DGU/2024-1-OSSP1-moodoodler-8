@@ -50,7 +50,7 @@ export default function MonthlyReport({
   }, [selectedDate, setDate]);
 
   return (
-    <div className='flex w-[342px] h-[592px] justify-center items-center shadow-componentShadow'>
+    <div className='flex w-[342px] h-[592px] justify-center items-center rounded-[20px] shadow-componentShadow'>
       <div className='flex flex-col w-[342px] h-[548px] justify-between items-center'>
         <div className='flex flex-row w-[283px] h-[24px] justify-start items-center gap-[95px]'>
           <button type='button' onClick={handleReportComponent}>
@@ -86,11 +86,11 @@ export default function MonthlyReport({
               </div>
               <div className='flex flex-col w-[310px] h-[45px]'>
                 <div className='flex flex-row justify-between items-center'>
-                  <img src='/assets/leftDQM.svg' alt='왼쪽큰따옴표' />
-                  <img src='/assets/rightDQM.svg' alt='오른쪽큰따옴표' />
+                  <img src='/assets/leftDQM.svg' alt='leftDoubleQuote' />
+                  <img src='/assets/rightDQM.svg' alt='rightDoubleQuote' />
                 </div>
                 <div className='text-center text-[13px] text-darkGray'>
-                  [{profile.nickname}]님, 이번 달에는 행복한 일이 많으셨군요!
+                  [{profile.nickname}]님, 이번 달에는 {mainColor.id}한() 일이 많으셨군요!
                   <br />
                   <span className={`text-[${mainColor.color}]`}>[{mainColor.id}]</span>이 {mainColor.value}%를 차지하고
                   있어요~
@@ -103,13 +103,15 @@ export default function MonthlyReport({
         </div>
         {dayjs(selectedDate).format('YYYY-MM') <= dayjs().format('YYYY-MM') ? (
           <>
-            <div className='flex flex-col w-[268px] h-[70px] justify-between items-center'>
-              <p className='font-bold text-base text-darkNavy'>이달의 태그</p>
-              <div className='flex flex-row flex-wrap justify-center items-center gap-[10px]'>
-                {monthTagList.length > 0 &&
-                  monthTagList.map((tag, index) => (
-                    <MoodHashTag key={index} mood_title={tag.tag_name} mood_color={tag.tag_color} />
-                  ))}
+            <div className='flex flex-col w-[268px] h-[80px] justify-between items-center'>
+              <div className='flex flex-col h-[67px] justify-between items-center'>
+                <p className='font-bold text-base text-darkNavy'>이달의 태그</p>
+                <div className='flex flex-row flex-wrap justify-center items-center gap-[10px]'>
+                  {monthTagList.length > 0 &&
+                    monthTagList.map((tag, index) => (
+                      <MoodHashTag key={index} mood_title={tag.tag_name} mood_color={tag.tag_color} />
+                    ))}
+                </div>
               </div>
             </div>
           </>

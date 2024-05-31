@@ -16,12 +16,14 @@ export default function useMoodCalendar(selectedDate, isModified, to_user_id) {
         `/diary/month/${localStorage.getItem('id')}/${yearMonth.year}/${yearMonth.month}/`
       );
       const diaryData = response.data.result;
+      console.log(diaryData);
       setDaysDiary(diaryData);
       setMoodcolorlist(diaryData.map((diary) => diary.main_mood_color));
     } catch (error) {
       console.error(error);
     }
   };
+
   // 친구 무드 캘린더 받아오기
   const getFriendMoodCalendar = async (to_user_id) => {
     try {

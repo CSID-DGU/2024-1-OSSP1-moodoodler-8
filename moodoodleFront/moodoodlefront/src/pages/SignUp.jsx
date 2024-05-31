@@ -5,7 +5,7 @@ import SignUpComponent from '../components/SignUpComponent';
 export default function SignUp() {
   return (
     <div className='flex flex-col justify-center items-center w-full h-screen bg-white'>
-      <div className='flex flex-col items-center justify-between h-[643px]'>
+      <div className='flex flex-col items-center justify-between h-[643px] gap-[20px]'>
         <Link to='/'>
           <img src='/assets/moodoodleLogoMain.svg' alt='logo' />
         </Link>

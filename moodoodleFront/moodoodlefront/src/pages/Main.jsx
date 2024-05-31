@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import dayjs from 'dayjs';
 import { useOutletContext } from 'react-router-dom';
 import DiaryWritePopup from '../components/DiaryWritePopup';
@@ -9,17 +9,12 @@ import ProhibitionComponent from '../components/ProhibitionComponent';
 
 export default function Main() {
   const context = useOutletContext();
-  const [isModified, setIsModified] = useState(false);
-
-  const handleModified = () => {
-    setIsModified((prev) => !prev);
-  };
 
   return (
     <div className='relative'>
       <div className='flex flex-col items-center gap-[12px]'>
         {context.isCalendar ? (
-          <YearCalendar handleColorChipToggle={context.handleColorChipToggle} />
+          <YearCalendar isCalendar={context.isCalendar} handleColorChipToggle={context.handleColorChipToggle} />
         ) : (
           <Calendar
             handleColorChipToggle={context.handleColorChipToggle}
@@ -38,9 +33,9 @@ export default function Main() {
               text='분석 결과 보기'
               color='orange'
               handleDayMoodAnalysisToggle={context.handleDayMoodAnalysisToggle}
-              handleModified={handleModified}
-              isModified={isModified}
-              setIsModified={setIsModified}
+              handleModified={context.handleModified}
+              isModified={context.isModified}
+              setIsModified={context.setIsModified}
             />
           ) : (
             <DiaryWritePopup selectedDate={context.selectedDate} />

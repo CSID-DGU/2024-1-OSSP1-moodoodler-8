@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import dayjs from 'dayjs';
 import DiaryContent from './DiaryContent';
 import DiaryModifiedComponent from './DiaryModifiedComponent';

@@ -15,7 +15,8 @@ const colorVariants = {
 };
 
 export default function MoodAnalysis({ isModal, handleDayMoodAnalysisToggle, diary_id }) {
-  const { mainColor, mainColorName, analysisResult, getDiaryAnalysis } = useDiaryAnalysis();
+  const { mainColor, mainColorName, analysisResult, getDiaryAnalysis, musicInfo, getRecommendedMusic } =
+    useDiaryAnalysis();
   const { profile, getUserProfile } = useProfile();
 
   useEffect(() => {
@@ -24,6 +25,7 @@ export default function MoodAnalysis({ isModal, handleDayMoodAnalysisToggle, dia
 
   useEffect(() => {
     getDiaryAnalysis(diary_id);
+    getRecommendedMusic(diary_id);
   }, [diary_id]);
 
   return (
@@ -58,15 +60,19 @@ export default function MoodAnalysis({ isModal, handleDayMoodAnalysisToggle, dia
             )}
           </div>
         </div>
-        <div className='w-[210px] h-[32px] text-darkGray text-center text-[13px] whitespace-pre-line'>
+        <div className='h-[32px] text-darkGray text-center text-[13px] whitespace-pre-line'>
           {comment.COMMENT[mainColorName]}
         </div>
-        <div className='flex flex-col h-[135px] justify-between items-center'>
+        <div className='flex flex-col h-[135px] justify-between items-center gap-[5px]'>
           <p className='font-bold text-normal text-darkNavy'>오늘의 추천 음악</p>
-          <div className='w-[89px] h-[89px] rounded-full' />
-          <div className='flex justify-center items-center gap-[5px]'>
-            <img src='/assets/music.svg' alt='음악' />
-            <p className='font-semibold text-[12px] text-darkGray'>제목 - 가수</p>
+          <div className='flex flex-col h-[112px] justify-between items-center'>
+            <img className='w-[75px] h-[75px] rounded-full' src={musicInfo.cover} alt='음악' />
+            <div className='flex flex-row gap-[5px]'>
+              <img src='/assets/music.svg' alt='music' />
+              <p className='font-semibold text-[12px] text-darkGray'>
+                {musicInfo.title} - {musicInfo.artist}
+              </p>
+            </div>
           </div>
         </div>
       </div>
