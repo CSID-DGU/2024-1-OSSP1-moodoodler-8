@@ -25,10 +25,6 @@ export default function Home() {
     setIsDateClick((prev) => !prev);
   }
 
-  useEffect(() => {
-    getMoodCalendar();
-  }, [daysDiary]);
-
   return (
     <>
       <Header />

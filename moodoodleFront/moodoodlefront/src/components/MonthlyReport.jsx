@@ -86,8 +86,8 @@ export default function MonthlyReport({
               </div>
               <div className='flex flex-col w-[310px] h-[45px]'>
                 <div className='flex flex-row justify-between items-center'>
-                  <img src='/assets/leftDQM.svg' alt='왼쪽큰따옴표' />
-                  <img src='/assets/rightDQM.svg' alt='오른쪽큰따옴표' />
+                  <img src='/assets/leftDQM.svg' alt='leftDoubleQuote' />
+                  <img src='/assets/rightDQM.svg' alt='rightDoubleQuote' />
                 </div>
                 <div className='text-center text-[13px] text-darkGray'>
                   [{profile.nickname}]님, 이번 달에는 {mainColor.id}한() 일이 많으셨군요!

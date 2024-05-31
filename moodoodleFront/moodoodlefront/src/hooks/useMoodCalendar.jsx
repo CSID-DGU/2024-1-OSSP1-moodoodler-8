@@ -16,6 +16,7 @@ export default function useMoodCalendar(selectedDate, isModified, to_user_id) {
         `/diary/month/${localStorage.getItem('id')}/${yearMonth.year}/${yearMonth.month}/`
       );
       const diaryData = response.data.result;
+      console.log(diaryData);
       setDaysDiary(diaryData);
       setMoodcolorlist(diaryData.map((diary) => diary.main_mood_color));
     } catch (error) {
