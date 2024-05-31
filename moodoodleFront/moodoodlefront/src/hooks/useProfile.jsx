@@ -6,6 +6,7 @@ export default function useProfile() {
     nickname: '',
     description: '',
     isPublic: false,
+    profile_image: '',
   });
 
   const [isModified, setIsModified] = useState(false);
@@ -25,6 +26,7 @@ export default function useProfile() {
         nickname: getProfileResponse.data.data.nickname,
         description: getProfileResponse.data.data.description,
         isPublic: getProfileResponse.data.data.public,
+        profile_image: getProfileResponse.data.data.profile_image,
       });
     } catch (error) {
       console.error(error.response);
@@ -32,10 +34,13 @@ export default function useProfile() {
   };
 
   const patchUserProfile = async (handleProfileComponent) => {
+    console.log(profile.profile_image);
     const patchUserInfoData = {
+      id: localStorage.getItem('id'),
       nickname: profile.nickname,
       description: profile.description,
       public: profile.isPublic,
+      profile_image: profile.profile_image,
     };
     try {
       const patchProfileManagementResponse = await defaultAxios.patch(

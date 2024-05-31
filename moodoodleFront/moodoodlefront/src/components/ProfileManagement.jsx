@@ -3,13 +3,26 @@ import ToggleContainer from './ToggleContainer';
 import InputProfile from './InputProfile';
 import useProfile from '../hooks/useProfile';
 import CustomButton from './CustomButton';
+import IMG_URL from '../constants/ImgUrl';
 
 export default function ProfileManagement({ handleProfileComponent }) {
   const { profile, setProfile, getUserProfile, patchUserProfile, isModified } = useProfile();
 
+  const [uploadedImage, setUploadedImage] = useState('');
+
   useEffect(() => {
     getUserProfile();
-  }, [localStorage.getItem('id')]);
+  }, [localStorage.getItem('id'), profile]);
+
+  const onChangeImage = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setUploadedImage(reader.result);
+      setProfile({ ...profile, profile_image: reader.result });
+    };
+  };
 
   return (
     <div className='flex w-[342px] h-[479px] justify-center items-center rounded-[20px] bg-white shadow-componentShadow'>
@@ -21,13 +34,25 @@ export default function ProfileManagement({ handleProfileComponent }) {
           <p className='font-bold text-base text-darkNavy'>프로필 관리</p>
         </div>
         <div className='flex flex-col justify-between items-center w-[99px] h-[128px]'>
-          <img src='/assets/profile.svg' alt='프로필 사진' className='w-[99px] h-[99px] rounded-full' />
+          {uploadedImage ? (
+            <img
+              src={uploadedImage}
+              alt='프로필 사진'
+              className='w-[99px] h-[99px] rounded-full shadow-profileShadow'
+            />
+          ) : (
+            <img
+              src={`${IMG_URL}/${profile.profile_image}`}
+              alt='프로필 사진'
+              className='w-[99px] h-[99px] rounded-full shadow-profileShadow'
+            />
+          )}
           <label
             htmlFor='file'
             className='text-center font-light text-[14px] text-[#408DF9] tracking-[-1.26px] cursor-pointer'>
             <div>사진 수정 및 삭제</div>
           </label>
-          <input type='file' className='hidden' name='file' id='file' />
+          <input type='file' className='hidden' name='file' id='file' onChange={onChangeImage} />
         </div>
         <div className='flex flex-col w-[280px] h-[133px] justify-between items-center'>
           <InputProfile
