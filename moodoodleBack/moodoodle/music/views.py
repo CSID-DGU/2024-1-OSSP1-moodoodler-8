@@ -1,6 +1,6 @@
 # music view.py
 from rest_framework import status
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView
 from rest_framework.response import Response
 from django.shortcuts import render, get_object_or_404
 from rest_framework.permissions import IsAuthenticated
@@ -17,16 +17,21 @@ class MusicCreateView(CreateAPIView):
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
-            self.cover_create(serializer)
+            serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    def cover_create(self, serializer):
-        obj = serializer.save()
-        if obj.cover:
-            obj.cover = f"https://moodoodlebucket.s3.ap-northeast-2.amazonaws.com/{obj.cover}"
-            obj.save()
+class MusicListView(ListAPIView):
+    serializer_class = MusicSerializer
     
+    def get_queryset(self):
+        return Music.objects.all()
+
+    def get(self, request, *args, **kwargs):
+        musics = self.get_queryset()
+        serializer = self.serializer_class(musics, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 class MusicMoodView(CreateAPIView):
     serializer_class = MusicMooodSerializer
 
