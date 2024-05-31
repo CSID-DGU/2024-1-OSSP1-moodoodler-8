@@ -9,6 +9,11 @@ from .models import Music_Mood, Music
 from diary_mood.models import Diary_Mood
 from user.models import users, Survey
 from sklearn.metrics.pairwise import cosine_similarity
+import random as r
+
+def random_music(lis):
+    num = r.randint(0, len(lis))
+    return num
 
 
 class MusicCreateView(CreateAPIView):
@@ -64,19 +69,20 @@ class MusicMoodView(CreateAPIView):
         ret = [mood[2:] for mood in music_mood_values]
 
         sim = cosine_similarity(diary, ret)
-        sim_idx = []
+        sim_music = []
         for i in range(min(len(sim[0]), len(musics))):
             music_data = MusicSerializer(musics[i]).data
-            sim_idx.append({
-                "similarity": sim[0][i],
-                "music": music_data
-            })
-        sim_idx = sorted(sim_idx, key=lambda x: x["similarity"], reverse=True)
+            if(sim[0][i] > 0.8):
+                sim_music.append({
+                    "similarity": sim[0][i],
+                    "music": music_data
+                })
+        sim_music = sorted(sim_music, key=lambda x: x["similarity"], reverse=True)
 
         return Response({
             "success" : True,
             "status_code" : 200,
             "message" : "요청에 성공하였습니다.",
             "diary_id" : diary_id,
-            "recomand_music" : sim_idx[:10]
+            "recomand_music" : sim_music[random_music(sim_music)]
         }, status=status.HTTP_200_OK)
