@@ -4,8 +4,8 @@ import GenreButton from '../components/GenreButton';
 import CustomButton from '../components/CustomButton';
 
 const detailMood = {
-  긍정: '긍정 : 평온, 성취감, 행복, 열정',
-  부정: '부정 : 슬픔, 불안, 화남',
+  긍정: '긍정 : 행복, 중립',
+  부정: '부정 : 분노, 놀람, 공포, 혐오, 슬픔',
 };
 
 const buttonText = {
@@ -52,7 +52,12 @@ export default function SurveyComponent({ title, direction, answers, setAnswers,
           />
         ))}
       </div>
-      <CustomButton text={buttonText[direction]} color='purple' onClick={() => onClickHandleSubmit()} />
+      <CustomButton
+        text={buttonText[direction]}
+        color='purple'
+        disabled={answers.length > 0 ? false : true}
+        onClick={() => onClickHandleSubmit()}
+      />
     </div>
   );
 }
