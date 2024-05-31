@@ -78,6 +78,7 @@ class DuplicatedView(CreateAPIView):
             'message' : "중복되지 않는 아이디입니다."
         }, status=status.HTTP_200_OK)
 
+
 class MypageAPIView(RetrieveUpdateAPIView):
     # permission_classes = (IsAuthenticated,)
     serializer_class = MypageSerializer
@@ -123,7 +124,7 @@ class MypageAPIView(RetrieveUpdateAPIView):
         )
         try:
             serializer.is_valid(raise_exception=True)
-            self.profile_image_create(serializer)
+            serializer.save()
             return Response({
                 'success' : True,
                 'status_code': status.HTTP_200_OK,
@@ -136,12 +137,6 @@ class MypageAPIView(RetrieveUpdateAPIView):
                 'status_code': status.HTTP_400_BAD_REQUEST,
                 'message': e.detail
             }, status=status.HTTP_400_BAD_REQUEST)
-        
-    def profile_image_create(self, serializer):
-        obj = serializer.save()
-        if obj.profile_image:
-            obj.profile_image = f"https://moodoodlebucket.s3.ap-northeast-2.amazonaws.com/{obj.profile_image}"
-            obj.save()
 
 class UserMoodReportView(ListAPIView):
     # permission_classes = [IsAuthenticated]

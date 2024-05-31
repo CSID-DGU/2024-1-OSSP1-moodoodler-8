@@ -2,7 +2,6 @@
 from rest_framework import status
 from rest_framework.generics import CreateAPIView, ListAPIView
 from rest_framework.response import Response
-from django.shortcuts import render, get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from .serializers import MusicSerializer, MusicMooodSerializer
 from .models import Music_Mood, Music
