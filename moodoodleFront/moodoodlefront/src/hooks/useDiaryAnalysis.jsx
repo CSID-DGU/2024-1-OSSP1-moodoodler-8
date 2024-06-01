@@ -1,16 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { defaultAxios } from '../axios/defaultAxios';
 
-export default function useDiaryAnalysis() {
+export default function useDiaryAnalysis(diary_id) {
   const [mainColor, setMainColor] = useState('');
   const [mainColorName, setMainColorName] = useState('');
   const [analysisResult, setAnalysisResult] = useState([]);
+  const [musicInfo, setMusicInfo] = useState({ music: {}, similarity: '' });
 
-  const [musicList, setMusicList] = useState([]);
-  const [music, setMusic] = useState({});
-
-  const getDiaryAnalysis = async (diary_id) => {
-    console.log(diary_id);
+  const getDiaryAnalysis = async () => {
     try {
       const getDiaryAnalysisrResponse = await defaultAxios.get(
         `/diary/detail/${localStorage.getItem('id')}/${diary_id}/`,
@@ -19,7 +16,6 @@ export default function useDiaryAnalysis() {
           diary_id: diary_id,
         }
       );
-      console.log(getDiaryAnalysisrResponse.data.detail);
       setMainColor(getDiaryAnalysisrResponse.data.detail[0].mood_color);
       setMainColorName(getDiaryAnalysisrResponse.data.detail[0].mood_name);
       setAnalysisResult(getDiaryAnalysisrResponse.data.detail);
@@ -28,20 +24,22 @@ export default function useDiaryAnalysis() {
     }
   };
 
-  const getRecommendedMusic = async (diary_id) => {
+  const getRecommendedMusic = async () => {
     console.log(diary_id);
     try {
       const response = await defaultAxios.get(`/music/recomand/${localStorage.getItem('id')}/${diary_id}/`, {
         id: localStorage.getItem('id'),
         diary_id: diary_id,
       });
-      console.log(response.data.recomand_music);
-      setMusicList(response.data.recomand_music);
-      setMusic(musicList[0]);
+      setMusicInfo({
+        ...musicInfo,
+        music: response.data.recomand_music.music,
+        similarity: response.data.recomand_music.similarity,
+      });
     } catch (error) {
       console.error('Error getting Music:', error.response);
     }
   };
 
-  return { mainColor, mainColorName, analysisResult, getDiaryAnalysis, music, getRecommendedMusic };
+  return { mainColor, mainColorName, analysisResult, getDiaryAnalysis, musicInfo, getRecommendedMusic };
 }

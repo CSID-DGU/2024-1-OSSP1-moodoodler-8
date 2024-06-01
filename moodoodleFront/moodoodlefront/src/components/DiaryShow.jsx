@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import dayjs from 'dayjs';
 import DiaryContent from './DiaryContent';
 import DiaryModifiedComponent from './DiaryModifiedComponent';
 import useDiaryWrite from '../hooks/useDiaryWrite';
+import useMoodCalendar from '../hooks/useMoodCalendar';
 
 export default function DiaryShow({
   content,
@@ -45,10 +46,7 @@ export default function DiaryShow({
         )}
         {isModified ? (
           <>
-            <button
-              onClick={() => {
-                handleDeleteDiary({ diary_id, handleModified });
-              }}>
+            <button onClick={() => handleDeleteDiary({ diary_id, handleModified })}>
               <img src='/assets/trash.svg' alt='삭제하기' className='absolute top-[29px] right-[29px]' />
             </button>
             <button onClick={() => setIsModified((prev) => !prev)}>

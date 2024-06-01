@@ -9,13 +9,15 @@ import NavigationBar from '../components/NavigationBar';
 import useMoodCalendar from '../hooks/useMoodCalendar';
 
 export default function Home() {
+  const location = useLocation();
   const [isCalendar, setIsCalendar] = useState(false);
   const [isClick, setIsClick] = useState(false);
   const [isDateClick, setIsDateClick] = useState(false);
-  const location = useLocation();
-  const [selectedDate, setSelectedDate] = useState(dayjs().format('YYYY-MM-DD'));
+  const [isModified, setIsModified] = useState(false);
+  const [isUpdated, setIsUpdated] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(localStorage.getItem('selectedDate'));
   const date = parseInt(dayjs(selectedDate).format('DD')) - 1;
-  const { daysDiary, getMoodCalendar } = useMoodCalendar(selectedDate);
+  const { daysDiary, getMoodCalendar } = useMoodCalendar(selectedDate, isModified, isUpdated);
 
   function handleColorChipToggle() {
     setIsClick((prev) => !prev);
@@ -25,9 +27,17 @@ export default function Home() {
     setIsDateClick((prev) => !prev);
   }
 
+  const handleModified = () => {
+    setIsModified((prev) => !prev);
+  };
+
+  const handleUpdated = () => {
+    setIsUpdated((prev) => !prev);
+  };
+
   useEffect(() => {
     getMoodCalendar();
-  }, [daysDiary]);
+  }, [isUpdated]);
 
   return (
     <>
@@ -52,7 +62,6 @@ export default function Home() {
           ''
         )}
         <Outlet
-          className=''
           context={{
             isCalendar,
             isClick,
@@ -63,6 +72,11 @@ export default function Home() {
             setSelectedDate,
             daysDiary,
             date,
+            isModified,
+            setIsModified,
+            handleModified,
+            isUpdated,
+            handleUpdated,
           }}
         />
       </div>
