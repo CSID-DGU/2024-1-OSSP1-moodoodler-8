@@ -33,14 +33,13 @@ export default function useProfile() {
     }
   };
 
-  const patchUserProfile = async (handleProfileComponent) => {
-    console.log(profile.profile_image);
+  const patchUserProfile = async (handleProfileComponent, imgUrl) => {
     const patchUserInfoData = {
       id: localStorage.getItem('id'),
       nickname: profile.nickname,
       description: profile.description,
       public: profile.isPublic,
-      profile_image: profile.profile_image,
+      profile_image: imgUrl,
     };
     try {
       const patchProfileManagementResponse = await defaultAxios.patch(

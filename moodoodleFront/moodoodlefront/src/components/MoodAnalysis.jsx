@@ -3,7 +3,6 @@ import MoodHashTag from './MoodHashTag';
 import useDiaryAnalysis from '../hooks/useDiaryAnalysis';
 import useProfile from '../hooks/useProfile';
 import comment from '../constants/comment';
-import IMG_URL from '../constants/ImgUrl';
 
 const colorVariants = {
   DBD3FB: 'text-[#DBD3FB]',

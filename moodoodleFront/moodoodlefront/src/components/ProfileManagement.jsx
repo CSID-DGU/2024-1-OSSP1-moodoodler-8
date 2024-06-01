@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ToggleContainer from './ToggleContainer';
 import InputProfile from './InputProfile';
 import useProfile from '../hooks/useProfile';
@@ -9,20 +9,25 @@ export default function ProfileManagement({ handleProfileComponent }) {
   const { profile, setProfile, getUserProfile, patchUserProfile, isModified } = useProfile();
 
   const [uploadedImage, setUploadedImage] = useState('');
+  const imgRef = useRef();
 
   useEffect(() => {
     getUserProfile();
   }, [localStorage.getItem('id'), profile]);
 
-  const onChangeImage = (e) => {
-    const file = e.target.files[0];
+  const onChangeImage = () => {
+    const file = imgRef.current.files[0];
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
       setUploadedImage(reader.result);
-      setProfile({ ...profile, profile_image: reader.result });
     };
   };
+
+  useEffect(() => {
+    console.log(uploadedImage);
+    setProfile({ ...profile, profile_image: uploadedImage });
+  }, [uploadedImage]);
 
   return (
     <div className='flex w-[342px] h-[479px] justify-center items-center rounded-[20px] bg-white shadow-componentShadow'>
@@ -52,7 +57,7 @@ export default function ProfileManagement({ handleProfileComponent }) {
             className='text-center font-light text-[14px] text-[#408DF9] tracking-[-1.26px] cursor-pointer'>
             <div>사진 수정 및 삭제</div>
           </label>
-          <input type='file' className='hidden' name='file' id='file' onChange={onChangeImage} />
+          <input type='file' className='hidden' name='file' id='file' ref={imgRef} onChange={() => onChangeImage()} />
         </div>
         <div className='flex flex-col w-[280px] h-[133px] justify-between items-center'>
           <InputProfile
@@ -76,7 +81,11 @@ export default function ProfileManagement({ handleProfileComponent }) {
             <ToggleContainer is={profile} isPublic={profile.isPublic} setIs={setProfile} />
           </div>
         </div>
-        <CustomButton text='저장하기' color='pink' onClick={() => patchUserProfile(handleProfileComponent)} />
+        <CustomButton
+          text='저장하기'
+          color='pink'
+          onClick={() => patchUserProfile(handleProfileComponent, uploadedImage)}
+        />
       </div>
     </div>
   );
