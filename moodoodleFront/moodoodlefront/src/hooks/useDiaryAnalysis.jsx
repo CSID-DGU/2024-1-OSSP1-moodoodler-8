@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { defaultAxios } from '../axios/defaultAxios';
 
 export default function useDiaryAnalysis(diary_id) {
@@ -25,7 +25,6 @@ export default function useDiaryAnalysis(diary_id) {
   };
 
   const getRecommendedMusic = async () => {
-    console.log(diary_id);
     try {
       const response = await defaultAxios.get(`/music/recomand/${localStorage.getItem('id')}/${diary_id}/`, {
         id: localStorage.getItem('id'),
