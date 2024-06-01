@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import ToggleContainer from './ToggleContainer';
 import useProfile from '../hooks/useProfile';
-import IMG_URL from '../constants/ImgUrl';
 
 export default function MainProfile({ isCalendar, setIsCalendar }) {
   const {
@@ -18,7 +17,7 @@ export default function MainProfile({ isCalendar, setIsCalendar }) {
       <div className='flex flex-row justify-between items-center w-[330px] h-[48px]'>
         <div className='flex flex-row items-center gap-x-[27px]'>
           <img
-            src={`${IMG_URL}/${profile_image}`}
+            src={`${profile_image}`}
             alt='프로필 사진'
             className='w-[48px] h-[48px] rounded-full shadow-profileImgShadow'
           />

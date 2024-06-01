@@ -33,19 +33,25 @@ export default function useProfile() {
     }
   };
 
-  const patchUserProfile = async (handleProfileComponent, imgUrl) => {
-    const patchUserInfoData = {
-      id: localStorage.getItem('id'),
-      nickname: profile.nickname,
-      description: profile.description,
-      public: profile.isPublic,
-      profile_image: imgUrl,
-    };
+  const patchUserProfile = async (handleProfileComponent, uploadedImage) => {
+    const formData = new FormData();
+    formData.append('id', localStorage.getItem('id'));
+    formData.append('nickname', profile.nickname);
+    formData.append('description', profile.description);
+    formData.append('public', profile.isPublic);
+    formData.append('profile_image', uploadedImage);
+
     try {
       const patchProfileManagementResponse = await defaultAxios.patch(
         `/user/mypage/${localStorage.getItem('id')}/`,
-        patchUserInfoData
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
       );
+      console.log(patchProfileManagementResponse.data);
       handleProfileComponent();
       setIsModified((prev) => !prev);
     } catch (error) {

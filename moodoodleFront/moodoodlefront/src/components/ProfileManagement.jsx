@@ -1,33 +1,22 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ToggleContainer from './ToggleContainer';
 import InputProfile from './InputProfile';
 import useProfile from '../hooks/useProfile';
 import CustomButton from './CustomButton';
-import IMG_URL from '../constants/ImgUrl';
 
 export default function ProfileManagement({ handleProfileComponent }) {
   const { profile, setProfile, getUserProfile, patchUserProfile, isModified } = useProfile();
 
-  const [uploadedImage, setUploadedImage] = useState('');
-  const imgRef = useRef();
+  const [uploadedImage, setUploadedImage] = useState();
 
   useEffect(() => {
     getUserProfile();
   }, [localStorage.getItem('id'), profile]);
 
-  const onChangeImage = () => {
-    const file = imgRef.current.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setUploadedImage(reader.result);
-    };
+  const onChangeImage = (event) => {
+    const file = event.target.files[0];
+    setUploadedImage(file);
   };
-
-  useEffect(() => {
-    console.log(uploadedImage);
-    setProfile({ ...profile, profile_image: uploadedImage });
-  }, [uploadedImage]);
 
   return (
     <div className='flex w-[342px] h-[479px] justify-center items-center rounded-[20px] bg-white shadow-componentShadow'>
@@ -41,13 +30,13 @@ export default function ProfileManagement({ handleProfileComponent }) {
         <div className='flex flex-col justify-between items-center w-[99px] h-[128px]'>
           {uploadedImage ? (
             <img
-              src={uploadedImage}
+              src={URL.createObjectURL(uploadedImage)}
               alt='프로필 사진'
               className='w-[99px] h-[99px] rounded-full shadow-profileShadow'
             />
           ) : (
             <img
-              src={`${IMG_URL}/${profile.profile_image}`}
+              src={`${profile.profile_image}`}
               alt='프로필 사진'
               className='w-[99px] h-[99px] rounded-full shadow-profileShadow'
             />
@@ -57,7 +46,7 @@ export default function ProfileManagement({ handleProfileComponent }) {
             className='text-center font-light text-[14px] text-[#408DF9] tracking-[-1.26px] cursor-pointer'>
             <div>사진 수정 및 삭제</div>
           </label>
-          <input type='file' className='hidden' name='file' id='file' ref={imgRef} onChange={() => onChangeImage()} />
+          <input type='file' className='hidden' name='file' id='file' accept='image/*' onChange={onChangeImage} />
         </div>
         <div className='flex flex-col w-[280px] h-[133px] justify-between items-center'>
           <InputProfile
