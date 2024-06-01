@@ -1,10 +1,11 @@
 import React from 'react';
 import dayjs from 'dayjs';
 import CustomButton from './CustomButton';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 
 export default function DiaryShowInAnalysis({ selectedDate, content, text, color }) {
   const navigate = useNavigate();
+  const context = useOutletContext();
   return (
     <div className='relative flex justify-center items-center w-[342px] h-[300px] rounded-[20px] bg-white shadow-componentShadow'>
       <div className='flex flex-col justify-between items-center w-[175px] h-[250px]'>
@@ -16,7 +17,14 @@ export default function DiaryShowInAnalysis({ selectedDate, content, text, color
           </p>
         </div>
         <div className='w-[298px] text-center font-normal text-[13px] text-darkGray'>{content}</div>
-        <CustomButton text={text} color={color} onClick={() => navigate('/main')} />
+        <CustomButton
+          text={text}
+          color={color}
+          onClick={() => {
+            context.handleUpdated();
+            navigate('/main');
+          }}
+        />
       </div>
     </div>
   );

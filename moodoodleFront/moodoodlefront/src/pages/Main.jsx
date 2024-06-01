@@ -20,6 +20,8 @@ export default function Main() {
             handleColorChipToggle={context.handleColorChipToggle}
             selectedDate={context.selectedDate}
             setSelectedDate={context.setSelectedDate}
+            isModified={context.isModified}
+            isUpdated={context.isUpdated}
           />
         )}
         {context.selectedDate <= dayjs().format('YYYY-MM-DD') ? (
