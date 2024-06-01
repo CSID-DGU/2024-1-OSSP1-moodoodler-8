@@ -38,7 +38,7 @@ class DiaryDetailSerializer(serializers.ModelSerializer):
             "surprise": "놀람",
             "anger": "분노",
             "sad": "슬픔",
-            "neutral": "중립",
+            "normal": "중립",
             "happy": "행복",
             "disgust": "혐오"
         }
