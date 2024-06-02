@@ -11,7 +11,7 @@ export default function ProfileManagement({ handleProfileComponent }) {
 
   useEffect(() => {
     getUserProfile();
-  }, [localStorage.getItem('id'), profile]);
+  }, []);
 
   const onChangeImage = (event) => {
     const file = event.target.files[0];
@@ -28,15 +28,23 @@ export default function ProfileManagement({ handleProfileComponent }) {
           <p className='font-bold text-base text-darkNavy'>프로필 관리</p>
         </div>
         <div className='flex flex-col justify-between items-center w-[99px] h-[128px]'>
-          {uploadedImage ? (
-            <img
-              src={URL.createObjectURL(uploadedImage)}
-              alt='프로필 사진'
-              className='w-[99px] h-[99px] rounded-full shadow-profileShadow'
-            />
+          {profile.profile_image ? (
+            uploadedImage ? (
+              <img
+                src={URL.createObjectURL(uploadedImage)}
+                alt='프로필 사진'
+                className='w-[99px] h-[99px] rounded-full shadow-profileShadow'
+              />
+            ) : (
+              <img
+                src={`${profile.profile_image}`}
+                alt='프로필 사진'
+                className='w-[99px] h-[99px] rounded-full shadow-profileShadow'
+              />
+            )
           ) : (
             <img
-              src={`${profile.profile_image}`}
+              src='/assets/profile.svg'
               alt='프로필 사진'
               className='w-[99px] h-[99px] rounded-full shadow-profileShadow'
             />

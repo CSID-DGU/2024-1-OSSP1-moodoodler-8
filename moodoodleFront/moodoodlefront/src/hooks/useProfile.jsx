@@ -35,21 +35,23 @@ export default function useProfile() {
 
   const patchUserProfile = async (handleProfileComponent, uploadedImage) => {
     const formData = new FormData();
-    formData.append('id', localStorage.getItem('id'));
-    formData.append('nickname', profile.nickname);
-    formData.append('description', profile.description);
-    formData.append('public', profile.isPublic);
-    formData.append('profile_image', uploadedImage);
+    if (uploadedImage === undefined) {
+      formData.append('id', localStorage.getItem('id'));
+      formData.append('nickname', profile.nickname);
+      formData.append('description', profile.description);
+      formData.append('public', profile.isPublic);
+    } else {
+      formData.append('id', localStorage.getItem('id'));
+      formData.append('nickname', profile.nickname);
+      formData.append('description', profile.description);
+      formData.append('public', profile.isPublic);
+      formData.append('profile_image', uploadedImage);
+    }
 
     try {
       const patchProfileManagementResponse = await defaultAxios.patch(
         `/user/mypage/${localStorage.getItem('id')}/`,
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        }
+        formData
       );
       console.log(patchProfileManagementResponse.data);
       handleProfileComponent();
