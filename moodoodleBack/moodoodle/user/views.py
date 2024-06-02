@@ -14,6 +14,7 @@ from drf_yasg.utils import swagger_auto_schema
 from diary.models import Diary
 from diary_mood.models import Diary_Mood
 from .serializers import UserRegistrationSerializer, UserLoginSerializer, MypageSerializer, UserLogoutSerializer, DuplicatedSerializer, UserSurveySerializer
+from rest_framework.parsers import MultiPartParser, FormParser
 
 class UserRegistrationView(CreateAPIView):
     serializer_class = UserRegistrationSerializer
@@ -83,6 +84,7 @@ class MypageAPIView(RetrieveUpdateAPIView):
     # permission_classes = (IsAuthenticated,)
     serializer_class = MypageSerializer
     queryset = users.objects.all()
+    parser_classes = (MultiPartParser, FormParser)
     # lookup_field = 'id'
     
     def get_object(self):
@@ -92,7 +94,9 @@ class MypageAPIView(RetrieveUpdateAPIView):
     def get(self, request, *args, **kwargs):
         try:
             user = self.get_object()
-            serializer_data = request.data
+            data = request.data
+            profile_image = request.FILES.get('profile_image')
+            serializer_data = {**data, 'profile_image': profile_image}
             serializer = self.serializer_class(user, data=serializer_data, partial=True)
             serializer.is_valid(raise_exception=True)
             response_data = {
