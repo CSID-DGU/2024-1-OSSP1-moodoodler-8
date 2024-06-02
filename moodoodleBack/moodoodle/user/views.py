@@ -94,9 +94,7 @@ class MypageAPIView(RetrieveUpdateAPIView):
     def get(self, request, *args, **kwargs):
         try:
             user = self.get_object()
-            data = request.data
-            profile_image = request.FILES.get('profile_image')
-            serializer_data = {**data, 'profile_image': profile_image}
+            serializer_data = request.data
             serializer = self.serializer_class(user, data=serializer_data, partial=True)
             serializer.is_valid(raise_exception=True)
             response_data = {

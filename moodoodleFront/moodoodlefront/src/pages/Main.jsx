@@ -25,7 +25,9 @@ export default function Main() {
             isUpdated={context.isUpdated}
           />
         )}
-        {context.selectedDate <= dayjs().format('YYYY-MM-DD') ? (
+        {context.isCalendar ? (
+          ''
+        ) : context.selectedDate <= dayjs().format('YYYY-MM-DD') ? (
           context.daysDiary.length < context.date + 1 ? (
             <DiaryWritePopup selectedDate={context.selectedDate} />
           ) : context.daysDiary[context.date].content ? (

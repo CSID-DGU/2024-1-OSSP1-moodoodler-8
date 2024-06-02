@@ -14,6 +14,7 @@ import Survey from './pages/Survey';
 import Welcome from './pages/Welcome';
 import Alarm from './pages/Alarm';
 import Search from './pages/Search';
+import Landing from './pages/Landing';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
               <div className='flex-1'>
                 <Routes>
                   <Route path='/' element={<Start />} />
+                  <Route path='/moodoodle' element={<Landing />} />
                   <Route path='/login' element={<Login />} />
                   <Route path='/signup' element={<SignUp />} />
                   <Route path='/survey' element={<Survey />} />
@@ -46,6 +48,7 @@ function App() {
                 <Routes>
                   <Route path='/' element={<Start />} />
                   <Route path='/login' element={<Login />} />
+                  <Route path='/moodoodle' element={<Landing />} />
                   <Route path='/signup' element={<SignUp />} />
                   <Route path='/survey' element={<Survey />} />
                   <Route exact path='/' element={<Home />}>

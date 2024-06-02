@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { defaultAxios } from '../axios/defaultAxios';
 import useDiaryAnalysis from './useDiaryAnalysis';
+import axios from 'axios';
 
 export default function useDiaryWrite() {
   const [content, setContent] = useState('');
@@ -15,7 +16,7 @@ export default function useDiaryWrite() {
       content: content,
     };
     try {
-      const postDiaryResponse = await defaultAxios.post('/diary/create/', postDiaryData);
+      const postDiaryResponse = await axios.post('http://43.203.49.149:5000/diary/create/', postDiaryData);
       console.log(postDiaryResponse.data.data.diary_id);
       localStorage.setItem('diary_id', postDiaryResponse.data.data.diary_id);
       localStorage.setItem('content', postDiaryResponse.data.data.content);
@@ -23,7 +24,7 @@ export default function useDiaryWrite() {
       setContent(postDiaryResponse.data.data.content);
       navigate(`/analysis/${localStorage.getItem('selectedDate')}`);
     } catch (error) {
-      console.log(error.response.status);
+      console.log(error.response);
     }
   };
 

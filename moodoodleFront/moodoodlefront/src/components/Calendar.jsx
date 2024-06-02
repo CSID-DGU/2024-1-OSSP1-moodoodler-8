@@ -8,7 +8,7 @@ export default function Calendar({
   handleColorChipToggle,
   selectedDate,
   setSelectedDate,
-  to_user_id = '',
+  to_user_id,
   isModified,
   isUpdated,
 }) {

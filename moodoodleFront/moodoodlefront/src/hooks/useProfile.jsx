@@ -6,6 +6,7 @@ export default function useProfile() {
     nickname: '',
     description: '',
     isPublic: false,
+    profile_image: '',
   });
 
   const [isModified, setIsModified] = useState(false);
@@ -25,23 +26,34 @@ export default function useProfile() {
         nickname: getProfileResponse.data.data.nickname,
         description: getProfileResponse.data.data.description,
         isPublic: getProfileResponse.data.data.public,
+        profile_image: getProfileResponse.data.data.profile_image,
       });
     } catch (error) {
       console.error(error.response);
     }
   };
 
-  const patchUserProfile = async (handleProfileComponent) => {
-    const patchUserInfoData = {
-      nickname: profile.nickname,
-      description: profile.description,
-      public: profile.isPublic,
-    };
+  const patchUserProfile = async (handleProfileComponent, uploadedImage) => {
+    const formData = new FormData();
+    if (uploadedImage === undefined) {
+      formData.append('id', localStorage.getItem('id'));
+      formData.append('nickname', profile.nickname);
+      formData.append('description', profile.description);
+      formData.append('public', profile.isPublic);
+    } else {
+      formData.append('id', localStorage.getItem('id'));
+      formData.append('nickname', profile.nickname);
+      formData.append('description', profile.description);
+      formData.append('public', profile.isPublic);
+      formData.append('profile_image', uploadedImage);
+    }
+
     try {
       const patchProfileManagementResponse = await defaultAxios.patch(
         `/user/mypage/${localStorage.getItem('id')}/`,
-        patchUserInfoData
+        formData
       );
+      console.log(patchProfileManagementResponse.data);
       handleProfileComponent();
       setIsModified((prev) => !prev);
     } catch (error) {
