@@ -22,6 +22,8 @@ module.exports = {
         'gray-scale-1': '#F7F7F7',
         'gray-scale-2': '#AFAFAF',
         'gray-scale-3': '#7E7E7E',
+        pink: '#FBCFE0',
+        purple: '#D4AFF9',
       },
     },
   },
