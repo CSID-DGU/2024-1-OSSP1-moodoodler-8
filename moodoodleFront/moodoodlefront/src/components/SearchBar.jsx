@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import useFriendSearch from '../hooks/useFriendSearch';
 
 export default function SearchBar() {

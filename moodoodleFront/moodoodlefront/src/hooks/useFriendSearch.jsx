@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { defaultAxios } from '../axios/defaultAxios';
+import useFriendRequest from './useFriendRequest';
 
 export default function useFriendSearch() {
   const navigate = useNavigate();
@@ -20,7 +21,6 @@ export default function useFriendSearch() {
         nickname: getSearchResponse.data.nickname,
         description: getSearchResponse.data.description,
       });
-      console.log(getSearchResponse.data);
       navigate('/search', { state: { searchData: getSearchResponse.data } });
     } catch (error) {
       console.log(error.response);

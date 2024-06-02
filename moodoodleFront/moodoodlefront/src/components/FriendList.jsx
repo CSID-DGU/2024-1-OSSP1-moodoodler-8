@@ -56,6 +56,7 @@ export default function FriendList() {
               key={friend.id} // 고유한 key prop 추가
               nickname={friend.nickname}
               description={friend.description}
+              img={friend.profile_image}
               src2={isDelete ? '/assets/frienddelete.svg' : '/assets/calendar.svg'}
               alt2={isDelete ? 'delete' : 'calendar'}
               onClick2={isDelete ? () => handleDelete(friend.id) : () => handleCalendar(friend)}

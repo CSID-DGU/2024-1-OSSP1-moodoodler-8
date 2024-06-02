@@ -22,7 +22,7 @@ export default function useFriendProfile() {
       // 배열을 Map으로 변환
       const friendMap = new Map();
       result.forEach((friend) => {
-        friendMap.set(friend.nickname, friend);
+        friendMap.set(friend.id, friend);
       });
       // Map 객체 상태로 설정
       setFriendList(friendMap);
@@ -31,7 +31,7 @@ export default function useFriendProfile() {
       console.error('Error getting profile:', error);
     }
   };
-
+  // 친구 데이터 삭제하기
   const handleDeleteFriend = async (to_user_id) => {
     const deleteReqest = {
       from_user_id: localStorage.getItem('id'),

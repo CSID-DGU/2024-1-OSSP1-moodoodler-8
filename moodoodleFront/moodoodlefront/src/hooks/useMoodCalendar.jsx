@@ -37,8 +37,8 @@ export default function useMoodCalendar(selectedDate, isModified, to_user_id) {
   };
 
   useEffect(() => {
-    getMoodCalendar();
     if (to_user_id != false) getFriendMoodCalendar();
+    else getMoodCalendar();
   }, [yearMonth, isModified]);
 
   useEffect(() => {
