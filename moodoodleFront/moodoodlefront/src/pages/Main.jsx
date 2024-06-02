@@ -21,6 +21,7 @@ export default function Main() {
             selectedDate={context.selectedDate}
             setSelectedDate={context.setSelectedDate}
             isModified={context.isModified}
+            to_user_id=''
             isUpdated={context.isUpdated}
           />
         )}
