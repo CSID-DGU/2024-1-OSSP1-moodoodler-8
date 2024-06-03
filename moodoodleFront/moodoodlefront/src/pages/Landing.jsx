@@ -22,7 +22,7 @@ export default function Landing() {
             그에 맞는 음악을 추천해주는 서비스입니다.
           </div>
         </div>
-        <div className='flex flex-col w-[278px] h-[180px] justify-between items-center'>
+        <div className='flex flex-col w-[347px] h-[253px] justify-between items-center'>
           <p className='text-[16px] font-bold leading-[15px]'>MOODOODLE COLOR CHIP</p>
           <p className='text-[12px] font-medium leading-[15px] text-darkGray'>
             MOODOOELE이 분석하는 7가지의 감정을 소개합니다!

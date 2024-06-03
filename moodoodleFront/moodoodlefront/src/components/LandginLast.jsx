@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 export default function LandginLast() {
   return (
@@ -8,14 +7,17 @@ export default function LandginLast() {
       style={{
         backgroundImage: `url('/assets/color_bg_vertical.svg')`,
       }}>
-      <div className='flex flex-col items-center justify-between w-[280px] h-[166px] mt-[100px]'>
+      <div className='flex flex-col items-center justify-between w-[280px] h-[135px] mt-[100px]'>
         <p className='text-[22px] text-center font-semibold leading-[25px]'>
           지금 바로 <br /> MOODOODLE을 만나보세요!
         </p>
         <img className='w-[247px] h-[43px]' src='/assets/moodoodleLogo.svg' alt='logo' />
-        <Link to='/signup'>
-          <p className='text-[15px] text-darkGray underline decoration-solid'>회원가입 바로 가기</p>
-        </Link>
+        <a
+          href='https://github.com/CSID-DGU/2024-1-OSSP1-moodoodler-8'
+          className='flex flex-row h-[18px] items-center border-b border-black'>
+          <img src='/assets/link.svg' alt='link' />
+          <p className='text-[14px] decoration-none'>Github 바로가기</p>
+        </a>
       </div>
     </div>
   );
