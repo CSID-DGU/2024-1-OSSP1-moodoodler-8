@@ -8,13 +8,17 @@ export default function FriendProfile({ nickname, description, img, src1, alt1, 
         <img src={`${img}`} alt='프로필 사진' className='w-[48px] h-[48px] rounded-full shadow-profileImgShadow' />
         <div className='w-[140px] items-center'>
           <p className='text-[12px] font-bold text-left text-black'>{nickname}</p>
-          <p className='text-[10px] font-medium text-left text-black'>{description}</p>
+          {description === null ? (
+            <p className='text-[10px] font-medium text-left text-black'>&nbsp;</p>
+          ) : (
+            <p className='text-[10px] font-medium text-left text-black'>{description}</p>
+          )}
         </div>
       </div>
-      <button type='button' className='' onClick={onClick1}>
+      <button type='button' onClick={onClick1}>
         <img src={src1} alt={alt1} />
       </button>
-      <button type='button' className='' onClick={onClick2}>
+      <button type='button' onClick={onClick2}>
         <img src={src2} alt={alt2} />
       </button>
     </div>
