@@ -31,14 +31,12 @@ class MypageSerializer(serializers.ModelSerializer):
         nickname = validated_data.get('nickname')
         if nickname:
             instance.nickname = nickname
-        else:
-            instance.nickname = instance.nickname
 
         description = validated_data.get('description')
         if description:
             instance.description = description
         else:
-            instance.description = instance.description
+            instance.description = None
 
         public = validated_data.get('public')
         if public is not None:
@@ -47,8 +45,6 @@ class MypageSerializer(serializers.ModelSerializer):
         profile_image = validated_data.get('profile_image')
         if profile_image:
             instance.profile_image = profile_image
-        else:
-            instance.profile_image = instance.profile_image
 
         instance.save()
         return instance
