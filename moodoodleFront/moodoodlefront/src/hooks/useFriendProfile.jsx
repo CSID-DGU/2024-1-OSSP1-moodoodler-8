@@ -4,7 +4,6 @@ import { defaultAxios } from '../axios/defaultAxios';
 export default function useFriendProfile() {
   // 친구 프로필 설정
   const [friendList, setFriendList] = useState([]);
-  const [friendCalendar, setFriendCalendar] = useState();
   const [hasFriend, setHasFriend] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
 
@@ -23,7 +22,7 @@ export default function useFriendProfile() {
       // 배열을 Map으로 변환
       const friendMap = new Map();
       result.forEach((friend) => {
-        friendMap.set(friend.nickname, friend);
+        friendMap.set(friend.id, friend);
       });
       // Map 객체 상태로 설정
       setFriendList(friendMap);
@@ -32,23 +31,7 @@ export default function useFriendProfile() {
       console.error('Error getting profile:', error);
     }
   };
-
-  // 친구 달력 받아오기
-  const getFriendCalendar = async ({ to_user_id, year, month }) => {
-    try {
-      const getFriendCalendarResponse = await defaultAxios.get(
-        `/friend/calendar/${localStorage.getItem('id')}/${to_user_id}/${year}/${month}/`,
-        {
-          from_user_id: localStorage.getItem('id'),
-          to_user_id: to_user_id,
-        }
-      );
-      const result = getFriendCalendarResponse.data;
-    } catch (error) {
-      console.error('Error getting calendar:', error);
-    }
-  };
-
+  // 친구 데이터 삭제하기
   const handleDeleteFriend = async (to_user_id) => {
     const deleteReqest = {
       from_user_id: localStorage.getItem('id'),

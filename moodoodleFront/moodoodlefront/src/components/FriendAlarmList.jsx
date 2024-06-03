@@ -5,10 +5,6 @@ import FriendProfile from '../components/FriendProfile';
 export default function FriendAlarmList() {
   const { alarmList, getAlarmList, hasAlarm, RequestAccept, RequestDeny } = useFriendAlarm();
 
-  useEffect(() => {
-    getAlarmList();
-  }, [getAlarmList]);
-
   const handleAcceptClick = (friendId) => {
     RequestAccept({ friend_id: friendId });
   };

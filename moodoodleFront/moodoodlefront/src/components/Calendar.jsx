@@ -5,7 +5,7 @@ import useMoodCalendar from '../hooks/useMoodCalendar';
 const days = ['일', '월', '화', '수', '목', '금', '토'];
 
 export default function Calendar({ handleColorChipToggle, selectedDate, setSelectedDate, to_user_id, isModified }) {
-  const { moodcolorlist } = useMoodCalendar(selectedDate, isModified);
+  const { moodcolorlist } = useMoodCalendar(selectedDate, isModified, to_user_id);
   const [arr, setArr] = useState([]);
   const [moodArr, setMoodArr] = useState([]);
 

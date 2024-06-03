@@ -12,7 +12,7 @@ export default function FriendSearch() {
 
   useEffect(() => {
     setSearchData();
-  }, [setSearchData]);
+  }, []);
 
   return (
     <div className='flex flex-col items-center w-[342px] h-[619px] relative gap-[20px] rounded-[20px] bg-white shadow-componentShadow'>
