@@ -9,11 +9,10 @@ export default function InputProfile({
   defaultValue,
 }) {
   const handleSetValue = (e) => {
-    console.log(e.target.value);
-    if (e.target.value === '' || e.target.length === 0) {
+    if (e.target.value.length > 0) {
       setModifiedProfile({ ...modifiedProfile, [type]: e.target.value });
     } else {
-      setModifiedProfile({ ...modifiedProfile, [type]: ' ' });
+      setModifiedProfile({ ...modifiedProfile, [type]: '' });
     }
   };
 
