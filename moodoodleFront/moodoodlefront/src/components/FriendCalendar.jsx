@@ -1,21 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Calendar from './Calendar';
 
-export default function FriendCalendar({ to_user, handleColorChipToggle, selectedDate, setSelectedDate }) {
+export default function FriendCalendar({
+  to_user,
+  handleColorChipToggle,
+  selectedDate,
+  setSelectedDate,
+  handleShowCalendar,
+}) {
   return (
-    <div className='w-[342px] h-[370px] relative'>
-      <div className='w-[342px] h-[370px] absolute left-0 top-0 overflow-hidden rounded-[20px] bg-white'>
-        <p className='absolute left-[108px] top-[29px] text-base font-semibold text-center text-darkNavy'>
-          {to_user.nickname}님의 감정 달력
-        </p>
-        <img src='./assets/close.svg' className='w-4 h-4 absolute left-[300px] top-[27px] object-contain' />
+    <div className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50'>
+      <div className='flex flex-col items-center w-[342px] h-[370px] relative rounded-[20px] bg-white'>
+        <div className='flex justify-between w-[300px] h-[40px]'>
+          <p className='self-end w-full font-bold text-center text-darkNavy'>{to_user.nickname}님의 감정 달력</p>
+          <button className='self-end cursor-pointer' type='button' onClick={handleShowCalendar}>
+            <img src='/assets/close.svg' alt='닫기' />
+          </button>
+        </div>
+        <Calendar
+          handleColorChipToggle={handleColorChipToggle}
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+          to_user_id={to_user.id}
+        />
       </div>
-      <Calendar
-        handleColorChipToggle={handleColorChipToggle}
-        selectedDate={selectedDate}
-        setSelectedDate={setSelectedDate}
-        to_user_id={to_user.id}
-      />
     </div>
   );
 }
