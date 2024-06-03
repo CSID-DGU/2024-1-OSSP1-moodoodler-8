@@ -22,12 +22,22 @@ export default function useProfile() {
           withCredentials: true,
         }
       );
-      setProfile({
-        nickname: getProfileResponse.data.data.nickname,
-        description: getProfileResponse.data.data.description,
-        isPublic: getProfileResponse.data.data.public,
-        profile_image: getProfileResponse.data.data.profile_image,
-      });
+      console.log(getProfileResponse.data.data.description);
+      if (getProfileResponse.data.data.description == 'null') {
+        setProfile({
+          nickname: getProfileResponse.data.data.nickname,
+          description: null,
+          isPublic: getProfileResponse.data.data.public,
+          profile_image: getProfileResponse.data.data.profile_image,
+        });
+      } else {
+        setProfile({
+          nickname: getProfileResponse.data.data.nickname,
+          description: getProfileResponse.data.data.description,
+          isPublic: getProfileResponse.data.data.public,
+          profile_image: getProfileResponse.data.data.profile_image,
+        });
+      }
     } catch (error) {
       console.error(error.response);
     }
@@ -47,7 +57,7 @@ export default function useProfile() {
       formData.append('public', profile.isPublic);
       formData.append('profile_image', uploadedImage);
     }
-
+    console.log(...formData);
     try {
       const patchProfileManagementResponse = await defaultAxios.patch(
         `/user/mypage/${localStorage.getItem('id')}/`,
