@@ -1,10 +1,10 @@
 // 친구 신청 확인
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { defaultAxios } from '../axios/defaultAxios';
 
 export default function useFriendAlarm() {
   const [alarmList, setAlarmList] = useState([]);
-  const [hasAlarm, setHasAlarm] = useState(true);
+  const [hasAlarm, setHasAlarm] = useState();
 
   const getAlarmList = async () => {
     try {
@@ -15,7 +15,7 @@ export default function useFriendAlarm() {
       // 배열을 Map으로 변환
       const alarmMap = new Map();
       result.forEach((alarm) => {
-        alarmMap.set(alarm.nickname, alarm);
+        alarmMap.set(alarm.id, alarm);
       });
       setAlarmList(alarmMap);
       setHasAlarm(alarmMap.size > 0);
@@ -33,6 +33,8 @@ export default function useFriendAlarm() {
         `/friend/accept/${localStorage.getItem('id')}/${friend_id}/`,
         postData
       );
+      getAlarmList();
+      setHasAlarm(alarmList.size > 0);
     } catch (error) {
       const { status_code } = error.response.status;
       console.error('Error submitting post:', status_code);
@@ -49,11 +51,17 @@ export default function useFriendAlarm() {
         `/friend/reject/${localStorage.getItem('id')}/${friend_id}/`,
         postData
       );
+      getAlarmList();
+      setHasAlarm(alarmList.size > 0);
     } catch (error) {
       const { status_code } = error.response.status;
       console.error('Error submitting post:', status_code);
     }
   };
+
+  useEffect(() => {
+    getAlarmList();
+  }, []);
 
   return { alarmList, getAlarmList, hasAlarm, setHasAlarm, RequestAccept, RequestDeny };
 }
