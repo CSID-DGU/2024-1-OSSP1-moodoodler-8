@@ -9,7 +9,11 @@ export default function InputProfile({
   defaultValue,
 }) {
   const handleSetValue = (e) => {
-    setModifiedProfile({ ...modifiedProfile, [type]: e.target.value });
+    if (e.target.value.length > 0) {
+      setModifiedProfile({ ...modifiedProfile, [type]: e.target.value });
+    } else {
+      setModifiedProfile({ ...modifiedProfile, [type]: '' });
+    }
   };
 
   return (
@@ -20,7 +24,7 @@ export default function InputProfile({
         placeholder={placeholder}
         defaultValue={defaultValue}
         onChange={(e) => handleSetValue(e)}
-        className='w-[203px] h-[20px] text-[13px] font-medium text-darkGray tracking-[-1.2px] outline-none'></input>
+        className='w-[203px] h-[20px] text-[13px] font-medium text-darkGray tracking-[-0.5px] outline-none'></input>
     </div>
   );
 }

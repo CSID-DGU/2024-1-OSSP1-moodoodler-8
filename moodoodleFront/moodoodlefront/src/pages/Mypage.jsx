@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import { useRecoilState } from 'recoil';
 import selectedDateState from '../stores/selectedDate';
 import ProfileCol from '../components/ProfileCol';
 import MypageMenu from '../components/MypageMenu';
 import ProfileManagement from '../components/ProfileManagement';
 import MonthlyReport from '../components/MonthlyReport';
 import useLogout from '../hooks/useLogout';
+import dayjs from 'dayjs';
 
 export default function Mypage() {
   const [isClick, setIsClick] = useState(false);
   const [isClickedReport, setIsClickedReport] = useState(false);
   const [isClickedProfile, setIsClickedProfile] = useState(false);
-  const [selectedDate, setSelectedDate] = useRecoilState(selectedDateState);
+  const [selectedDate, setSelectedDate] = useState(dayjs().format('YYYY-MM-DD'));
   const { logout } = useLogout();
 
   function handleReportComponent() {
