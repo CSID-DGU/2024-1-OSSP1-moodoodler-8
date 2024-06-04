@@ -36,7 +36,7 @@ class MypageSerializer(serializers.ModelSerializer):
         if description:
             instance.description = description
         else:
-            instance.description = None
+            instance.description = ''
 
         public = validated_data.get('public')
         if public is not None:
