@@ -194,8 +194,11 @@ class FriendCalendarView(ListAPIView):
         return Diary.objects.filter(date__range=(start_date, end_date), user_id=to_user.user_id)
 
     def list(self, request, *args, **kwargs):
-        try:    
-            queryset = self.get_queryset()
+        to_user_id = self.kwargs.get('to_user_id')
+        to_user = users.objects.get(id=to_user_id)
+        
+        try:
+            queryset = self.get_queryset()    
             results = []
             year = int(self.kwargs.get('year'))
             month = int(self.kwargs.get('month'))
@@ -221,7 +224,8 @@ class FriendCalendarView(ListAPIView):
             response = {
                 'success': False,
                 'status_code': status.HTTP_400_BAD_REQUEST,
-                'message': str(e)
+                'message': str(e),
+                'public': to_user.public
             }
             return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
@@ -229,6 +233,7 @@ class FriendCalendarView(ListAPIView):
             'success': True,
             'status_code': status.HTTP_200_OK,
             'message': '요청에 성공하였습니다.',
+            'public': to_user.public,
             'result': results
         }
         return Response(response, status=status.HTTP_200_OK)
