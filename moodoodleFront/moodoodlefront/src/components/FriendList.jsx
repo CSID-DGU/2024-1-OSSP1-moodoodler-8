@@ -68,8 +68,6 @@ export default function FriendList() {
         {showCalendar && (
           <FriendCalendar
             handleColorChipToggle={context.handleColorChipToggle}
-            selectedDate={context.selectedDate}
-            setSelectedDate={context.setSelectedDate}
             to_user={selectedUser}
             handleShowCalendar={handleShowCalendar}
           />
