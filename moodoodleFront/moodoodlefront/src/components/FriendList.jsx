@@ -57,7 +57,7 @@ export default function FriendList() {
               nickname={friend.nickname}
               description={friend.description}
               img={friend.profile_image}
-              src2={isDelete ? '/assets/frienddelete.svg' : '/assets/calendar.svg'}
+              src2={isDelete ? '/assets/frienddelete.svg' : friend.public ? '/assets/calendar.svg' : null}
               alt2={isDelete ? 'delete' : 'calendar'}
               onClick2={isDelete ? () => handleDelete(friend.id) : () => handleCalendar(friend)}
             />
