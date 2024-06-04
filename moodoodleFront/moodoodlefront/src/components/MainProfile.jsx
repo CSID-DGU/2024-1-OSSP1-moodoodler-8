@@ -10,14 +10,14 @@ export default function MainProfile({ isCalendar, setIsCalendar }) {
 
   useEffect(() => {
     getUserProfile();
-  }, [localStorage.getItem('id'), nickname, description]);
+  }, [localStorage.getItem('id'), nickname, description, profile_image]);
 
   return (
     <div className='flex flex-row h-[82px] justify-center items-center'>
       <div className='flex flex-row justify-between items-center w-[330px] h-[48px]'>
         <div className='flex flex-row items-center gap-x-[27px]'>
           <img
-            src={`${profile_image}`}
+            src={`${profile_image ? profile_image : '/assets/profile.svg'}`}
             alt='프로필 사진'
             className='w-[48px] h-[48px] rounded-full shadow-profileImgShadow'
           />
