@@ -57,9 +57,19 @@ export default function FriendList() {
               nickname={friend.nickname}
               description={friend.description}
               img={friend.profile_image}
-              src2={isDelete ? '/assets/frienddelete.svg' : friend.public ? '/assets/calendar.svg' : null}
-              alt2={isDelete ? 'delete' : 'calendar'}
-              onClick2={isDelete ? () => handleDelete(friend.id) : () => handleCalendar(friend)}
+              {...(isDelete
+                ? {
+                    src2: '/assets/frienddelete.svg',
+                    alt2: 'delete',
+                    onClick2: () => handleDelete(friend.id),
+                  }
+                : friend.public
+                  ? {
+                      src2: '/assets/calendar.svg',
+                      alt2: 'calendar',
+                      onClick2: () => handleCalendar(friend),
+                    }
+                  : { src2: '/assets/nocalendar.svg', alt2: 'nocalendar' })}
             />
           ))
         ) : (
