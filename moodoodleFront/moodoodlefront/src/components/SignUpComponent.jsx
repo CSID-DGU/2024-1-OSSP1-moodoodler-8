@@ -58,7 +58,7 @@ export default function SignUp() {
                   resetValidation(event.target.id);
                 }}
                 onReset={setSignupInfo}
-                placeholder='4자~10자의 영문, 숫자'
+                placeholder='4자~20자의 대소문자/숫자'
               />
             </div>
             <CustomButton
