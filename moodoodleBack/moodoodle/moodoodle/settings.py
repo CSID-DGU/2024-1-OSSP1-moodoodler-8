@@ -151,7 +151,7 @@ AUTH_USER_MODEL = 'user.users'
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']
 
-CSRF_TRUSTED_ORIGINS = ['https://moodoodle.netlify.app/', 'https://port-0-moodoodle-test-rm6l2llw4xv3nr.sel5.cloudtype.app']
+CSRF_TRUSTED_ORIGINS = ['https://moodoodle.netlify.app', 'https://port-0-moodoodle-test-rm6l2llw4xv3nr.sel5.cloudtype.app']
 CORS_ALLOW_CREDENTIALS = True
 
 # CSRF_COOKIE_SAMESITE = 'None'
