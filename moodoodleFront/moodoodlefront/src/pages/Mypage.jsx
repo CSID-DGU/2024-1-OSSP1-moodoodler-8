@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import selectedDateState from '../stores/selectedDate';
 import ProfileCol from '../components/ProfileCol';
 import MypageMenu from '../components/MypageMenu';
 import ProfileManagement from '../components/ProfileManagement';

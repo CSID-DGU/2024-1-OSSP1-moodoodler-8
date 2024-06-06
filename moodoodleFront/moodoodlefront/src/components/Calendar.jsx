@@ -105,9 +105,11 @@ export default function Calendar({ handleColorChipToggle, selectedDate, setSelec
           </div>
         </div>
       </div>
-      <button className='absolute right-[15px] bottom-[15px]' type='button' onClick={handleColorChipToggle}>
-        <img src='/assets/more.svg' alt='컬러칩 보기' />
-      </button>
+      {!to_user_id && (
+        <button className='absolute right-[15px] bottom-[15px]' type='button' onClick={handleColorChipToggle}>
+          <img src='/assets/more.svg' alt='컬러칩 보기' />
+        </button>
+      )}
     </div>
   );
 }
