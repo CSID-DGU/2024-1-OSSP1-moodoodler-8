@@ -16,7 +16,7 @@ export default function useDiaryWrite() {
       content: content,
     };
     try {
-      const postDiaryResponse = await diaryAxios.post('/diary/create/', postDiaryData);
+      const postDiaryResponse = await defaultAxios.post('/diary/create/', postDiaryData);
       console.log(postDiaryResponse.data.data.diary_id);
       localStorage.setItem('diary_id', postDiaryResponse.data.data.diary_id);
       localStorage.setItem('content', postDiaryResponse.data.data.content);
@@ -42,7 +42,7 @@ export default function useDiaryWrite() {
       content: modifiedContent,
     };
     try {
-      const putDiaryResponse = await diaryAxios.put(`/diary/update/${diary_id}/`, putDiaryData);
+      const putDiaryResponse = await defaultAxios.put(`/diary/update/${diary_id}/`, putDiaryData);
       setModifiedContent('');
       handleModified();
     } catch (error) {
