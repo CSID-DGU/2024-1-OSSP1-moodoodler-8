@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { defaultAxios } from '../axios/defaultAxios';
+import { diaryAxios } from '../axios/diaryAxios';
 
 export default function useDiaryAnalysis(diary_id) {
   const [mainColor, setMainColor] = useState('');
