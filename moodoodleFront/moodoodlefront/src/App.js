@@ -3,7 +3,7 @@ import { Mobile, Pc } from './responsive';
 import { RecoilRoot } from 'recoil';
 import Start from './pages/Start';
 import Login from './pages/Login';
-import SignUp from './pages/SignUp';
+import SignUp from './pages/SignUp/SignUp';
 import Home from './pages/Home';
 import Main from './pages/Main';
 import DiaryWritePage from './pages/DiaryWritePage';
@@ -15,6 +15,7 @@ import Welcome from './pages/Welcome';
 import Alarm from './pages/Alarm';
 import Search from './pages/Search';
 import Landing from './pages/Landing';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
                     <Route path='/friend' element={<Friend />} />
                     <Route path='/alarm' element={<Alarm />} />
                     <Route path='/search' element={<Search />} />
+                    <Route path='/privacypolicy' element={<PrivacyPolicy />} />
                   </Route>
                 </Routes>
               </div>
@@ -47,10 +49,11 @@ function App() {
               <div className='flex-1 relative'>
                 <Routes>
                   <Route path='/' element={<Start />} />
-                  <Route path='/login' element={<Login />} />
                   <Route path='/moodoodle' element={<Landing />} />
+                  <Route path='/login' element={<Login />} />
                   <Route path='/signup' element={<SignUp />} />
                   <Route path='/survey' element={<Survey />} />
+                  <Route path='/welcome' element={<Welcome />} />
                   <Route exact path='/' element={<Home />}>
                     <Route path='/main' element={<Main />} />
                     <Route path='/diary/:selectedDate' element={<DiaryWritePage />} />
@@ -59,6 +62,7 @@ function App() {
                     <Route path='/friend' element={<Friend />} />
                     <Route path='/alarm' element={<Alarm />} />
                     <Route path='/search' element={<Search />} />
+                    <Route path='/privacypolicy' element={<PrivacyPolicy />} />
                   </Route>
                 </Routes>
               </div>
