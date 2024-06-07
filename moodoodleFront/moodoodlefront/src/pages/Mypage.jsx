@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import ProfileCol from '../components/ProfileCol';
 import MypageMenu from '../components/MypageMenu';
 import ProfileManagement from '../components/ProfileManagement';
@@ -46,6 +47,9 @@ export default function Mypage() {
               handleProfileComponent={handleProfileComponent}
               handleLogout={logout}
             />
+            <Link to='/privacypolicy'>
+              <p className='w-[342px] text-end text-[10px] text-darkGray'>개인정보 처리방침</p>
+            </Link>
           </>
         )}
       </div>
