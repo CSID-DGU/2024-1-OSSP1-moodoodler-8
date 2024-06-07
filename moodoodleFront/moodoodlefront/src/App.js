@@ -15,6 +15,7 @@ import Welcome from './pages/Welcome';
 import Alarm from './pages/Alarm';
 import Search from './pages/Search';
 import Landing from './pages/Landing';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
                     <Route path='/friend' element={<Friend />} />
                     <Route path='/alarm' element={<Alarm />} />
                     <Route path='/search' element={<Search />} />
+                    <Route path='/privacypolicy' element={<PrivacyPolicy />} />
                   </Route>
                 </Routes>
               </div>
@@ -59,6 +61,7 @@ function App() {
                     <Route path='/friend' element={<Friend />} />
                     <Route path='/alarm' element={<Alarm />} />
                     <Route path='/search' element={<Search />} />
+                    <Route path='/privacypolicy' element={<PrivacyPolicy />} />
                   </Route>
                 </Routes>
               </div>
