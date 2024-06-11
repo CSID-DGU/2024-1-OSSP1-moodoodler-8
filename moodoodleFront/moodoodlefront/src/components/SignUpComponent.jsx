@@ -9,7 +9,7 @@ import DATES from '../constants/days';
 import { checkPasswordPattern, checkPasswordReEnter, checkUserIdPattern } from '../utils/checkPattern';
 import REGEX from '../constants/regex';
 
-export default function SignUp() {
+export default function SignUpComponent() {
   const {
     signupInfo: { id, password, nickname },
     isUniqued,
