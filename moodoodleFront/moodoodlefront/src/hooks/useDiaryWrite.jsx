@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { defaultAxios } from '../axios/defaultAxios';
-import { diaryAxios } from '../axios/diaryAxios';
 import useDiaryAnalysis from './useDiaryAnalysis';
 
 export default function useDiaryWrite() {
