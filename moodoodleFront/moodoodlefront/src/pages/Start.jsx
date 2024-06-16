@@ -11,7 +11,7 @@ export default function Start() {
           <br />
           다채로운 색깔로 기록하고 관리하는 다이어리
         </div>
-        <img src='/assets/moodoodleLogoMain.svg' alt='logo' />
+        <img src='/assets/moodoodleLogoMain.png' alt='logo' />
         <div className='flex flex-col items-center'>
           <Link to='/login'>
             <MainButton text='로그인' />
