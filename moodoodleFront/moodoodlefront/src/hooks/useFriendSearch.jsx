@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { defaultAxios } from '../axios/defaultAxios';
-import useFriendRequest from './useFriendRequest';
 
 export default function useFriendSearch() {
   const navigate = useNavigate();

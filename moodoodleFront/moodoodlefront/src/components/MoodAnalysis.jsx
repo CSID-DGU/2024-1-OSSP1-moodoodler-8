@@ -54,7 +54,7 @@ export default function MoodAnalysis({ isModal, handleDayMoodAnalysisToggle, dia
               </div>
             </div>
           </div>
-          <div className=''>
+          <div>
             <div className='flex flex-row flex-wrap justify-center items-center gap-[25px]'>
               {analysisResult.map((result, v) =>
                 v < 3 ? <MoodHashTag key={v} mood_title={result.mood_name} mood_color={result.mood_color} /> : ''

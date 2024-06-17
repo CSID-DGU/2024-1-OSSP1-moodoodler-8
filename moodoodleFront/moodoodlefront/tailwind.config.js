@@ -9,7 +9,7 @@ module.exports = {
         headerShadow: '0 3px 5px 0px rgba(0, 0, 0, 0.05)',
         buttonShadow: '0px 0px 8px 0px rgba(0, 0, 0, 0.10)',
         componentShadow: '0px 0px 20px 0px rgba(0, 0, 0, 0.05)',
-        profileImgShadow: '0px 0px 20px 0px rgba(0, 0, 0, 0.10)',
+        profileImgShadow: '0px 0px 20px 0px rgba(0, 0, 0, 0.15)',
         hashtagShadow: '0px 0px 5px 0px rgba(0, 0, 0, 0.20)',
         loginShadow: '0px 0px 18.85px 0px rgba(0,0,0,0.05)',
       },

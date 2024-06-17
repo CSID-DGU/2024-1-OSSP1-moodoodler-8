@@ -22,7 +22,7 @@ export default function useProfile() {
           withCredentials: true,
         }
       );
-      if (getProfileResponse.data.data.description == 'null') {
+      if (getProfileResponse.data.data.description === 'null') {
         setProfile({
           nickname: getProfileResponse.data.data.nickname,
           description: null,

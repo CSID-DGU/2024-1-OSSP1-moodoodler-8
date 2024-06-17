@@ -25,7 +25,6 @@ export default function SurveyComponent({ title, direction, answers, setAnswers,
   useEffect(() => {
     if (selectedGenre !== '') {
       setAnswers([...answers, selectedGenre]);
-      console.log(answers);
     }
   }, [selectedGenre]);
 
