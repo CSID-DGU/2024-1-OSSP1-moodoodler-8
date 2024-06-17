@@ -8,7 +8,7 @@ export default function FriendProfile({ nickname, description, img, src1, alt1, 
         <img src={`${img}`} alt='프로필 사진' className='w-[48px] h-[48px] rounded-full shadow-profileImgShadow' />
         <div className='w-[140px] items-center'>
           <p className='text-[12px] font-bold text-left text-black'>{nickname}</p>
-          {description === null ? (
+          {description === null || description === 'null' ? (
             <p className='text-[10px] font-medium text-left text-black'>&nbsp;</p>
           ) : (
             <p className='text-[10px] font-medium text-left text-black'>{description}</p>
