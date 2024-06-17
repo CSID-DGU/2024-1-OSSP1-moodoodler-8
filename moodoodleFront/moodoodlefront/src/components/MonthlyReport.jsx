@@ -39,7 +39,7 @@ export default function MonthlyReport({
 
   useEffect(() => {
     getUserProfile();
-  }, [profile]);
+  }, []);
 
   return (
     <div className='flex w-[342px] h-[592px] justify-center items-center rounded-[20px] shadow-componentShadow'>
