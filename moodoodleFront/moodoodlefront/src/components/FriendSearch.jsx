@@ -25,6 +25,7 @@ export default function FriendSearch() {
             key={searchData.id}
             nickname={searchData.nickname}
             description={searchData.description}
+            img={searchData.profile_image}
             src2={hasRequest ? '/assets/friendresp.svg' : '/assets/friendreq.svg'}
             alt2='friendrequest'
             onClick2={() => handleRequest(searchData.id)}
