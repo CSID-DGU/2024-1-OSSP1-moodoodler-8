@@ -55,7 +55,10 @@ export default function SurveyComponent({ title, direction, answers, setAnswers,
         text={buttonText[direction]}
         color='purple'
         disabled={answers.length > 0 ? false : true}
-        onClick={() => onClickHandleSubmit()}
+        onClick={() => {
+          setSelectedGenre('');
+          onClickHandleSubmit();
+        }}
       />
     </div>
   );
