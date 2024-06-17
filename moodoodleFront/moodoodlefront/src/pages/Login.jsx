@@ -7,7 +7,7 @@ export default function Login() {
     <div className='flex justify-center flex-col items-center w-full h-screen bg-white'>
       <div className='flex flex-col h-[368px] items-center justify-between'>
         <Link to='/'>
-          <img src='/assets/moodoodleLogoMain.svg' alt='logo' />
+          <img src='/assets/moodoodleLogo_bg.svg' alt='logo' />
         </Link>
         <LoginComponent />
       </div>

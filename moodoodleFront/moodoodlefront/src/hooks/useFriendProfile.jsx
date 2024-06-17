@@ -31,6 +31,7 @@ export default function useFriendProfile() {
       console.error('Error getting profile:', error);
     }
   };
+
   // 친구 데이터 삭제하기
   const handleDeleteFriend = async (to_user_id) => {
     const deleteReqest = {

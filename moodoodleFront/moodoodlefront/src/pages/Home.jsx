@@ -46,7 +46,8 @@ export default function Home() {
         {location.pathname === '/mypage' ||
         location.pathname === '/friend' ||
         location.pathname === '/alarm' ||
-        location.pathname === '/search' ? (
+        location.pathname === '/search' ||
+        location.pathname === '/privacypolicy' ? (
           <div className='h-[12px]' />
         ) : (
           <MainProfile isCalendar={isCalendar} setIsCalendar={setIsCalendar} />
