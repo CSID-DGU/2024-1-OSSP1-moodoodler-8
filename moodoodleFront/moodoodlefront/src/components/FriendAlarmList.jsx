@@ -23,6 +23,7 @@ export default function FriendAlarmList() {
             <FriendProfile
               nickname={friend.nickname}
               description={friend.description}
+              img={friend.profile_image}
               src1='/assets/accept.svg'
               alt1='accept'
               onClick1={() => handleAcceptClick(friend.id)}
