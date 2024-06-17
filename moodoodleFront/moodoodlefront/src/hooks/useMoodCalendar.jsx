@@ -42,10 +42,6 @@ export default function useMoodCalendar(selectedDate, isModified, to_user_id) {
   }, [yearMonth, isModified]);
 
   useEffect(() => {
-    getMoodCalendar();
-  }, [isModified]);
-
-  useEffect(() => {
     setYearMonth({
       year: dayjs(selectedDate).format('YYYY'),
       month: dayjs(selectedDate).format('MM'),

@@ -19,7 +19,6 @@ export default function useDiaryAnalysis(diary_id) {
       setMainColor(getDiaryAnalysisrResponse.data.detail[0].mood_color);
       setMainColorName(getDiaryAnalysisrResponse.data.detail[0].mood_name);
       setAnalysisResult(getDiaryAnalysisrResponse.data.detail);
-      console.log(getDiaryAnalysisrResponse.data);
     } catch (error) {
       console.error('Error getting diary Analysis:', error.response);
     }

@@ -10,7 +10,7 @@ export default function MainProfile({ isCalendar, setIsCalendar }) {
 
   useEffect(() => {
     getUserProfile();
-  }, [localStorage.getItem('id'), nickname, description, profile_image]);
+  }, []);
 
   return (
     <div className='flex flex-row h-[82px] justify-center items-center'>

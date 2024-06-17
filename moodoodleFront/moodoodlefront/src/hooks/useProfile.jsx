@@ -22,6 +22,7 @@ export default function useProfile() {
           withCredentials: true,
         }
       );
+      console.log(getProfileResponse.data.data);
       if (getProfileResponse.data.data.description === 'null') {
         setProfile({
           nickname: getProfileResponse.data.data.nickname,
