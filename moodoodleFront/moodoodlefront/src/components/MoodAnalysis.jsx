@@ -21,7 +21,7 @@ export default function MoodAnalysis({ isModal, handleDayMoodAnalysisToggle, dia
 
   useEffect(() => {
     getUserProfile();
-  }, [profile]);
+  }, []);
 
   useEffect(() => {
     getDiaryAnalysis();
