@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'diary_mood.apps.DiaryMoodConfig',
     'friend.apps.FriendConfig',
     'music.apps.MusicConfig',
+    'book.apps.BookConfig',
     'corsheaders',
     'storages',
 ]
