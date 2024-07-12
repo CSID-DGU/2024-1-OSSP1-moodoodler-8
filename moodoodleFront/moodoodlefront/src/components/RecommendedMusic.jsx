@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function RecommendedMusic() {
+export default function RecommendedMusic({ musicInfo }) {
   return (
     <div>
       <div className='flex flex-col h-[186px] justify-between items-center gap-[5px]'>
