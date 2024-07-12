@@ -1,5 +1,5 @@
 from django.db import models
-from .models import Diary
+from diary.models import Diary
 
 class Book_Mapping(models.Model):
     book_mapping_id = models.AutoField(primary_key=True)
