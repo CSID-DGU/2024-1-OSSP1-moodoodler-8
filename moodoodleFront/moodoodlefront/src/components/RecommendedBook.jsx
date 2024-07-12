@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function RecommendedBook() {
   return (
-    <div className='flex flex-col h-[295px] justify-between items-center'>
+    <div className='flex flex-col h-[295px] justify-between items-center mb-[31px]'>
       <p className='font-bold text-normal text-darkNavy'>오늘의 추천 도서</p>
       <img src='' className='h-[134px]' />
       <div className='flex flex-col justify-between items-center gap-[5px]'>
