@@ -21,7 +21,7 @@ export default function MoodAnalysis({ isModal, handleDayMoodAnalysisToggle, dia
   }, []);
 
   return (
-    <div className='relative flex flex-col justify-center items-center w-[342px] h-[780px] rounded-[20px] bg-white shadow-componentShadow'>
+    <div className='relative flex flex-col justify-center items-center w-[342px] h-[835px] rounded-[20px] bg-white shadow-componentShadow'>
       {isModal ? (
         <button type='button' onClick={handleDayMoodAnalysisToggle} className='absolute top-[19px] right-[22px]'>
           <img src='/assets/close.svg' alt='닫기' />

@@ -37,7 +37,6 @@ export default function DiaryShow({
           />
         ) : (
           <DiaryContent
-            className='w-[298px]'
             diary_id={diary_id}
             content={content}
             text={text}
