@@ -20,7 +20,7 @@ class BookMappingView(CreateAPIView):
             return Response({
                 'success': False,
                 'status_code': status.HTTP_404_NOT_FOUND,
-                'message': "Book_Mapping 객체를 찾을 수 없습니다.",
+                'message': "Book_Mapping을 찾을 수 없습니다.",
             }, status=status.HTTP_404_NOT_FOUND)
 
         return Response({
