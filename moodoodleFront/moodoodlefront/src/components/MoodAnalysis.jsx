@@ -7,8 +7,16 @@ import RecommendedBook from './RecommendedBook';
 import MoodTagAnalysis from './MoodTagAnalysis';
 
 export default function MoodAnalysis({ isModal, handleDayMoodAnalysisToggle, diary_id }) {
-  const { mainColor, mainColorName, analysisResult, musicInfo, getDiaryAnalysis, getRecommendedMusic } =
-    useDiaryAnalysis(diary_id);
+  const {
+    mainColor,
+    mainColorName,
+    analysisResult,
+    musicInfo,
+    getDiaryAnalysis,
+    getRecommendedMusic,
+    bookInfo,
+    getRecommendedBook,
+  } = useDiaryAnalysis(diary_id);
   const { profile, getUserProfile } = useProfile();
 
   useEffect(() => {
@@ -18,6 +26,7 @@ export default function MoodAnalysis({ isModal, handleDayMoodAnalysisToggle, dia
   useEffect(() => {
     getDiaryAnalysis();
     getRecommendedMusic();
+    getRecommendedBook();
   }, []);
 
   return (
@@ -35,7 +44,7 @@ export default function MoodAnalysis({ isModal, handleDayMoodAnalysisToggle, dia
           {comment.COMMENT[mainColorName]}
         </div>
         <RecommendedMusic musicInfo={musicInfo} />
-        <RecommendedBook />
+        <RecommendedBook bookInfo={bookInfo} />
       </div>
     </div>
   );
