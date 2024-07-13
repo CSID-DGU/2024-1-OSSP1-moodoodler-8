@@ -22,7 +22,6 @@ export default function useProfile() {
           withCredentials: true,
         }
       );
-      console.log(getProfileResponse.data.data);
       if (getProfileResponse.data.data.description === 'null') {
         setProfile({
           nickname: getProfileResponse.data.data.nickname,
@@ -63,7 +62,6 @@ export default function useProfile() {
         `/user/mypage/${localStorage.getItem('id')}/`,
         formData
       );
-      console.log(patchProfileManagementResponse.data);
       handleProfileComponent();
       setIsModified((prev) => !prev);
     } catch (error) {
